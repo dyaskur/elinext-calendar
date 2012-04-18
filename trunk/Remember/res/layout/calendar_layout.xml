@@ -125,7 +125,7 @@
             android:id="@+id/notes"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="notes"
+            android:text="@string/notiz_"
             android:textColor="#ffffff"
             android:textSize="16dp" >
         </TextView>
@@ -134,7 +134,7 @@
             android:id="@+id/symptomes"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="symptomes"
+            android:text="@string/symptome_"
             android:textColor="#ffffff"
             android:textSize="16dp" >
         </TextView>
@@ -143,7 +143,7 @@
             android:id="@+id/stimung"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="stimung"
+            android:text="@string/stimmung_"
             android:textColor="#ffffff"
             android:textSize="16dp" >
         </TextView>
@@ -152,7 +152,7 @@
             android:id="@+id/minstruation"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="minstruation"
+            android:text="@string/menstruation_"
             android:textColor="#ffffff"
             android:textSize="16dp" >
         </TextView>
@@ -161,7 +161,7 @@
             android:id="@+id/time"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="time"
+            android:text="@string/arzttermin_"
             android:textColor="#ffffff"
             android:textSize="16dp" >
         </TextView>

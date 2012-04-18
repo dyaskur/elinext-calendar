@@ -3,5 +3,10 @@
 
     <string name="app_name">RememberMe</string>
     <string name="content_descr">image/png</string>
+    <string name="arzttermin_">Arzttermin:</string>
+    <string name="menstruation_">"Menstruation: "</string>
+    <string name="stimmung_">"Stimmung: "</string>
+    <string name="symptome_">"Symptome: "</string>
+    <string name="notiz_">"Notiz: "</string>
 
 </resources>
