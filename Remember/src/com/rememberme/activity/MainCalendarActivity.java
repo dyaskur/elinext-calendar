@@ -83,7 +83,6 @@ public class MainCalendarActivity extends BaseActivity implements
 		calendarView.setAdapter(adapter);
 	}
 
-
 	public void onClick(View v) {
 		if (v == prevMonth) {
 			if (month <= 1) {
@@ -111,10 +110,10 @@ public class MainCalendarActivity extends BaseActivity implements
 	}
 
 	public void onButtonSetClick(View v) {
+		Intent intent;
 		switch (v.getId()) {
 		case R.id.info_btn:
-			Intent intent = new Intent(MainCalendarActivity.this,
-					InfoActivity.class);
+			intent = new Intent(MainCalendarActivity.this, InfoActivity.class);
 			startActivity(intent);
 			break;
 		case R.id.key_btn:
@@ -122,8 +121,8 @@ public class MainCalendarActivity extends BaseActivity implements
 					Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.alarm_btn:
-			Toast.makeText(MainCalendarActivity.this, "Alarm button pressed!",
-					Toast.LENGTH_SHORT).show();
+			intent = new Intent(MainCalendarActivity.this, AlarmActivity.class);
+			startActivity(intent);
 			break;
 		case R.id.plus_btn:
 			Toast.makeText(MainCalendarActivity.this, "Plus button pressed!",
