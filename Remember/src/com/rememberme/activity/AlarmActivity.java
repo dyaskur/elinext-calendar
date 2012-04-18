@@ -15,6 +15,7 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.rememberme.R;
+import com.rememberme.adapter.SoundsAdapter;
 import com.rememberme.broadcast.AlarmReciver;
 
 /**
@@ -50,8 +51,10 @@ public class AlarmActivity extends BaseActivity {
 	private ToggleButton mToggleButton;
 	private TextView mTimeValue;
 	private TextView mSoundValue;
-	private int requestCode = 1;
+	private final static int TIME_RESULT = 10;
+	private final static int SOUND_RESULT = 20;
 	private Integer hoursOfDay;
+
 	private Integer minute;
 
 	@Override
@@ -120,8 +123,9 @@ public class AlarmActivity extends BaseActivity {
 		return new OnClickListener() {
 
 			public void onClick(View v) {
-				Toast.makeText(AlarmActivity.this, "Sound pressed",
-						Toast.LENGTH_SHORT).show();
+				Intent intent = new Intent(AlarmActivity.this,
+						SoundActivity.class);
+				startActivityForResult(intent, SOUND_RESULT);
 
 			}
 		};
@@ -133,7 +137,7 @@ public class AlarmActivity extends BaseActivity {
 			public void onClick(View v) {
 				Intent intent = new Intent(AlarmActivity.this,
 						TimePickerActivity.class);
-				startActivityForResult(intent, requestCode);
+				startActivityForResult(intent, TIME_RESULT);
 
 			}
 		};
@@ -142,17 +146,22 @@ public class AlarmActivity extends BaseActivity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-		hoursOfDay = (Integer) data
-				.getSerializableExtra(TimePickerActivity.HOURS_OF_DAY);
-		minute = (Integer) data.getSerializableExtra(TimePickerActivity.MINUTE);
-		String fixedMinute = "";
-		if (minute < 10) {
-			fixedMinute = "0" + minute;
-		} else {
-			fixedMinute = "" + minute;
+		if (requestCode == TIME_RESULT) {
+			hoursOfDay = (Integer) data
+					.getSerializableExtra(TimePickerActivity.HOURS_OF_DAY);
+			minute = (Integer) data
+					.getSerializableExtra(TimePickerActivity.MINUTE);
+			String fixedMinute = "";
+			if (minute < 10) {
+				fixedMinute = "0" + minute;
+			} else {
+				fixedMinute = "" + minute;
+			}
+			String alarmTime = hoursOfDay + " : " + fixedMinute;
+			mTimeValue.setText(alarmTime);
+		} else if (requestCode == SOUND_RESULT) {
+			mSoundValue.setText(SoundActivity.SOUNDS[resultCode]);
 		}
-		String alarmTime = hoursOfDay + " : " + fixedMinute;
-		mTimeValue.setText(alarmTime);
 
 		super.onActivityResult(requestCode, resultCode, data);
 	}
