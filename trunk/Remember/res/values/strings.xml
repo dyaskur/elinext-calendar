@@ -3,6 +3,11 @@
 
     <string name="app_name">RememberMe</string>
     <string name="content_descr">image/png</string>
+    <string name="alarm">Alarm</string>
+    <string name="start_alarm">Start</string>
+    <string name="alarm_scheduled">Alarm Scheduled</string>
+    <string name="miutes">Minutes</string>
+    <string name="hour">Hour</string>
     <string name="arzttermin_">Arzttermin:</string>
     <string name="menstruation_">"Menstruation: "</string>
     <string name="stimmung_">"Stimmung: "</string>
