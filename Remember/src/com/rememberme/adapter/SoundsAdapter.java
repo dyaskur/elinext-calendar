@@ -30,8 +30,6 @@ public class SoundsAdapter extends ArrayAdapter<String> {
 
 		ViewGroup currentView = (ViewGroup) mInflater.inflate(
 				R.layout.sound_list_element, null);
-		currentView.setFocusable(true);
-		currentView.setClickable(true);
 		mSoundname = (TextView) currentView.findViewById(R.id.sound_name);
 		mSoundname.setText(mSounds[position]);
 		return currentView;
