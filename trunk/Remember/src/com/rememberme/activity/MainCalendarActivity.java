@@ -209,7 +209,9 @@ public class MainCalendarActivity extends BaseActivity implements
 		}
 
 
+
 	}
+
 
 	private void setClear() {
 		mNotes.setText(getString(R.string.notiz_));
