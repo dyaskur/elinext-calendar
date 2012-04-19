@@ -8,6 +8,7 @@
     android:padding="4dp" >
 
     <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="fill_parent"
         android:layout_height="180dp"
         android:layout_alignParentBottom="true"
@@ -137,5 +138,18 @@
             android:contentDescription="@string/content_descr" >
         </ImageView>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/big_clock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="56dp"
+        android:gravity="center"
+        android:text="12:00"
+        android:textColor="#e8b3cc"
+        android:textSize="50dp" >
+    </TextView>
 
 </RelativeLayout>

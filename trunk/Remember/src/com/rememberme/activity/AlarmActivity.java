@@ -57,6 +57,7 @@ public class AlarmActivity extends BaseActivity {
 	private ToggleButton mToggleButton;
 	private TextView mTimeValue;
 	private TextView mSoundValue;
+	private TextView mBigClock;
 	private final static int TIME_RESULT = 10;
 	private static MediaPlayer mMediaPlayer;
 	private Integer hoursOfDay;
@@ -80,6 +81,7 @@ public class AlarmActivity extends BaseActivity {
 		mSoundValue = (TextView) findViewById(R.id.sound_value);
 		mSound = (LinearLayout) findViewById(R.id.sound);
 		mSound.setOnClickListener(OnSoundButtonClick());
+		mBigClock = (TextView) findViewById(R.id.big_clock);
 
 	}
 
@@ -125,6 +127,7 @@ public class AlarmActivity extends BaseActivity {
 				} else {
 					if (am != null) {
 						am.cancel(sender);
+						AlarmActivity.stopPlaySound();
 					}
 				}
 
@@ -178,6 +181,8 @@ public class AlarmActivity extends BaseActivity {
 			}
 			String alarmTime = hoursOfDay + " : " + fixedMinute;
 			mTimeValue.setText(alarmTime);
+			mBigClock.setText(alarmTime);
+
 		}
 		super.onResume();
 	}
