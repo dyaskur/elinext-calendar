@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.rememberme.R;
 import com.rememberme.activity.BaseActivity;
+import com.rememberme.activity.MainCalendarActivity;
 import com.rememberme.entity.DayNote;
 import com.rememberme.sqlite.DayNoteDataSource;
 import com.rememberme.utils.DayNoteLoadAction;
@@ -302,7 +303,7 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 			DayNote dayNote = mDayNoteDataSource
 					.getDayNoteByDate(date_month_year);
 			dayNote.setDate(date_month_year);
-
+			MainCalendarActivity.day_month_year = date_month_year;
 			mDayNoteDataSource.close();
 			mAction.setSelectedDayNote(dayNote);
 

@@ -32,6 +32,7 @@ public class MainCalendarActivity extends BaseActivity implements
 	private Calendar _calendar;
 	private LinearLayout mInfo;
 	private int month, year;
+	public static String day_month_year = "";
 	private static final String dateTemplate = "MMMM yyyy";
 
 	/** Called when the activity is first created. */
@@ -89,6 +90,7 @@ public class MainCalendarActivity extends BaseActivity implements
 				_calendar.getTime()));
 		adapter.notifyDataSetChanged();
 		calendarView.setAdapter(adapter);
+
 	}
 
 	public void onClick(View v) {
@@ -148,6 +150,7 @@ public class MainCalendarActivity extends BaseActivity implements
 	}
 
 	public void setSelectedDayNote(DayNote dayNote) {
+		dayNote.setDate(day_month_year);
 		BaseActivity.setDayNote(dayNote);
 
 	}
