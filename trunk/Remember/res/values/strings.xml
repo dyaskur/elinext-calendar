@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">RememberMe</string>
+    <string name="app_name">Remember Me</string>
     <string name="content_descr">image/png</string>
     <string name="alarm">Alarm</string>
     <string name="start_alarm">Start</string>
@@ -13,5 +13,6 @@
     <string name="stimmung_">"Stimmung: "</string>
     <string name="symptome_">"Symptome: "</string>
     <string name="notiz_">"Notiz: "</string>
+    <string name="heir_kannst_du_deine_notiz_eingeben_">Heir kannst du deine Notiz eingeben!</string>
 
 </resources>

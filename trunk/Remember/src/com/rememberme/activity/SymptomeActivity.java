@@ -3,6 +3,7 @@ package com.rememberme.activity;
 import java.util.LinkedList;
 import java.util.List;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckedTextView;
@@ -10,8 +11,6 @@ import android.widget.ListView;
 
 import com.rememberme.R;
 import com.rememberme.adapter.ItemAdapter;
-import com.rememberme.entity.DayNote;
-import com.rememberme.sqlite.DayNoteDataSource;
 
 public class SymptomeActivity extends BaseActivity{
     public final static String[] ITEMS = {"Spannungsgefuhl der Bruste","Gewichtszunahme","Schmierblutung","Zwischenblutung","Unreine Haut","Vollegefuhl", "Erbrechen",
@@ -45,12 +44,23 @@ public class SymptomeActivity extends BaseActivity{
     		}
     	}
     	
-    	DayNote dayNote=getDayNote();
-    	dayNote.setListSymptoms(symptome);
-    	DayNoteDataSource dataSource= new DayNoteDataSource(this);
-    	dataSource.open();
-    	dataSource.saveOrupdateDayNote(dayNote);
-    	dataSource.close();
+    	String symptomeStr = "";
+		for (int i = 0; i < symptome.size(); i++) {
+			if (i == symptome.size()) {
+				symptomeStr += i;
+
+			} else {
+				symptomeStr += i + "/";
+
+			}
+
+		}
+
+		SharedPreferences.Editor editor = getSharedPreferences(
+				DayActivity.PREFERENCES, 0).edit();
+		editor.putString(DayActivity.SYMPTOMES, symptomeStr);
+		editor.commit();
+		
     	finish();
     }
 }

@@ -2,6 +2,7 @@ package com.rememberme.activity;
 import java.util.LinkedList;
 import java.util.List;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CheckedTextView;
@@ -9,8 +10,6 @@ import android.widget.ListView;
 
 import com.rememberme.R;
 import com.rememberme.adapter.ItemAdapter;
-import com.rememberme.entity.DayNote;
-import com.rememberme.sqlite.DayNoteDataSource;
 
 public class StimmungActivity extends BaseActivity {
     public final static String[] ITEMS = { "glucklich", "traurig",
@@ -59,21 +58,32 @@ public class StimmungActivity extends BaseActivity {
     public void onBackPressed () {
     	CheckedTextView cView;
     	View v;
-    	for (int i=0;i<view.getChildCount();i++){
+		for (int i = 0; i < view.getChildCount(); i++) {
 			v = view.getChildAt(i);
 			cView = (CheckedTextView) v.findViewById(R.id.item_name);
 
-    		if (cView.isSelected()){
-    			stimmung.add(cView.getText().toString());
-    		}
-    	}
+			if (cView.isSelected()) {
+				stimmung.add(cView.getText().toString());
+			}
+		}
+
+		String stimmungStr = "";
+		for (int i = 0; i < stimmung.size(); i++) {
+			if (i == stimmung.size()) {
+				stimmungStr += i;
+
+			} else {
+				stimmungStr += i + "/";
+
+			}
+
+		}
+
+		SharedPreferences.Editor editor = getSharedPreferences(
+				DayActivity.PREFERENCES, 0).edit();
+		editor.putString(DayActivity.STIMMUNGS, stimmungStr);
+		editor.commit();
     	
-    	DayNote dayNote=getDayNote();
-    	dayNote.setListStimmungs(stimmung);
-    	DayNoteDataSource dataSource = new DayNoteDataSource(this);
-    	dataSource.open();
-    	dataSource.saveOrupdateDayNote(dayNote);
-    	dataSource.close();
     	finish();
     }
 

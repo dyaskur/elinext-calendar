@@ -79,6 +79,11 @@
                 android:name=".activity.PasswordChangeActivity"
                 android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
         </activity>
+        <activity
+                android:name=".activity.FirstLaunch"
+                android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
+        </activity>
+        
 
         <receiver android:name=".broadcast.AlarmReciver" >
             <intent-filter>

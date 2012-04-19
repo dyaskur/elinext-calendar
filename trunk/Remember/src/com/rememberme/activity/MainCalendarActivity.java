@@ -152,6 +152,7 @@ public class MainCalendarActivity extends BaseActivity implements
 			break;
 		case R.id.plus_btn:
 			intent = new Intent(MainCalendarActivity.this, DayActivity.class);
+			DayActivity.date = day_month_year;
 			startActivity(intent);
 			break;
 

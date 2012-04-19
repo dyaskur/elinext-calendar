@@ -76,6 +76,10 @@ public class DayNote {
 
 	public List<String> getNormalizedStimmungs() {
 		ArrayList<String> stimmungsList = new ArrayList<String>();
+		if(stimmungs == null) {
+			return stimmungsList;
+		}
+		
 		String[] array = stimmungs.split("/");
 
 		for (String i : array) {
@@ -87,6 +91,10 @@ public class DayNote {
 
 	public List<String> getNormalizedSymptoms() {
 		ArrayList<String> symptomsList = new ArrayList<String>();
+		if(symptoms == null) {
+			return symptomsList;
+		}
+		
 		String[] array = symptoms.split("/");
 
 		for (String i : array) {
