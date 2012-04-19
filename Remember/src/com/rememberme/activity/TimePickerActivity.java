@@ -32,6 +32,10 @@ public class TimePickerActivity extends BaseActivity {
 				mMinute = minute;
 			}
 		});
+		if (mHoursOfDay == 0) {
+			mHoursOfDay = mTimePicker.getCurrentHour();
+			mMinute = mTimePicker.getCurrentMinute();
+		}
 		super.onCreate(savedInstanceState);
 
 	}
