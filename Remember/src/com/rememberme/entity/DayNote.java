@@ -14,8 +14,8 @@ public class DayNote {
 	private String stimmungs;
 	private String symptoms;
 	private Date date;
-	private Date begin_or_end_pille_date;
-	private Date arzttermin;
+	private String begin_or_end_pille_date;
+	private String arzttermin;
 	private int month;
 
 	public String getNote() {
@@ -110,21 +110,7 @@ public class DayNote {
 		this.date = convertStringDateToDateObj(date);
 	}
 
-	public Date getBegin_or_end_pille_date() {
-		return begin_or_end_pille_date;
-	}
-
-	public void setBegin_or_end_pille_date(String setDate) {
-		this.begin_or_end_pille_date = convertStringDateToDateObj(setDate);
-	}
-
-	public Date getArzttermin() {
-		return arzttermin;
-	}
-
-	public void setArzttermin(String arzttermin) {
-		this.arzttermin = convertStringDateToDateObj(arzttermin);
-	}
+	
 
 	public static String converDateToString(Date dateConvert) {
 		if(dateConvert == null) {
@@ -160,6 +146,22 @@ public class DayNote {
 
 	public void setMonth(int month) {
 		this.month = month;
+	}
+
+	public String getBegin_or_end_pille_date() {
+		return begin_or_end_pille_date;
+	}
+
+	public void setBegin_or_end_pille_date(String begin_or_end_pille_date) {
+		this.begin_or_end_pille_date = begin_or_end_pille_date;
+	}
+
+	public String getArzttermin() {
+		return arzttermin;
+	}
+
+	public void setArzttermin(String arzttermin) {
+		this.arzttermin = arzttermin;
 	}
 
 

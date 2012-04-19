@@ -152,10 +152,4 @@ public class MainCalendarActivity extends BaseActivity implements
 
 	}
 
-	@Override
-	public void setDayNote(DayNote dayNote) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
