@@ -50,6 +50,30 @@
                 <action android:name="com.rememberme.activity.intent" />
             </intent-filter>
         </activity>
+                <activity
+            android:name=".activity.StimmungActivity"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
+        </activity>
+       <activity
+            android:name=".activity.SymptomeActivity"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+                android:name=".activity.MenstruationActivity"
+                android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+                android:name=".activity.PilleneinnahmeActivity"
+                android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+                android:name=".activity.ArztterminActivity"
+                android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
+        </activity>
+                <activity
+                android:name=".activity.DayActivity"
+                android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
+        </activity>
 
         <receiver android:name=".broadcast.AlarmReciver" >
             <intent-filter>

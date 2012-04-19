@@ -1,5 +1,14 @@
 package com.rememberme.adapter;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.List;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
@@ -10,11 +19,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import com.rememberme.R;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import com.rememberme.R;
 
 public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 	private static final String tag = "GridCellAdapter";
