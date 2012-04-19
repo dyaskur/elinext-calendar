@@ -64,24 +64,64 @@ public class DayNoteDataSource {
 		cursor.close();
 		return newDayNote;
 	}
-	
-	public List<DayNote> getDayNotesByMonth(int month) {
-		ArrayList<DayNote> list = new ArrayList<DayNote>();	
-		Cursor cursor = database.query(DaySQLiteOpenHelper.TABLE_DAY_NOTES,
-				allColumns, DaySQLiteOpenHelper.COLUMN_MONTH + " = " + month,
-				null, null, null, null);
+
+	public void saveOrupdateDayNote(DayNote dayNote) {
+		ContentValues values = new ContentValues();
+		values.put(DaySQLiteOpenHelper.COLUMN_DAY_NOTE, dayNote.getNote());
+		values.put(DaySQLiteOpenHelper.COLUMN_MENSTRUATION,
+				dayNote.getMenstruation());
+		values.put(DaySQLiteOpenHelper.COLUMN_STIMMUNGS, dayNote.getStimmungs());
+		values.put(DaySQLiteOpenHelper.COLUMN_SYMPTOMS, dayNote.getSymptoms());
+		values.put(DaySQLiteOpenHelper.COLUMN_DATE,
+				DayNote.converDateToString(dayNote.getDate()));
+		values.put(DaySQLiteOpenHelper.COLUMN_BEGIN_OR_END_PILLE_DATE, DayNote
+				.converDateToString(dayNote.getBegin_or_end_pille_date()));
+		values.put(DaySQLiteOpenHelper.COLUMN_ARZTTERMIN,
+				DayNote.converDateToString(dayNote.getArzttermin()));
+		values.put(DaySQLiteOpenHelper.COLUMN_MONTH, dayNote.getMonth());
+
+		int updated = database.update(DaySQLiteOpenHelper.TABLE_DAY_NOTES, values, null, null);
 		
+		if(updated == 0) {
+			createDayNote(dayNote);
+		}
+
+	}
+	
+	public DayNote getDayNoteByDate(String date) {
+		Cursor cursor = database.query(DaySQLiteOpenHelper.TABLE_DAY_NOTES,
+				null, DaySQLiteOpenHelper.COLUMN_DATE + "='" + date + "'",
+				null, null, null, null);
+
+		cursor.moveToFirst();
+		int count = cursor.getCount();
+		if(count == 0) {
+			return null;
+		}
+		
+		DayNote dayNote = cursorToDayNote(cursor);	
+		cursor.close();
+		return dayNote;
+	}
+
+	public List<DayNote> getDayNotesByMonth(int month) {
+		String whereClose = DaySQLiteOpenHelper.COLUMN_MONTH + " = " + month;
+		ArrayList<DayNote> list = new ArrayList<DayNote>();
+		Cursor cursor = database.query(DaySQLiteOpenHelper.TABLE_DAY_NOTES,
+				allColumns, whereClose,
+				null, null, null, null);
+
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
 			DayNote dayNote = cursorToDayNote(cursor);
 			list.add(dayNote);
 			cursor.moveToNext();
 		}
-		
+
 		cursor.close();
-		
+
 		return list;
-		
+
 	}
 
 	public void deleteDayNote(DayNote dayNote) {

@@ -1,5 +1,6 @@
 package com.rememberme.adapter;
 
+import java.security.KeyStore.LoadStoreParameter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,6 +22,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.rememberme.R;
+import com.rememberme.entity.DayNote;
+import com.rememberme.sqlite.DayNoteDataSource;
+import com.rememberme.utils.DayNoteLoadAction;
 
 public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 	private static final String tag = "GridCellAdapter";
@@ -46,15 +50,19 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 	private View layout;
 	private final SimpleDateFormat dateFormatter = new SimpleDateFormat(
 			"dd-MMM-yyyy");
+	private DayNoteDataSource mDayNoteDataSource;
+	private DayNoteLoadAction mAction;
 
 	// Days in Current Month
 	public GridCellAdapter(Context context, int textViewResourceId, int month,
-			int year) {
+			int year, DayNoteLoadAction action) {
 		super();
 		this._context = context;
 		this.list = new ArrayList<String>();
 		this.month = month;
 		this.year = year;
+		mAction = action;
+		mDayNoteDataSource = new DayNoteDataSource(context);
 
 		Log.d(tag, "==> Passed in Date FOR Month: " + month + " " + "Year: "
 				+ year);
@@ -255,7 +263,7 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 		Log.d(tag, "Current Day: " + getCurrentDayOfMonth());
 		String[] day_color = list.get(position).split("-");
 		String theday = day_color[0];
-		String themonth = day_color[2];
+		String themonth = day_color[2].substring(0, 3);
 		String theyear = day_color[3];
 		if ((!eventsPerMonthMap.isEmpty()) && (eventsPerMonthMap != null)) {
 			if (eventsPerMonthMap.containsKey(theday)) {
@@ -291,6 +299,13 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 		try {
 			Date parsedDate = dateFormatter.parse(date_month_year);
 			Log.d(tag, "Parsed Date: " + parsedDate.toString());
+			
+			mDayNoteDataSource.open();
+			DayNote dayNote= mDayNoteDataSource.getDayNoteByDate(date_month_year);
+			mDayNoteDataSource.close();
+			mAction.setDayNote(dayNote);
+			
+			
 
 		} catch (ParseException e) {
 			e.printStackTrace();
