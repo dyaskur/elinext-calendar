@@ -15,13 +15,13 @@
         android:id="@+id/button_set"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="13dp"
         android:gravity="right" >
 
         <ImageButton
             android:id="@+id/info_btn"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/iconsSize"
+            android:layout_height="@dimen/iconsSize"
             android:layout_marginRight="5dp"
             android:background="@drawable/info_btn"
             android:contentDescription="@string/content_descr"
@@ -31,8 +31,8 @@
 
         <ImageButton
             android:id="@+id/key_btn"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/iconsSize"
+            android:layout_height="@dimen/iconsSize"
             android:layout_marginRight="5dp"
             android:background="@drawable/lock_btn"
             android:contentDescription="@string/content_descr"
@@ -42,8 +42,8 @@
 
         <ImageButton
             android:id="@+id/alarm_btn"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/iconsSize"
+            android:layout_height="@dimen/iconsSize"
             android:layout_marginRight="5dp"
             android:background="@drawable/clock_btn"
             android:contentDescription="@string/content_descr"
@@ -53,8 +53,8 @@
 
         <ImageButton
             android:id="@+id/plus_btn"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/iconsSize"
+            android:layout_height="@dimen/iconsSize"
             android:layout_marginRight="5dp"
             android:background="@drawable/add_btn"
             android:contentDescription="@string/content_descr"
@@ -67,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
         android:layout_marginBottom="35dp"
-        android:layout_marginTop="70dp" >
+        android:layout_marginTop="50dp" >
 
         <RelativeLayout
             android:layout_width="wrap_content"
