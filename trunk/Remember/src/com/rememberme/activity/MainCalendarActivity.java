@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.rememberme.R;
@@ -34,6 +35,11 @@ public class MainCalendarActivity extends BaseActivity implements
 	private int month, year;
 	public static String day_month_year = "";
 	private static final String dateTemplate = "MMMM yyyy";
+	private TextView mNotes;
+	private TextView mSympt;
+	private TextView mStimung;
+	private TextView mMenstruation;
+	private TextView mTime;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -75,6 +81,17 @@ public class MainCalendarActivity extends BaseActivity implements
 				R.id.calendar_day_gridcell, month, year, this);
 		adapter.notifyDataSetChanged();
 		calendarView.setAdapter(adapter);
+
+		initCalendarData();
+	}
+
+	private void initCalendarData() {
+		mNotes = (TextView) findViewById(R.id.notes);
+		mSympt = (TextView) findViewById(R.id.symptomes);
+		mStimung = (TextView) findViewById(R.id.stimung);
+		mMenstruation = (TextView) findViewById(R.id.minstruation);
+		mTime = (TextView) findViewById(R.id.time);
+
 	}
 
 	/**
@@ -149,10 +166,57 @@ public class MainCalendarActivity extends BaseActivity implements
 		super.onDestroy();
 	}
 
+	// "•";
+
+	private String checkIfEqualsNull(String str) {
+		if (str == null) {
+			return "";
+		} else {
+			return str;
+
+		}
+	}
+
 	public void setSelectedDayNote(DayNote dayNote) {
-		dayNote.setDate(day_month_year);
-		BaseActivity.setDayNote(dayNote);
+		if (dayNote != null) {
+			mNotes.setText(getString(R.string.notiz_)
+					+ checkIfEqualsNull(dayNote.getNote()));
+			String sypm = "";
+			String spacer_sym = "                     ";
+			for (String i : dayNote.getNormalizedSymptoms()) {
+				sypm += "• " + i + "\n" + spacer_sym;
+			}
+
+			mSympt.setText(getString(R.string.symptome_) + sypm);
+
+			String stim = "";
+			String spacer_stim = "                    ";
+			for (String i : dayNote.getNormalizedStimmungs()) {
+				stim += "• " + i + "\n" + spacer_stim;
+
+			}
+
+			mStimung.setText(getString(R.string.stimmung_) + stim);
+			mMenstruation.setText(getString(R.string.menstruation_)
+					+ checkIfEqualsNull(dayNote.getMenstruation()));
+			mTime.setText(getString(R.string.arzttermin_)
+					+ checkIfEqualsNull(dayNote.getArzttermin()));
+		} else {
+			setClear();
+			dayNote = new DayNote();
+			dayNote.setDate(day_month_year);
+			BaseActivity.setDayNote(dayNote);
+		}
+
 
 	}
 
+	private void setClear() {
+		mNotes.setText(getString(R.string.notiz_));
+		mSympt.setText(getString(R.string.symptome_));
+		mStimung.setText(getString(R.string.stimmung_));
+		mMenstruation.setText(getString(R.string.menstruation_));
+		mTime.setText(getString(R.string.arzttermin_));
+		
+	}
 }
