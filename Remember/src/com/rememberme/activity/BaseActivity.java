@@ -1,5 +1,8 @@
 package com.rememberme.activity;
 
+import java.util.Date;
+import java.util.List;
+
 import android.app.Activity;
 import android.view.View;
 import android.widget.CheckedTextView;
@@ -10,8 +13,10 @@ import com.rememberme.entity.DayNote;
 public class BaseActivity extends Activity {
 
 	public final static String REMEMBERME = "remember_me";
-	public static DayNote dayNote  = new DayNote();
- 
+
+
+public static DayNote dayNote  = new DayNote();
+
 	public void toggle(View v) {
 		CheckedTextView cView = (CheckedTextView) v
 				.findViewById(R.id.item_name);

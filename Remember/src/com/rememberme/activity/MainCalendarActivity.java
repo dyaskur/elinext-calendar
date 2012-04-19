@@ -65,6 +65,7 @@ public class MainCalendarActivity extends BaseActivity implements
 		calendarView = (GridView) this.findViewById(R.id.calendar);
 
 		mInfo = (LinearLayout) this.findViewById(R.id.info);
+		
 		mInfo.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
@@ -151,8 +152,8 @@ public class MainCalendarActivity extends BaseActivity implements
 			startActivity(intent);
 			break;
 		case R.id.plus_btn:
-			Toast.makeText(MainCalendarActivity.this, "Plus button pressed!",
-					Toast.LENGTH_SHORT).show();
+			intent = new Intent(MainCalendarActivity.this, DayActivity.class);
+			startActivity(intent);
 			break;
 
 		default:
