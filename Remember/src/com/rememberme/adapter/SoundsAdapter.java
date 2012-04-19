@@ -37,7 +37,7 @@ public class SoundsAdapter extends ArrayAdapter<String> {
 
 		ViewGroup currentView = (ViewGroup) mInflater.inflate(
 				R.layout.sound_list_element, null);
-
+		
 		checkTextBox = (CheckedTextView) currentView
 				.findViewById(R.id.sound_name);
 
