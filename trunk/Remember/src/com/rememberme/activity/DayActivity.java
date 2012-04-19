@@ -6,11 +6,15 @@ import android.view.View;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.rememberme.R;
+import com.rememberme.entity.DayNote;
+import com.rememberme.sqlite.DayNoteDataSource;
 
 public class DayActivity extends BaseActivity{
-
+private TextView tvPilleneinnahme;
+private TextView tvArzttermin;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -40,7 +44,7 @@ public class DayActivity extends BaseActivity{
 
             }
         });
-		TextView tvPilleneinnahme=(TextView)findViewById(R.id.pilleneinnahme);
+		tvPilleneinnahme=(TextView)findViewById(R.id.pilleneinnahme);
         tvPilleneinnahme.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent  intent = new Intent(DayActivity.this, PilleneinnahmeActivity.class);
@@ -48,7 +52,8 @@ public class DayActivity extends BaseActivity{
 
             }
         });
-		TextView tvArzttermin=(TextView)findViewById(R.id.arzttermin);
+    	
+		tvArzttermin=(TextView)findViewById(R.id.arzttermin);
         tvArzttermin.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent  intent = new Intent(DayActivity.this, ArztterminActivity.class);
@@ -57,7 +62,23 @@ public class DayActivity extends BaseActivity{
             }
         });
         
+        
 
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+    	DayNoteDataSource dataSource= new DayNoteDataSource(this);
+    	dataSource.open();
+    	if (dataSource.getDayNoteByDate("18-04-2012")!=null){
+    		tvPilleneinnahme.setText("Begin/Ende Pilleneinnahme  "+dataSource.getDayNoteByDate("18-04-2012").getBegin_or_end_pille_date());
+    	}
+    	if (dataSource.getDayNoteByDate("18-04-2012")!=null){
+    		tvArzttermin.setText("Arzttermin eintragen  "+dataSource.getDayNoteByDate("18-04-2012").getArzttermin());
+    	}
+    	dataSource.close();
 	}
 
 	//---WTF-- DO NOT WORKING
@@ -95,6 +116,18 @@ public class DayActivity extends BaseActivity{
 	//		}
 	//
 	//	}
+	
+	@Override
+    public void onBackPressed () {
+    	DayNote dayNote=getDayNote();
+    	EditText note=(EditText)findViewById(R.id.edittext);
+    	dayNote.setNote(note.getText().toString());
+    	DayNoteDataSource dataSource= new DayNoteDataSource(this);
+    	dataSource.open();
+    	dataSource.saveOrupdateDayNote(dayNote);
+    	finish();
+    }
+
 
 
 }

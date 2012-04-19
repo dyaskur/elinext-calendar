@@ -8,6 +8,8 @@ import android.widget.ListView;
 import com.rememberme.R;
 import com.rememberme.adapter.ItemAdapter;
 import com.rememberme.adapter.MenstrItemAdapter;
+import com.rememberme.entity.DayNote;
+import com.rememberme.sqlite.DayNoteDataSource;
 
 /**
  * Created with IntelliJ IDEA. User: Luxor-XP Date: 18.04.12 Time: 22:44 To
@@ -15,7 +17,8 @@ import com.rememberme.adapter.MenstrItemAdapter;
  */
 public class MenstruationActivity extends BaseActivity {
 	public final static String[] ITEMS = { "leicht", "mittel", "stark" };
-
+	private ListView view;
+	private String menstruation;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.stimmung_layout);
@@ -25,7 +28,7 @@ public class MenstruationActivity extends BaseActivity {
 				MenstruationActivity.this, R.layout.menstr_item,
 				R.id.menstr_item_name, ITEMS);
 
-		final ListView view = (ListView) findViewById(R.id.list_stimmung);
+		view = (ListView) findViewById(R.id.list_stimmung);
 		view.setAdapter(adapter);
 		view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
@@ -53,4 +56,26 @@ public class MenstruationActivity extends BaseActivity {
 			}
 		});
 	}
+	
+	@Override
+    public void onBackPressed () {
+    	CheckedTextView cView;
+    	View v;
+    	for (int i=0;i<view.getChildCount();i++){
+			v = view.getChildAt(i);
+			cView = (CheckedTextView) v.findViewById(R.id.menstr_item_name);
+
+    		if (cView.isSelected()){
+    			menstruation=cView.getText().toString();
+    		}
+    	}
+    	
+    	DayNote dayNote=getDayNote();
+    	dayNote.setMenstruation(menstruation);
+    	DayNoteDataSource dataSource= new DayNoteDataSource(this);
+    	dataSource.open();
+    	dataSource.saveOrupdateDayNote(dayNote);
+    	dataSource.close();
+    	finish();
+    }
 }

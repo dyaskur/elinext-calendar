@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:orientation="vertical">
+              android:orientation="vertical"
+              android:background="@drawable/bg">
 
     <TextView
             android:id="@+id/date"
@@ -14,11 +15,11 @@
             android:textColor="#FFFFFF"/>
     <ScrollView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
     <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg">
+            android:layout_height="wrap_content">
 
         <LinearLayout
                 android:id="@+id/first_block"
@@ -202,6 +203,7 @@
             </LinearLayout>
         </LinearLayout>
             <EditText
+                android:id="@+id/edittext"
                 android:layout_width="fill_parent"
                 android:layout_height="150dp"
                 android:layout_below="@id/second_block"
