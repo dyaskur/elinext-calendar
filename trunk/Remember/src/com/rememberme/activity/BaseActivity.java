@@ -1,8 +1,5 @@
 package com.rememberme.activity;
 
-import java.util.Date;
-import java.util.List;
-
 import android.app.Activity;
 import android.view.View;
 import android.widget.CheckedTextView;

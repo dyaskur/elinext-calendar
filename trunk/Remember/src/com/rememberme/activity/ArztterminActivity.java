@@ -1,8 +1,6 @@
 package com.rememberme.activity;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.CheckedTextView;
 import android.widget.TimePicker;
 
 import com.rememberme.R;

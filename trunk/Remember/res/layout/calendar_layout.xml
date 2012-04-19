@@ -3,7 +3,7 @@
      <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"    
-    android:orientation="vertical" >
+    android:orientation="vertical" >
 -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -64,10 +64,10 @@
     </LinearLayout>
 
     <ScrollView
-        android:layout_marginTop="70dp"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent"
-        android:layout_marginBottom="35dp" >
+        android:layout_marginBottom="35dp"
+        android:layout_marginTop="70dp" >
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -80,7 +80,7 @@
                 android:layout_below="@id/button_set"
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
-                android:background="@drawable/blue_bg_with_text" >
+                android:background="@drawable/topbar" >
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -99,10 +99,12 @@
                         android:id="@+id/currentMonth"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
                         android:layout_weight="0.6"
-                        android:background="@drawable/calendar_bar"
+                        android:background="@android:color/transparent"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="#FFFFFF" >
+                        android:textColor="#3b4958"
+                        android:textSize="18dp" >
                     </Button>
 
                     <ImageView

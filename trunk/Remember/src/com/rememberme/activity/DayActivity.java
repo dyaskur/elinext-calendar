@@ -3,10 +3,8 @@ package com.rememberme.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.rememberme.R;
 import com.rememberme.entity.DayNote;

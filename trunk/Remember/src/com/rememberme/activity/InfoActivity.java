@@ -1,8 +1,8 @@
 package com.rememberme.activity;
 
-import com.rememberme.R;
-
 import android.os.Bundle;
+
+import com.rememberme.R;
 
 public class InfoActivity extends BaseActivity {
 
