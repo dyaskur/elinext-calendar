@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -59,6 +60,8 @@ public class AlarmActivity extends BaseActivity {
 	private final static int TIME_RESULT = 10;
 	private static MediaPlayer mMediaPlayer;
 	private Integer hoursOfDay;
+	private LinearLayout mTime;
+	private LinearLayout mSound;
 
 	private Integer minute;
 	private int mCurrentSound;
@@ -72,9 +75,11 @@ public class AlarmActivity extends BaseActivity {
 		mToggleButton = (ToggleButton) findViewById(R.id.toggleButton);
 		mToggleButton.setOnCheckedChangeListener(OnToogleButtonClick());
 		mTimeValue = (TextView) findViewById(R.id.time_value);
-		mTimeValue.setOnClickListener(OnTimeButtonClick());
+		mTime = (LinearLayout) findViewById(R.id.time);
+		mTime.setOnClickListener(OnTimeButtonClick());
 		mSoundValue = (TextView) findViewById(R.id.sound_value);
-		mSoundValue.setOnClickListener(OnSoundButtonClick());
+		mSound = (LinearLayout) findViewById(R.id.sound);
+		mSound.setOnClickListener(OnSoundButtonClick());
 
 	}
 
@@ -209,6 +214,9 @@ public class AlarmActivity extends BaseActivity {
 	}
 
 	public static void stopPlaySound() {
-
+		if (mMediaPlayer != null) {
+			mMediaPlayer.release();
+			mMediaPlayer = null;
+		}
 	}
 }
