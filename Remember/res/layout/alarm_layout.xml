@@ -54,6 +54,7 @@
         </ImageView>
 
         <LinearLayout
+            android:id="@+id/time"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -95,6 +96,7 @@
         </ImageView>
 
         <LinearLayout
+            android:id="@+id/sound"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
