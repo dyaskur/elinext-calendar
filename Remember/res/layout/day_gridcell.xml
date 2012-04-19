@@ -12,7 +12,8 @@
         android:layout_gravity="center"
         android:background="@drawable/calendar_button_selector"
         android:focusable="true"
-        android:focusableInTouchMode="true"
+        
+        android:onClick="onCellButtonClick"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#FFFFFF" >
     </Button>
