@@ -1,209 +1,256 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:orientation="vertical"
-              android:background="@drawable/bg">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bg"
+    android:orientation="vertical" >
 
     <TextView
-            android:id="@+id/date"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:background="@drawable/dark_back"
-            android:gravity="center"
-            android:text="17 april 2012"
-            android:textColor="#FFFFFF"/>
-    <ScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp">
-    <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        android:id="@+id/date"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/dark_back"
+        android:gravity="center"
+        android:text="17 april 2012"
+        android:textColor="#FFFFFF" />
 
-        <LinearLayout
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp" >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <LinearLayout
                 android:id="@+id/first_block"
                 android:layout_width="fill_parent"
                 android:layout_height="120dp"
+                android:layout_marginBottom="30dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="50dp"
                 android:background="@drawable/white_bg"
-                android:orientation="vertical"
-                android:layout_marginBottom="30dp">
-            <LinearLayout
+                android:orientation="vertical" >
+
+                <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="40dp"
                     android:orientation="horizontal"
-                    android:weightSum="10">
-                <TextView
+                    android:weightSum="10" >
+
+                    <TextView
                         android:id="@+id/stimmung"
                         android:layout_width="0dp"
                         android:layout_height="30dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="6dp"
-                        android:text="Stimmung"
+                        android:layout_weight="8"
                         android:gravity="center_vertical"
-                        android:textColor="#000000"
-                        android:layout_weight="8">
-                </TextView>
-                <ImageView
+                        android:text="Stimmung"
+                        android:textColor="#000000" >
+                    </TextView>
+
+                    <ImageView
                         android:layout_width="0dp"
                         android:layout_height="15dp"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="2"
-                        android:src="@drawable/arrow">
-                </ImageView>
-            </LinearLayout>
+                        android:src="@drawable/arrow" >
+                    </ImageView>
+                </LinearLayout>
 
-            <ImageView
+                <ImageView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/border"/>
-            <LinearLayout
+                    android:src="@drawable/border" />
+
+                <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="30dp"
                     android:orientation="horizontal"
-                    android:weightSum="10">
-                <TextView
+                    android:weightSum="10" >
+
+                    <TextView
                         android:id="@+id/symptome"
                         android:layout_width="0dp"
                         android:layout_height="30dp"
                         android:layout_marginLeft="10dp"
+                        android:layout_weight="8"
+                        android:gravity="center_vertical"
                         android:onClick="onDayInfoItem"
                         android:text="Symptome"
-                        android:gravity="center_vertical"
-                        android:textColor="#000000"
-                        android:layout_weight="8">
-                </TextView>
-                <ImageView
+                        android:textColor="#000000" >
+                    </TextView>
+
+                    <ImageView
                         android:layout_width="0dp"
                         android:layout_height="15dp"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="2"
-                        android:src="@drawable/arrow">
-                </ImageView>
-            </LinearLayout>
+                        android:src="@drawable/arrow" >
+                    </ImageView>
+                </LinearLayout>
 
-            <ImageView
+                <ImageView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/border"/>
-            <LinearLayout
+                    android:src="@drawable/border" />
+
+                <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="30dp"
                     android:orientation="horizontal"
-                    android:weightSum="10">
-                <TextView
+                    android:weightSum="10" >
+
+                    <TextView
                         android:id="@+id/menstruation"
                         android:layout_width="0dp"
                         android:layout_height="30dp"
                         android:layout_marginLeft="10dp"
-                        android:onClick="onDayInfoItem"
+                        android:layout_weight="8"
                         android:gravity="center_vertical"
+                        android:onClick="onDayInfoItem"
                         android:text="Menstruation"
-                        android:textColor="#000000"
-                        android:layout_weight="8">
-                </TextView>
-                <ImageView
+                        android:textColor="#000000" >
+                    </TextView>
+
+                    <ImageView
                         android:layout_width="0dp"
                         android:layout_height="15dp"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="2"
-                        android:src="@drawable/arrow">
-                </ImageView>
+                        android:src="@drawable/arrow" >
+                    </ImageView>
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
 
-        <LinearLayout
+            <LinearLayout
                 android:id="@+id/second_block"
-                android:layout_below="@id/first_block"
                 android:layout_width="fill_parent"
                 android:layout_height="120dp"
+                android:layout_below="@id/first_block"
+                android:layout_marginBottom="30dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="30dp"
                 android:background="@drawable/white_bg"
-                android:orientation="vertical">
+                android:orientation="vertical" >
 
-            <CheckedTextView
+                <CheckedTextView
                     android:id="@+id/intime"
                     android:layout_width="fill_parent"
                     android:layout_height="35dp"
-                    android:text="Intim"
-                    android:gravity="center_vertical"
-                    android:clickable="true"
-                    android:checkMark="@drawable/btn_check_off"
-                    android:focusable="true"
-                    android:checked="false"
-                    android:onClick="toggleIntime"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="5dp"
-                    android:textColor="#000000"/>
+                    android:checkMark="@drawable/btn_check_off"
+                    android:checked="false"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:onClick="toggleIntime"
+                    android:text="Intim"
+                    android:textColor="#000000" />
 
-
-            <ImageView
+                <ImageView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/border"/>
-            <LinearLayout
+                    android:src="@drawable/border" />
+
+                <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="35dp"
                     android:orientation="horizontal"
-                    android:weightSum="10">
+                    android:weightSum="10" >
 
-                <TextView
-                        android:id="@+id/pilleneinnahme"
-                        android:layout_width="0dp"
-                        android:layout_height="35dp"
-                        android:layout_marginLeft="10dp"
-                        android:onClick="onDayInfoItem"
-                        android:gravity="center_vertical"
-                        android:text="Begin/Ende Pilleneinnahme"
-                        android:textColor="#000000"
-                        android:layout_weight="8">
-                </TextView>
-                <ImageView
-                        android:layout_width="0dp"
+                    <LinearLayout
+                        android:layout_width="260dp"
+                        android:layout_height="wrap_content" >
+
+                        <TextView
+                            android:id="@+id/pilleneinnahme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="35dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="8"
+                            android:gravity="center_vertical"
+                            android:onClick="onDayInfoItem"
+                            android:text="@string/begin_ende_pilleneinnahme"
+                            android:textColor="#000000" >
+                        </TextView>
+                        <TextView
+                            android:id="@+id/begin_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="3.52"
+                            android:gravity="center_vertical"
+                            android:onClick="onDayInfoItem"
+                            android:text=""
+                            android:textColor="#000000" >
+                        </TextView>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
                         android:layout_height="15dp"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="2"
-                        android:src="@drawable/arrow">
-                </ImageView>
-            </LinearLayout>
+                        android:src="@drawable/arrow" >
+                    </ImageView>
+                </LinearLayout>
 
-            <ImageView
+                <ImageView
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/border"/>
-            <LinearLayout
+                    android:src="@drawable/border" />
+
+                <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="35dp"
                     android:orientation="horizontal"
-                    android:weightSum="10">
-                <TextView
-                        android:id="@+id/arzttermin"
-                        android:layout_width="0dp"
-                        android:layout_height="30dp"
-                        android:layout_marginLeft="10dp"
-                        android:onClick="onDayInfoItem"
-                        android:gravity="center_vertical"
-                        android:text="Arzttermin eintragen"
-                        android:textColor="#000000"
-                        android:layout_weight="8">
-                </TextView>
-                <ImageView
-                        android:layout_width="0dp"
+                    android:weightSum="10" >
+
+                    <LinearLayout
+                        android:layout_width="260dp"
+                        android:layout_height="wrap_content" >
+
+                        <TextView
+                            android:id="@+id/arzttermin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="8"
+                            android:gravity="center_vertical"
+                            android:onClick="onDayInfoItem"
+                            android:text="Arzttermin eintragen"
+                            android:textColor="#000000" >
+                        </TextView>
+                        <TextView
+                            android:id="@+id/arzttermin_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="1.40"
+                            android:gravity="center_vertical"
+                            android:onClick="onDayInfoItem"
+                            android:text=""
+                            android:textColor="#000000" >
+                        </TextView>
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
                         android:layout_height="15dp"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="2"
-                        android:src="@drawable/arrow">
-                </ImageView>
+                        android:src="@drawable/arrow" >
+                    </ImageView>
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+
             <EditText
-                android:padding="10dp"
                 android:id="@+id/edittext"
                 android:layout_width="fill_parent"
                 android:layout_height="150dp"
@@ -211,9 +258,11 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:background="@drawable/note"
+                android:padding="10dp"
                 android:text="@string/heir_kannst_du_deine_notiz_eingeben_"
-                android:textColor="#000000">
+                android:textColor="#000000" >
             </EditText>
-    </RelativeLayout>
+        </RelativeLayout>
     </ScrollView>
+
 </LinearLayout>

@@ -7,16 +7,25 @@ import java.util.Date;
 import java.util.List;
 
 public class DayNote {
-	private static final String DATE_FORMAT = "dd-MMM-yyyy";
+	private static final String DATE_FORMAT = "dd-mmm-yyyy";
 	private Long id;
 	private String note;
 	private String menstruation;
 	private String stimmungs;
 	private String symptoms;
-	private Date date;
+	private String date;
 	private String begin_or_end_pille_date;
 	private String arzttermin;
 	private int month;
+	private String isIntim;
+
+	public String getIsIntim() {
+		return isIntim;
+	}
+
+	public void setIsIntim(String isIntim) {
+		this.isIntim = isIntim;
+	}
 
 	public String getNote() {
 		return note;
@@ -110,12 +119,12 @@ public class DayNote {
 		return null;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
 	public void setDate(String date) {
-		this.date = convertStringDateToDateObj(date);
+		this.date = date;
 	}
 
 	

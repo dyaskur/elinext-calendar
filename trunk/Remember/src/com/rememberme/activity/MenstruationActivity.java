@@ -1,10 +1,10 @@
 package com.rememberme.activity;
 
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
 
@@ -21,6 +21,7 @@ public class MenstruationActivity extends BaseActivity {
 	public final static String[] ITEMS = { "leicht", "mittel", "stark" };
 	private ListView view;
 	private String menstruation;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.stimmung_layout);
@@ -42,10 +43,11 @@ public class MenstruationActivity extends BaseActivity {
 				if (cView.isSelected()) {
 					cView.setSelected(false);
 					cView.setCheckMarkDrawable(R.drawable.btn_check_off);
+
 				} else {
 					CheckedTextView cViewTemp;
 					for (int count = 0; count < view.getChildCount(); count++) {
-						v = view.getChildAt(i);
+						v = view.getChildAt(count);
 						cViewTemp = (CheckedTextView) v
 								.findViewById(R.id.menstr_item_name);
 						cViewTemp.setSelected(false);
@@ -54,28 +56,30 @@ public class MenstruationActivity extends BaseActivity {
 					}
 					cView.setSelected(true);
 					cView.setCheckMarkDrawable(R.drawable.btn_check_on);
+
 				}
 			}
 		});
 	}
-	
+
 	@Override
-    public void onBackPressed () {
-    	CheckedTextView cView;
-    	View v;
-    	for (int i=0;i<view.getChildCount();i++){
+	public void onBackPressed() {
+		CheckedTextView cView;
+		View v;
+		for (int i = 0; i < view.getChildCount(); i++) {
 			v = view.getChildAt(i);
 			cView = (CheckedTextView) v.findViewById(R.id.menstr_item_name);
 
-    		if (cView.isSelected()){
-    			menstruation=cView.getText().toString();
-    		}
-    	}
-    	
-    	
-    
- 
-    	
-    	finish();
-    }
+			if (cView.isSelected()) {
+				menstruation = cView.getText().toString();
+			}
+		}
+
+		SharedPreferences.Editor editor = getSharedPreferences(
+				DayActivity.PREFERENCES, 0).edit();
+		editor.putString(DayActivity.MENSTRUATION, menstruation);
+		editor.commit();
+		
+		finish();
+	}
 }
