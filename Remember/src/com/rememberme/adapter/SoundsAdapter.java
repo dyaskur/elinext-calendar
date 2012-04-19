@@ -2,7 +2,6 @@ package com.rememberme.adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.provider.UserDictionary.Words;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

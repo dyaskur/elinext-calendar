@@ -1,12 +1,13 @@
 package com.rememberme.activity;
 
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
+
 import com.rememberme.R;
-import com.rememberme.adapter.ItemAdapter;
 import com.rememberme.adapter.MenstrItemAdapter;
 import com.rememberme.entity.DayNote;
 import com.rememberme.sqlite.DayNoteDataSource;

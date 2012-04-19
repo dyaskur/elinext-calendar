@@ -1,13 +1,13 @@
 package com.rememberme.activity;
 
-import com.rememberme.R;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ToggleButton;
+
+import com.rememberme.R;
 
 public class PasswordChangeActivity extends Activity {
 	public static final String AUTH_REQURED = "auth_requred";
