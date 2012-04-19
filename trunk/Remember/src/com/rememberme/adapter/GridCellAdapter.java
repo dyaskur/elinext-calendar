@@ -21,7 +21,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.rememberme.R;
-import com.rememberme.activity.BaseActivity;
 import com.rememberme.activity.MainCalendarActivity;
 import com.rememberme.entity.DayNote;
 import com.rememberme.sqlite.DayNoteDataSource;
@@ -53,6 +52,7 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 			"dd-MMM-yyyy");
 	private DayNoteDataSource mDayNoteDataSource;
 	private DayNoteLoadAction mAction;
+	private View lastSelectedCell;
 
 	// Days in Current Month
 	public GridCellAdapter(Context context, int textViewResourceId, int month,
@@ -292,9 +292,18 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 	}
 
 	public void onClick(View view) {
+
+		if (lastSelectedCell == null) {
+			lastSelectedCell = view;
+		} else {
+			lastSelectedCell.setSelected(false);
+			lastSelectedCell = view;
+		}
+
 		String date_month_year = (String) view.getTag();
-		view.setFocusableInTouchMode(true);
+		view.setPressed(true);
 		view.setSelected(true);
+
 		try {
 			Date parsedDate = dateFormatter.parse(date_month_year);
 			Log.d(tag, "Parsed Date: " + parsedDate.toString());
@@ -302,7 +311,7 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 			mDayNoteDataSource.open();
 			DayNote dayNote = mDayNoteDataSource
 					.getDayNoteByDate(date_month_year);
-			dayNote.setDate(date_month_year);
+
 			MainCalendarActivity.day_month_year = date_month_year;
 			mDayNoteDataSource.close();
 			mAction.setSelectedDayNote(dayNote);
