@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 public class DayNote {
-	private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+	private static final String DATE_FORMAT = "dd-MMM-yyyy";
 	private Long id;
 	private String note;
 	private String menstruation;
