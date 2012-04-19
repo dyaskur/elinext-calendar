@@ -17,6 +17,7 @@ import com.rememberme.R;
  * <p>
  * When the alarm goes off, we show a <i>Toast</i>, a quick message.
  */
+//-----------------------------------------
 public class AlarmReciver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
