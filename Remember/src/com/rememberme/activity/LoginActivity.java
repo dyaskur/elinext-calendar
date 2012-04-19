@@ -1,12 +1,17 @@
 package com.rememberme.activity;
 
+import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
 import com.rememberme.R;
+import com.rememberme.entity.DayNote;
+import com.rememberme.sqlite.DayNoteDataSource;
 
 /**
  * Created with IntelliJ IDEA.
@@ -36,6 +41,17 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.main);
         super.onCreate(savedInstanceState);
         linearLayout = (LinearLayout) findViewById(R.id.edit_set);
+        
+        DayNoteDataSource dataSource = new DayNoteDataSource(this);
+        dataSource.open();
+        DayNote dayNote = new DayNote();
+        dayNote.setDate("20-Mar-2012");
+        dayNote.setNote("Ololo");
+        
+        dataSource.saveOrupdateDayNote(dayNote);
+        List<DayNote> list = dataSource.getAllDayNotes();
+        dataSource.close();
+        
     }
 
 

@@ -17,9 +17,11 @@ import android.widget.Toast;
 
 import com.rememberme.R;
 import com.rememberme.adapter.GridCellAdapter;
+import com.rememberme.entity.DayNote;
+import com.rememberme.utils.DayNoteLoadAction;
 
 public class MainCalendarActivity extends BaseActivity implements
-		OnClickListener {
+		OnClickListener, DayNoteLoadAction {
 	private static final String tag = "SimpleCalendarViewActivity";
 
 	private Button currentMonth;
@@ -68,7 +70,7 @@ public class MainCalendarActivity extends BaseActivity implements
 
 		// Initialised
 		adapter = new GridCellAdapter(getApplicationContext(),
-				R.id.calendar_day_gridcell, month, year);
+				R.id.calendar_day_gridcell, month, year, this);
 		adapter.notifyDataSetChanged();
 		calendarView.setAdapter(adapter);
 	}
@@ -80,7 +82,7 @@ public class MainCalendarActivity extends BaseActivity implements
 	 */
 	private void setGridCellAdapterToDate(int month, int year) {
 		adapter = new GridCellAdapter(getApplicationContext(),
-				R.id.calendar_day_gridcell, month, year);
+				R.id.calendar_day_gridcell, month, year, this);
 		_calendar.set(year, month - 1, _calendar.get(Calendar.DAY_OF_MONTH));
 		currentMonth.setText(DateFormat.format(dateTemplate,
 				_calendar.getTime()));
@@ -143,6 +145,12 @@ public class MainCalendarActivity extends BaseActivity implements
 	public void onDestroy() {
 		Log.d(tag, "Destroying View ...");
 		super.onDestroy();
+	}
+
+	@Override
+	public void setDayNote(DayNote dayNote) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
