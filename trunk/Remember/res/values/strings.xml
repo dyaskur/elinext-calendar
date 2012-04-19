@@ -8,7 +8,7 @@
     <string name="alarm_scheduled">Alarm Scheduled</string>
     <string name="miutes">Minutes</string>
     <string name="hour">Hour</string>
-    <string name="arzttermin_">Arzttermin:</string>
+    <string name="arzttermin_">Arzttermin: </string>
     <string name="menstruation_">"Menstruation: "</string>
     <string name="stimmung_">"Stimmung: "</string>
     <string name="symptome_">"Symptome: "</string>

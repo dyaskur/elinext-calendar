@@ -2,12 +2,10 @@ package com.rememberme.activity;
 
 import java.util.List;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.rememberme.R;
 import com.rememberme.entity.DayNote;
@@ -38,6 +36,34 @@ public class LoginActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		linearLayout = (LinearLayout) findViewById(R.id.edit_set);
 
+		DayNoteDataSource dataSource = new DayNoteDataSource(this);
+		dataSource.open();
+		
+		DayNote note = new DayNote();
+		note.setNote("note");
+		note.setMenstruation("Ololo");
+		note.setDate("20-Apr-2012");
+		note.setSymptoms("1/2/3/4");
+		note.setStimmungs("a/b/c/d");
+		note.setArzttermin("azermine");
+		note.setBegin_or_end_pille_date("begin");
+		
+		DayNote note2 = new DayNote();
+		note2.setNote("note2");
+		note2.setMenstruation("Ololo2");
+		note2.setDate("21-Apr-2012");
+		note2.setSymptoms("12/22/32/42");
+		note2.setStimmungs("a2/b2/c2/d2");
+		note2.setArzttermin("azermine 2");
+		note2.setBegin_or_end_pille_date("begin 2");
+		
+		dataSource.saveOrupdateDayNote(note2);
+		dataSource.saveOrupdateDayNote(note);
+		
+		List<DayNote> list = dataSource.getAllDayNotes();
+		
+		dataSource.close();
+		
 	}
 
 	public void onClickDescription(View v) {
