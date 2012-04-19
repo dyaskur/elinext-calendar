@@ -125,8 +125,7 @@ public class MainCalendarActivity extends BaseActivity implements
 			startActivity(intent);
 			break;
 		case R.id.key_btn:
-			Toast.makeText(MainCalendarActivity.this, "Key button pressed!",
-					Toast.LENGTH_SHORT).show();
+			startActivity(new Intent(this, PasswordChangeActivity.class));
 			break;
 		case R.id.alarm_btn:
 			intent = new Intent(MainCalendarActivity.this, AlarmActivity.class);
@@ -148,10 +147,15 @@ public class MainCalendarActivity extends BaseActivity implements
 		super.onDestroy();
 	}
 
-	@Override
 	public void setSelectedDayNote(DayNote dayNote) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void setDayNote(DayNote dayNote) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
