@@ -60,11 +60,11 @@ public class AlarmActivity extends BaseActivity {
 	private TextView mBigClock;
 	private final static int TIME_RESULT = 10;
 	private static MediaPlayer mMediaPlayer;
-	private Integer hoursOfDay;
+	private int hoursOfDay;
 	private LinearLayout mTime;
 	private LinearLayout mSound;
 
-	private Integer minute;
+	private int minute;
 	private int mCurrentSound;
 
 	@Override
