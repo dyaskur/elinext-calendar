@@ -148,7 +148,7 @@ public class MainCalendarActivity extends BaseActivity implements
 	}
 
 	public void setSelectedDayNote(DayNote dayNote) {
-		// TODO Auto-generated method stub
+		BaseActivity.setDayNote(dayNote);
 
 	}
 

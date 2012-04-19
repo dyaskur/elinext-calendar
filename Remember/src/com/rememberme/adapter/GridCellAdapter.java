@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.rememberme.R;
+import com.rememberme.activity.BaseActivity;
 import com.rememberme.entity.DayNote;
 import com.rememberme.sqlite.DayNoteDataSource;
 import com.rememberme.utils.DayNoteLoadAction;
@@ -291,7 +292,8 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 
 	public void onClick(View view) {
 		String date_month_year = (String) view.getTag();
-
+		view.setFocusableInTouchMode(true);
+		view.setSelected(true);
 		try {
 			Date parsedDate = dateFormatter.parse(date_month_year);
 			Log.d(tag, "Parsed Date: " + parsedDate.toString());
@@ -299,6 +301,8 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 			mDayNoteDataSource.open();
 			DayNote dayNote = mDayNoteDataSource
 					.getDayNoteByDate(date_month_year);
+			dayNote.setDate(date_month_year);
+
 			mDayNoteDataSource.close();
 			mAction.setSelectedDayNote(dayNote);
 

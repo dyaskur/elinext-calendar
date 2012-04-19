@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="50dp"
+    android:layout_height="50dp"
     android:background="@drawable/calendar_button_selector"
     android:orientation="vertical" >
 
@@ -11,6 +11,8 @@
         android:layout_height="50dp"
         android:layout_gravity="center"
         android:background="@drawable/calendar_button_selector"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#FFFFFF" >
     </Button>
@@ -20,7 +22,54 @@
         style="@style/calendar_event_style"
         android:layout_width="10dip"
         android:layout_height="10dip"
-        android:layout_gravity="right" >
+        android:layout_gravity="right"
+        android:layout_marginRight="5dp" >
     </TextView>
+
+    <ImageView
+        android:id="@+id/plus_icon"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/arzttermin"
+        android:contentDescription="@string/content_descr"
+        android:visibility="invisible" >
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/notes_icon"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/notiz"
+        android:contentDescription="@string/content_descr"
+        android:visibility="invisible" >
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/intim_icon"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/intim"
+        android:contentDescription="@string/content_descr"
+        android:visibility="invisible" >
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/pille_star_icon"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/pille_start"
+        android:contentDescription="@string/content_descr"
+        android:visibility="invisible" >
+    </ImageView>
 
 </RelativeLayout>
