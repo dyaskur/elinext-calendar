@@ -74,6 +74,11 @@
                 android:name=".activity.DayActivity"
                 android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
         </activity>
+      
+        <activity
+                android:name=".activity.PasswordChangeActivity"
+                android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
+        </activity>
 
         <receiver android:name=".broadcast.AlarmReciver" >
             <intent-filter>
