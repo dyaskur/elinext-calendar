@@ -1,20 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@drawable/bg2"
     android:orientation="vertical" >
 
     <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="180dp"
         android:background="@drawable/pillenwecker_bg" >
+
+        <TextView
+            android:id="@+id/descr"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:text="Bitte hier die Uhrzeit für Deinen täglichen Pillenwecker eingeben: "
+            android:textColor="#ffffff"
+            android:textSize="16dp" >
+        </TextView>
     </LinearLayout>
 
     <TimePicker
         android:id="@+id/timepicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/linearLayout1"
+        android:layout_marginRight="23dp"
+        android:layout_marginTop="98dp"
+        android:gravity="center" />
+
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" >
-    </TimePicker>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="165dp" >
 
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Für eine ordnungsgemäße Funtion muss die App innerhalb von 30 Tagen wieder geöffnet werden!"
+            android:textColor="#ffffff"
+            android:textSize="10dp" />
+    </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>
