@@ -8,6 +8,8 @@ import com.rememberme.R;
 
 public class SplashScreenActivity extends BaseActivity {
 
+	private static final int REQUEST_AUTH = 0;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -24,10 +26,7 @@ public class SplashScreenActivity extends BaseActivity {
 
 				try {
 					Thread.sleep(3000);
-					Intent intent = new Intent(SplashScreenActivity.this,
-							LoginActivity.class);
-					startActivity(intent);
-					finish();
+					requestAuth();
 				} catch (InterruptedException e) {
 					// Do nothing;
 				}
@@ -47,6 +46,23 @@ public class SplashScreenActivity extends BaseActivity {
 	public void onBackPressed() {
 
 		// DO Nothing;
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == REQUEST_AUTH){
+			if(resultCode == RESULT_OK){
+				startActivity(new Intent(this, MainCalendarActivity.class));
+			} else {
+				requestAuth();
+			}
+		}
+	}
+
+	protected void requestAuth() {
+		Intent intent = new Intent(SplashScreenActivity.this,
+				LoginActivity.class);
+		startActivityForResult(intent, REQUEST_AUTH);
 	}
 
 }
