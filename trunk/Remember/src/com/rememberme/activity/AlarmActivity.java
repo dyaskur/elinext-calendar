@@ -15,7 +15,6 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.rememberme.R;
-import com.rememberme.adapter.SoundsAdapter;
 import com.rememberme.broadcast.AlarmReciver;
 
 /**

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical">
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:weightSum="10"
+            android:background="@drawable/dark_back">
+        <TextView
+                android:id="@+id/date"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:text="17 april 2012"
+                android:textSize="15sp"
+                android:textColor="#FFFFFF"
+                android:layout_weight="4"/>
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="4"
+                android:text="Arzttermin"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp">
+        </TextView>
+    </LinearLayout>
+    <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/dark_back">
+        <LinearLayout
+                android:id="@+id/pillene"
+                android:layout_width="fill_parent"
+                android:layout_height="70dp"
+                android:orientation="horizontal"
+                android:weightSum="10"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/white_bg">
+            <TextView
+                    android:id="@+id/date"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:gravity="center_vertical"
+                    android:layout_marginLeft="10dp"
+                    android:text="Arzttermin"
+                    android:textSize="16sp"
+                    android:textColor="#000000"
+                    android:layout_weight="6"/>
+            <ToggleButton
+                    android:id="@+id/toggleButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:text="ToggleButton" >
+            </ToggleButton>
+        </LinearLayout>
+        <TextView
+                android:id="@+id/desc"
+                android:layout_below="@id/pillene"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="50dp"
+                android:text="Bitte trage hier die Uhtzeit Deines Arzttermins am 17 april 2012 y.ein"></TextView>
+        <TimePicker
+                android:id="@+id/timepicker"
+                android:layout_below="@id/desc"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_alignParentBottom="true">
+        </TimePicker>
+    </RelativeLayout>
+
+</LinearLayout>

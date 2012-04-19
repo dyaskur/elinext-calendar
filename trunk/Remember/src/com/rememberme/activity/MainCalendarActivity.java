@@ -1,17 +1,22 @@
 package com.rememberme.activity;
 
+import java.util.Calendar;
+import java.util.Locale;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
+
 import com.rememberme.R;
 import com.rememberme.adapter.GridCellAdapter;
-
-import java.util.Calendar;
-import java.util.Locale;
 
 public class MainCalendarActivity extends BaseActivity implements
 		OnClickListener {
@@ -55,8 +60,8 @@ public class MainCalendarActivity extends BaseActivity implements
 
 			public void onClick(View v) {
 
-				Toast.makeText(MainCalendarActivity.this, "Info block clicked",
-						Toast.LENGTH_SHORT).show();
+				Intent intent = new Intent(MainCalendarActivity.this, DayActivity.class);
+				startActivity(intent);
 
 			}
 		});

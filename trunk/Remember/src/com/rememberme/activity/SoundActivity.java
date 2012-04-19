@@ -1,10 +1,7 @@
 package com.rememberme.activity;
 
-import android.content.Intent;
+
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.rememberme.R;
@@ -18,24 +15,14 @@ public class SoundActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.sounds_layout);
+		super.onCreate(savedInstanceState);
 		SoundsAdapter adapter = new SoundsAdapter(SoundActivity.this,
 				R.layout.sound_list_element, R.id.sound_name, SOUNDS);
 
 		ListView view = (ListView) findViewById(R.id.list_of_sounds);
 		view.setAdapter(adapter);
-		view.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1,
-					int position, long arg3) {
-				Intent intent = new Intent();
-				setResult(position, intent);
-				finish();
-
-			}
-		});
 		
-		super.onCreate(savedInstanceState);
+		
 	}
 
 	@Override
