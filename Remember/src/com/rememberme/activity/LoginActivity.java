@@ -2,6 +2,7 @@ package com.rememberme.activity;
 
 import java.util.List;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -16,6 +17,8 @@ import com.rememberme.sqlite.DayNoteDataSource;
  * this template use File | Settings | File Templates.
  */
 public class LoginActivity extends BaseActivity {
+	public static final String MODE_AUTH = "mode_auth";
+	private static final String PASSWORD_IN_PREFS = "password";
 	private String password = "";
 	private static int position = 0;
 	private static final String ONE = "1";
@@ -28,7 +31,9 @@ public class LoginActivity extends BaseActivity {
 	private static final String EIGHT = "8";
 	private static final String NINE = "9";
 	private static final String ZERO = "0";
+	protected static final String PASS_WAS_SETTED = "pass_was_setted";
 	private LinearLayout linearLayout;
+	private SharedPreferences mPreferences;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -173,19 +178,42 @@ public class LoginActivity extends BaseActivity {
 		}
 		if (password.length() == 4) {
 
-			boolean isModeAuth = getIntent().getBooleanExtra("mode_auth", true);
+			boolean isModeAuth = getIntent().getBooleanExtra(MODE_AUTH, true);
 
 			if (isModeAuth) {
 
 				modeAuth();
+			} else {
+				modeSetPass();
 			}
 
 		}
 	}
 
+	private void modeSetPass() {
+		SharedPreferences.Editor editor = mPreferences.edit();
+		editor.putString(PASSWORD_IN_PREFS, password);
+		editor.putBoolean(PASS_WAS_SETTED, true);
+		editor.putBoolean(PasswordChangeActivity.AUTH_REQURED, true);
+		editor.commit();
+	
+		
+		finish();
+	}
+
+	@Override
+	protected void onResume() {
+
+		super.onResume();
+		mPreferences = getSharedPreferences(
+				PasswordChangeActivity.PREF_AUTH, MODE_PRIVATE);
+		position = 0;
+	}
+
 	protected void modeAuth() {
 		EditText editText;
-		if (password.equals("1111")) {
+		String curPass = mPreferences.getString(PASSWORD_IN_PREFS, "no");
+		if (password.equals(curPass)) {
 			setResult(RESULT_OK);
 			finish();
 		} else {
@@ -194,10 +222,11 @@ public class LoginActivity extends BaseActivity {
 				editText = (EditText) linearLayout.getChildAt(i);
 				editText.setText("");
 			}
+			password = "";
+			position = 0;
+			linearLayout.getChildAt(position).requestFocus();
+			setResult(0);
 		}
-		password = "";
-		position = 0;
-		linearLayout.getChildAt(position).requestFocus();
-		setResult(0);
+		
 	}
 }
