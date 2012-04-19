@@ -9,6 +9,7 @@ import com.rememberme.R;
 public class SplashScreenActivity extends BaseActivity {
 
 	private static final int REQUEST_AUTH = 0;
+	private static final String FIRST_LAUNCH = "if_first_launch";
 	private SharedPreferences mPreferences;
 
 	@Override
@@ -34,15 +35,29 @@ public class SplashScreenActivity extends BaseActivity {
 					boolean isRequestAuth = mPreferences.getBoolean(
 							PasswordChangeActivity.AUTH_REQURED, false);
 
-					auth(isRequestAuth);
+					boolean launch = getSharedPreferences(FIRST_LAUNCH, 0)
+							.getBoolean(FIRST_LAUNCH, false);
+
+					if (launch == false) {
+						SharedPreferences.Editor editor = getSharedPreferences(
+								FIRST_LAUNCH, 0).edit();
+						editor.putBoolean(FIRST_LAUNCH, true);
+						editor.commit();
+
+						startActivity(new Intent(SplashScreenActivity.this,
+								FirstLaunch.class));
+						finish();
+
+					} else {
+						auth(isRequestAuth);
+						
+					}
 
 				} catch (InterruptedException e) {
 					// Do nothing;
 				}
 
 			}
-
-			
 
 			private void auth(boolean isRequestAuth) {
 				if (isRequestAuth) {
@@ -76,6 +91,7 @@ public class SplashScreenActivity extends BaseActivity {
 			if (resultCode == RESULT_OK) {
 				startActivity(new Intent(this, MainCalendarActivity.class));
 				finish();
+
 			} else {
 				requestAuth();
 			}

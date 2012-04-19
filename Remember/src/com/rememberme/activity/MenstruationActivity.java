@@ -1,6 +1,7 @@
 package com.rememberme.activity;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -71,12 +72,10 @@ public class MenstruationActivity extends BaseActivity {
     		}
     	}
     	
-    	DayNote dayNote=getDayNote();
-    	dayNote.setMenstruation(menstruation);
-    	DayNoteDataSource dataSource= new DayNoteDataSource(this);
-    	dataSource.open();
-    	dataSource.saveOrupdateDayNote(dayNote);
-    	dataSource.close();
+    	
+    
+ 
+    	
     	finish();
     }
 }

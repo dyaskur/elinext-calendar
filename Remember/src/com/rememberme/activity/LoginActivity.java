@@ -41,7 +41,7 @@ public class LoginActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		linearLayout = (LinearLayout) findViewById(R.id.edit_set);
 
-		DayNoteDataSource dataSource = new DayNoteDataSource(this);
+		/*DayNoteDataSource dataSource = new DayNoteDataSource(this);
 		dataSource.open();
 		
 		DayNote note = new DayNote();
@@ -67,7 +67,7 @@ public class LoginActivity extends BaseActivity {
 		
 		List<DayNote> list = dataSource.getAllDayNotes();
 		
-		dataSource.close();
+		dataSource.close();*/
 		
 	}
 
