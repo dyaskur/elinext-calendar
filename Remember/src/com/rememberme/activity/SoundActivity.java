@@ -1,13 +1,11 @@
 package com.rememberme.activity;
 
-import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.CheckedTextView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.CheckedTextView;
 import android.widget.ListView;
 
 import com.rememberme.R;
@@ -17,6 +15,8 @@ public class SoundActivity extends BaseActivity {
 
 	public final static String[] SOUNDS = { "Disko Kitty", "Sonar",
 			"Softbells", "Electro Boogie", "Fanfare" };
+	public final static String CURRENT_SOUND = "current_sound";
+	private int mPosition;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +51,27 @@ public class SoundActivity extends BaseActivity {
 
 					cView.setSelected(true);
 					cView.setCheckMarkDrawable(R.drawable.btn_check_on);
+					mPosition = position;
 				}
 			}
 
 		});
 
+	}
+
+	@Override
+	public void onBackPressed() {
+		saveSelectedSound(mPosition);
+
+		super.onBackPressed();
+	}
+
+	private void saveSelectedSound(int mPosition) {
+		SharedPreferences sharedPreferences = getSharedPreferences(REMEMBERME,
+				MODE_WORLD_WRITEABLE);
+		SharedPreferences.Editor editor = sharedPreferences.edit();
+		editor.putInt(CURRENT_SOUND, mPosition);
+		editor.commit();
 	}
 
 	@Override
