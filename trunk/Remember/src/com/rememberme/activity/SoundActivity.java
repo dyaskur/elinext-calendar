@@ -52,17 +52,20 @@ public class SoundActivity extends BaseActivity {
 					cView.setSelected(true);
 					cView.setCheckMarkDrawable(R.drawable.btn_check_on);
 					mPosition = position;
+					AlarmActivity.stopPlaySound();
+					AlarmActivity.playSound(mPosition, SoundActivity.this);
+
 				}
 			}
 
 		});
-		
+
 	}
 
 	@Override
 	public void onBackPressed() {
 		saveSelectedSound(mPosition);
-
+		AlarmActivity.stopPlaySound();
 		super.onBackPressed();
 	}
 

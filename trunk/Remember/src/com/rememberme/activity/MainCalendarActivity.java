@@ -62,7 +62,8 @@ public class MainCalendarActivity extends BaseActivity implements
 
 			public void onClick(View v) {
 
-				Intent intent = new Intent(MainCalendarActivity.this, DayActivity.class);
+				Intent intent = new Intent(MainCalendarActivity.this,
+						DayActivity.class);
 				startActivity(intent);
 
 			}
@@ -148,9 +149,9 @@ public class MainCalendarActivity extends BaseActivity implements
 	}
 
 	@Override
-	public void setDayNote(DayNote dayNote) {
+	public void setSelectedDayNote(DayNote dayNote) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

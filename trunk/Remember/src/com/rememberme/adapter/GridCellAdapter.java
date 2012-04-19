@@ -1,6 +1,5 @@
 package com.rememberme.adapter;
 
-import java.security.KeyStore.LoadStoreParameter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -95,7 +94,6 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 	public String getItem(int position) {
 		return list.get(position);
 	}
-
 
 	public int getCount() {
 		return list.size();
@@ -241,7 +239,6 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 		return map;
 	}
 
-
 	public long getItemId(int position) {
 		return position;
 	}
@@ -292,20 +289,18 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 		return row;
 	}
 
-
 	public void onClick(View view) {
 		String date_month_year = (String) view.getTag();
 
 		try {
 			Date parsedDate = dateFormatter.parse(date_month_year);
 			Log.d(tag, "Parsed Date: " + parsedDate.toString());
-			
+
 			mDayNoteDataSource.open();
-			DayNote dayNote= mDayNoteDataSource.getDayNoteByDate(date_month_year);
+			DayNote dayNote = mDayNoteDataSource
+					.getDayNoteByDate(date_month_year);
 			mDayNoteDataSource.close();
-			mAction.setDayNote(dayNote);
-			
-			
+			mAction.setSelectedDayNote(dayNote);
 
 		} catch (ParseException e) {
 			e.printStackTrace();
