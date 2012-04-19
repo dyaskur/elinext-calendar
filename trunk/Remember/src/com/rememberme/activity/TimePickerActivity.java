@@ -1,7 +1,7 @@
 package com.rememberme.activity;
 
-
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,7 +18,6 @@ public class TimePickerActivity extends BaseActivity {
 	private final int response = 1;
 	public final static String HOURS_OF_DAY = "hours_of_day";
 	public final static String MINUTE = "minute";
-	private Button okButton;
 	private int mHoursOfDay;
 	private int mMinute;
 
@@ -38,17 +37,21 @@ public class TimePickerActivity extends BaseActivity {
 			}
 		});
 		super.onCreate(savedInstanceState);
-		okButton = (Button) findViewById(R.id.ok);
-		okButton.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent();
-				intent.putExtra(HOURS_OF_DAY, mHoursOfDay);
-				intent.putExtra(MINUTE, mMinute);
-				setResult(response, intent);
-				finish();
-			}
-		});
+	}
+
+	@Override
+	public void onBackPressed() {
+		saveSharedAlarmTime();
+		super.onBackPressed();
+	}
+
+	private void saveSharedAlarmTime() {
+		SharedPreferences sharedPreferences = getSharedPreferences(REMEMBERME,
+				MODE_WORLD_WRITEABLE);
+		SharedPreferences.Editor editor = sharedPreferences.edit();
+		editor.putInt(HOURS_OF_DAY, mHoursOfDay);
+		editor.putInt(MINUTE, mMinute);
+		editor.commit();
 	}
 }

@@ -1,18 +1,14 @@
 package com.rememberme.activity;
 
-import java.util.zip.Inflater;
-
 import android.app.Activity;
-import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckedTextView;
-import android.widget.ListView;
 
 import com.rememberme.R;
 
 public class BaseActivity extends Activity {
+
+	public final static String REMEMBERME = "remember_me";
 
 	public void toggle(View v) {
 		CheckedTextView cView = (CheckedTextView) v

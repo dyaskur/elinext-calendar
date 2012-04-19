@@ -4,8 +4,12 @@ import java.util.Calendar;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CompoundButton;
@@ -46,15 +50,18 @@ import com.rememberme.broadcast.AlarmReciver;
  * </table>
  */
 public class AlarmActivity extends BaseActivity {
+
+	private final static String TAG = "AlarmActivity";
 	private Toast mToast;
 	private ToggleButton mToggleButton;
 	private TextView mTimeValue;
 	private TextView mSoundValue;
 	private final static int TIME_RESULT = 10;
-	private final static int SOUND_RESULT = 20;
+	private static MediaPlayer mMediaPlayer;
 	private Integer hoursOfDay;
 
 	private Integer minute;
+	private int mCurrentSound;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,11 +69,6 @@ public class AlarmActivity extends BaseActivity {
 
 		setContentView(R.layout.alarm_layout);
 
-		// Watch for button clicks.
-		/*
-		 * Button button = (Button) findViewById(R.id.one_shot);
-		 * button.setOnClickListener(mOneShotListener);
-		 */
 		mToggleButton = (ToggleButton) findViewById(R.id.toggleButton);
 		mToggleButton.setOnCheckedChangeListener(OnToogleButtonClick());
 		mTimeValue = (TextView) findViewById(R.id.time_value);
@@ -79,6 +81,9 @@ public class AlarmActivity extends BaseActivity {
 	private OnCheckedChangeListener OnToogleButtonClick() {
 		return new OnCheckedChangeListener() {
 
+			private AlarmManager am;
+			private PendingIntent sender;
+
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
@@ -86,8 +91,10 @@ public class AlarmActivity extends BaseActivity {
 
 					Intent intent = new Intent(AlarmActivity.this,
 							AlarmReciver.class);
-					PendingIntent sender = PendingIntent.getBroadcast(
-							AlarmActivity.this, 0, intent, 0);
+
+					intent.putExtra(SoundActivity.CURRENT_SOUND, mCurrentSound);
+					sender = PendingIntent.getBroadcast(AlarmActivity.this, 0,
+							intent, 0);
 
 					Calendar calendar = Calendar.getInstance();
 					calendar.setTimeInMillis(System.currentTimeMillis());
@@ -99,7 +106,7 @@ public class AlarmActivity extends BaseActivity {
 					calendar.add(Calendar.SECOND, mAlarmTime);
 
 					// Schedule the alarm!
-					AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+					am = (AlarmManager) getSystemService(ALARM_SERVICE);
 					am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
 							sender);
 
@@ -111,7 +118,9 @@ public class AlarmActivity extends BaseActivity {
 							R.string.alarm_scheduled, Toast.LENGTH_LONG);
 					mToast.show();
 				} else {
-
+					if (am != null) {
+						am.cancel(sender);
+					}
 				}
 
 			}
@@ -124,7 +133,7 @@ public class AlarmActivity extends BaseActivity {
 			public void onClick(View v) {
 				Intent intent = new Intent(AlarmActivity.this,
 						SoundActivity.class);
-				startActivityForResult(intent, SOUND_RESULT);
+				startActivity(intent);
 
 			}
 		};
@@ -136,20 +145,26 @@ public class AlarmActivity extends BaseActivity {
 			public void onClick(View v) {
 				Intent intent = new Intent(AlarmActivity.this,
 						TimePickerActivity.class);
-				startActivityForResult(intent, TIME_RESULT);
+				startActivity(intent);
 
 			}
 		};
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	protected void onResume() {
+		SharedPreferences sharedPreferences = getSharedPreferences(REMEMBERME,
+				MODE_WORLD_READABLE);
 
-		if (requestCode == TIME_RESULT) {
-			hoursOfDay = (Integer) data
-					.getSerializableExtra(TimePickerActivity.HOURS_OF_DAY);
-			minute = (Integer) data
-					.getSerializableExtra(TimePickerActivity.MINUTE);
+		if (sharedPreferences.contains(SoundActivity.CURRENT_SOUND)) {
+			mCurrentSound = sharedPreferences.getInt(
+					SoundActivity.CURRENT_SOUND, 1);
+			mSoundValue.setText(SoundActivity.SOUNDS[mCurrentSound]);
+		}
+		if (sharedPreferences.contains(TimePickerActivity.HOURS_OF_DAY)) {
+			hoursOfDay = sharedPreferences.getInt(
+					TimePickerActivity.HOURS_OF_DAY, 1);
+			minute = sharedPreferences.getInt(TimePickerActivity.MINUTE, 1);
 			String fixedMinute = "";
 			if (minute < 10) {
 				fixedMinute = "0" + minute;
@@ -158,10 +173,42 @@ public class AlarmActivity extends BaseActivity {
 			}
 			String alarmTime = hoursOfDay + " : " + fixedMinute;
 			mTimeValue.setText(alarmTime);
-		} else if (requestCode == SOUND_RESULT) {
-			mSoundValue.setText(SoundActivity.SOUNDS[resultCode]);
+		}
+		super.onResume();
+	}
+
+	public static void playSound(Integer soundId, Context context) {
+		try {
+			switch (soundId) {
+			case 0:
+				mMediaPlayer = MediaPlayer.create(context, R.raw.disco_kitty);
+				break;
+			case 1:
+				mMediaPlayer = MediaPlayer.create(context, R.raw.sonar);
+				break;
+			case 2:
+				mMediaPlayer = MediaPlayer.create(context, R.raw.soft_bells);
+				break;
+			case 3:
+				mMediaPlayer = MediaPlayer
+						.create(context, R.raw.electro_boogie);
+				break;
+			case 4:
+				mMediaPlayer = MediaPlayer.create(context, R.raw.fanfare);
+				break;
+			default:
+				break;
+			}
+
+			mMediaPlayer.start();
+
+		} catch (Exception e) {
+			Log.e(TAG, "error: " + e.getMessage(), e);
 		}
 
-		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	public static void stopPlaySound() {
+
 	}
 }
