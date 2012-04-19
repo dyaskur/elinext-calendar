@@ -80,8 +80,12 @@ public class DayNoteDataSource {
 				dayNote.getArzttermin());
 		values.put(DaySQLiteOpenHelper.COLUMN_MONTH, dayNote.getMonth());
 
-		int updated = database.update(DaySQLiteOpenHelper.TABLE_DAY_NOTES,
-				values, null, null);
+		int updated = database.update(
+				DaySQLiteOpenHelper.TABLE_DAY_NOTES,
+				values,
+				DaySQLiteOpenHelper.COLUMN_DATE + "='"
+						+ DayNote.converDateToString(dayNote.getDate()) + "'",
+				null);
 
 		if (updated == 0) {
 			createDayNote(dayNote);
@@ -148,13 +152,13 @@ public class DayNoteDataSource {
 		return dayNotes;
 	}
 
-	private DayNote cursorToDayNote(Cursor cursor) {
+	private DayNote cursorToDayNote(Cursor cursor) {		
 		DayNote dayNote = new DayNote();
 		dayNote.setId(cursor.getLong(0));
-		dayNote.setNote(cursor.getString(1));
-		dayNote.setMenstruation(cursor.getString(2));
-		dayNote.setSymptoms(cursor.getString(3));
-		dayNote.setStimmungs(cursor.getString(4));
+		dayNote.setNote(cursor.getString(4));
+		dayNote.setMenstruation(cursor.getString(1));
+		dayNote.setSymptoms(cursor.getString(2));
+		dayNote.setStimmungs(cursor.getString(3));
 		dayNote.setDate(cursor.getString(5));
 		dayNote.setBegin_or_end_pille_date(cursor.getString(6));
 		dayNote.setArzttermin(cursor.getString(7));
