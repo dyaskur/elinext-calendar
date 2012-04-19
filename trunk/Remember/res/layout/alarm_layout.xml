@@ -81,12 +81,20 @@
                 android:id="@+id/time_value"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
                 android:layout_weight="4"
                 android:gravity="right"
                 android:text="12:00"
                 android:textColor="#000000"
                 android:textSize="18dp" >
             </TextView>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/arrow"
+                android:contentDescription="@string/content_descr" >
+            </ImageView>
         </LinearLayout>
 
         <ImageView
@@ -123,12 +131,20 @@
                 android:id="@+id/sound_value"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
                 android:layout_weight="4"
                 android:gravity="right"
                 android:text="No sound"
                 android:textColor="#000000"
                 android:textSize="18dp" >
             </TextView>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/arrow"
+                android:contentDescription="@string/content_descr" >
+            </ImageView>
         </LinearLayout>
 
         <ImageView
