@@ -1,10 +1,8 @@
 package com.rememberme.adapter;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
@@ -49,7 +47,7 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 	private final HashMap eventsPerMonthMap;
 	private View layout;
 	private final SimpleDateFormat dateFormatter = new SimpleDateFormat(
-			"dd-MMM-yyyy");
+			"dd-mmm-yyyy");
 	private DayNoteDataSource mDayNoteDataSource;
 	private DayNoteLoadAction mAction;
 	private View lastSelectedCell;
@@ -303,22 +301,12 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 		String date_month_year = (String) view.getTag();
 		view.setPressed(true);
 		view.setSelected(true);
+		mDayNoteDataSource.open();
+		DayNote dayNote = mDayNoteDataSource.getDayNoteByDate(date_month_year);
+		MainCalendarActivity.day_month_year = date_month_year;
+		mDayNoteDataSource.close();
+		mAction.setSelectedDayNote(dayNote);
 
-		try {
-			Date parsedDate = dateFormatter.parse(date_month_year);
-			Log.d(tag, "Parsed Date: " + parsedDate.toString());
-
-			mDayNoteDataSource.open();
-			DayNote dayNote = mDayNoteDataSource
-					.getDayNoteByDate(date_month_year);
-
-			MainCalendarActivity.day_month_year = date_month_year;
-			mDayNoteDataSource.close();
-			mAction.setSelectedDayNote(dayNote);
-
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public int getCurrentDayOfMonth() {

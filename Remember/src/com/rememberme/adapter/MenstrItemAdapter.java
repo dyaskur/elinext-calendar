@@ -25,7 +25,6 @@ public class MenstrItemAdapter extends ArrayAdapter<String> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
         ViewGroup currentView = (ViewGroup) mInflater.inflate(R.layout.menstr_item, null);
         CheckedTextView mItem = (CheckedTextView) currentView.findViewById(R.id.menstr_item_name);
         mItem.setText(mItems[position]);

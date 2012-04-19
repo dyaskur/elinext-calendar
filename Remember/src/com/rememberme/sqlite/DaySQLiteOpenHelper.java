@@ -17,6 +17,7 @@ public class DaySQLiteOpenHelper extends SQLiteOpenHelper {
 	public static final String COLUMN_BEGIN_OR_END_PILLE_DATE = "pille_date";
 	public static final String COLUMN_ARZTTERMIN = "arzttermin";
 	public static final String COLUMN_MONTH = "month";
+	public static final String COLUMN_INTIM = "intim";
 
 	private static final String DATABASE_NAME = "day_notes.db";
 	private static final int DATABASE_VERSION = 1;
@@ -28,7 +29,7 @@ public class DaySQLiteOpenHelper extends SQLiteOpenHelper {
 			+ " text," + COLUMN_SYMPTOMS + " text," + COLUMN_STIMMUNGS
 			+ " text," + COLUMN_DAY_NOTE + " text," + COLUMN_DATE + " text,"
 			+ COLUMN_BEGIN_OR_END_PILLE_DATE + " text," + COLUMN_ARZTTERMIN
-			+ " text," + COLUMN_MONTH + " integer" + ");";
+			+ " text," + COLUMN_MONTH + " integer," + COLUMN_INTIM + " text" + ");";
 
 	public DaySQLiteOpenHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
