@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rememberme.R;
 import com.rememberme.activity.MainCalendarActivity;
@@ -37,6 +38,8 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 			"November", "December" };
 	private final int[] daysOfMonth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31,
 			30, 31 };
+	private final int[] daysOfMonthUnusual = { 31, 29, 31, 30, 31, 30, 31, 31,
+			30, 31, 30, 31 };
 	private final int month, year;
 	private int daysInMonth, prevMonthDays;
 	private int currentDayOfMonth;
@@ -54,20 +57,20 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 
 	// Days in Current Month
 	public GridCellAdapter(Context context, int textViewResourceId, int month,
-			int year, DayNoteLoadAction action) {
+			int year, DayNoteLoadAction action, DayNoteDataSource dataSource) {
 		super();
 		this._context = context;
 		this.list = new ArrayList<String>();
 		this.month = month;
 		this.year = year;
 		mAction = action;
-		mDayNoteDataSource = new DayNoteDataSource(context);
+		mDayNoteDataSource = dataSource;
 
 		Log.d(tag, "==> Passed in Date FOR Month: " + month + " " + "Year: "
 				+ year);
 		Calendar calendar = Calendar.getInstance();
 		setCurrentDayOfMonth(calendar.get(Calendar.DAY_OF_MONTH));
-		setCurrentWeekDay(calendar.get(Calendar.DAY_OF_WEEK));
+		setCurrentWeekDay(getDay(calendar));
 		Log.d(tag, "New Calendar:= " + calendar.getTime().toString());
 		Log.d(tag, "CurrentDayOfWeek :" + getCurrentWeekDay());
 		Log.d(tag, "CurrentDayOfMonth :" + getCurrentDayOfMonth());
@@ -87,8 +90,12 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 		return weekdays[i];
 	}
 
-	private int getNumberOfDaysOfMonth(int i) {
-		return daysOfMonth[i];
+	private int getNumberOfDaysOfMonth(int i, int year) {
+		if (year % 4 == 0) {
+			return daysOfMonthUnusual[i];
+		} else {
+			return daysOfMonth[i];
+		}
 	}
 
 	public String getItem(int position) {
@@ -119,7 +126,7 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 
 		int currentMonth = mm - 1;
 		String currentMonthName = getMonthAsString(currentMonth);
-		daysInMonth = getNumberOfDaysOfMonth(currentMonth);
+		daysInMonth = getNumberOfDaysOfMonth(currentMonth, yy);
 
 		Log.d(tag, "Current Month: " + " " + currentMonthName + " having "
 				+ daysInMonth + " days.");
@@ -130,7 +137,7 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 
 		if (currentMonth == 11) {
 			prevMonth = currentMonth - 1;
-			daysInPrevMonth = getNumberOfDaysOfMonth(prevMonth);
+			daysInPrevMonth = getNumberOfDaysOfMonth(prevMonth, yy);
 			nextMonth = 0;
 			prevYear = yy;
 			nextYear = yy + 1;
@@ -140,7 +147,7 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 			prevMonth = 11;
 			prevYear = yy - 1;
 			nextYear = yy;
-			daysInPrevMonth = getNumberOfDaysOfMonth(prevMonth);
+			daysInPrevMonth = getNumberOfDaysOfMonth(prevMonth, yy);
 			nextMonth = 1;
 			Log.d(tag, "**--> PrevYear: " + prevYear + " PrevMonth:"
 					+ prevMonth + " NextMonth: " + nextMonth + " NextYear: "
@@ -150,7 +157,7 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 			nextMonth = currentMonth + 1;
 			nextYear = yy;
 			prevYear = yy;
-			daysInPrevMonth = getNumberOfDaysOfMonth(prevMonth);
+			daysInPrevMonth = getNumberOfDaysOfMonth(prevMonth, yy);
 			Log.d(tag, "***---> PrevYear: " + prevYear + " PrevMonth:"
 					+ prevMonth + " NextMonth: " + nextMonth + " NextYear: "
 					+ nextYear);
@@ -159,7 +166,7 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 		// Compute how much to leave before before the first day of the
 		// month.
 		// getDay() returns 0 for Sunday.
-		int currentWeekDay = cal.get(Calendar.DAY_OF_WEEK) - 1;
+		int currentWeekDay = getDay(cal);
 		trailingSpaces = currentWeekDay;
 
 		Log.d(tag, "Week Day:" + currentWeekDay + " is "
@@ -210,6 +217,12 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 			list.add(String.valueOf(i + 1) + "-GREY" + "-"
 					+ getMonthAsString(nextMonth) + "-" + nextYear);
 		}
+	}
+
+	private int getDay(Calendar cal) {
+		int retVal = cal.get(Calendar.DAY_OF_WEEK) - 2;
+		retVal = retVal < 0 ? 6 : retVal;
+		return retVal;
 	}
 
 	/**
@@ -286,7 +299,49 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 		if (day_color[1].equals("BLUE")) {
 			gridcell.setTextColor(Color.parseColor("#003366"));
 		}
+
+		setMarks(row, theday, themonth, theyear);
+
 		return row;
+	}
+
+	private void setMarks(View row, String day, String month, String year) {
+		
+
+		DayNote dayNote = mDayNoteDataSource.getDayNoteByDate(day + '-' + month
+				+ '-' + year);
+
+		if (dayNote != null) {
+			setIntim(row, dayNote);
+			setEintrag(row, dayNote);
+		} else {
+			hideUnused(row);
+		}
+
+		
+	}
+
+	private void setEintrag(View row, DayNote dayNote) {
+		String note = dayNote.getNote();
+		if (note == null || note.equals("")) {
+			row.findViewById(R.id.notes_icon).setVisibility(View.GONE);
+		} else {
+			row.findViewById(R.id.notes_icon).setVisibility(View.VISIBLE);
+		}
+	}
+
+	private void hideUnused(View row) {
+		row.findViewById(R.id.intim_icon).setVisibility(View.GONE);	
+		row.findViewById(R.id.notes_icon).setVisibility(View.GONE);
+	}
+
+	private void setIntim(View row, DayNote dayNote) {
+		boolean isIntim = Boolean.parseBoolean(dayNote.getIsIntim());
+		if (isIntim) {
+			row.findViewById(R.id.intim_icon).setVisibility(View.VISIBLE);
+		} else {
+			row.findViewById(R.id.intim_icon).setVisibility(View.GONE);
+		}
 	}
 
 	public void onClick(View view) {
@@ -301,10 +356,10 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 		String date_month_year = (String) view.getTag();
 		view.setPressed(true);
 		view.setSelected(true);
-		mDayNoteDataSource.open();
+		
 		DayNote dayNote = mDayNoteDataSource.getDayNoteByDate(date_month_year);
 		MainCalendarActivity.day_month_year = date_month_year;
-		mDayNoteDataSource.close();
+	
 		mAction.setSelectedDayNote(dayNote);
 
 	}
