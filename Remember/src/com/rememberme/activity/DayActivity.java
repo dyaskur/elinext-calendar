@@ -142,11 +142,23 @@ public class DayActivity extends BaseActivity {
 
 		String arz = sharedPreferences.getString(ARZTTERMIN, "");
 		TextView textView1 = (TextView) findViewById(R.id.arzttermin_time);
-		textView1.setText(arz);
+		if (arz.equals("-")) {
+			textView1.setText("");
+
+		} else {
+			textView1.setText(arz);
+
+		}
 
 		String begin_ende = sharedPreferences.getString(BEGIN_ENDE, "");
 		TextView textView2 = (TextView) findViewById(R.id.begin_time);
-		textView2.setText(begin_ende);
+		if (begin_ende.equals("-")) {
+			textView2.setText("");
+
+		} else {
+			textView2.setText(begin_ende);
+
+		}
 
 		intim = (CheckedTextView) findViewById(R.id.intime);
 		intim.setOnClickListener(new OnClickListener() {
