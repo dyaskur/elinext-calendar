@@ -15,14 +15,14 @@ public class PilleneinnahmeActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.arzttermin_layout);
+		setContentView(R.layout.pilleneinnahme_layout);
 	}
 
 	@Override
 	public void onBackPressed() {
 		ToggleButton button = (ToggleButton) findViewById(R.id.toggleButton);
 		if (button.isChecked()) {
-			TimePicker tp = (TimePicker) findViewById(R.id.timepicker_az);
+			TimePicker tp = (TimePicker) findViewById(R.id.timepicker);
 			String str = tp.getCurrentHour().toString() + ":"
 					+ tp.getCurrentMinute().toString();
 
@@ -30,16 +30,16 @@ public class PilleneinnahmeActivity extends BaseActivity {
 					DayActivity.PREFERENCES, 0).edit();
 			editor.putString(DayActivity.BEGIN_ENDE, str);
 			editor.commit();
-			
+
 		} else {
 			String str = "-";
 			SharedPreferences.Editor editor = getSharedPreferences(
 					DayActivity.PREFERENCES, 0).edit();
 			editor.putString(DayActivity.BEGIN_ENDE, str);
 			editor.commit();
-			
+
 		}
-		
+
 		finish();
 	}
 }

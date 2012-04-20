@@ -13,13 +13,11 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.rememberme.R;
 import com.rememberme.adapter.GridCellAdapter;
 import com.rememberme.entity.DayNote;
-import com.rememberme.sqlite.DayNoteDataSource;
 import com.rememberme.utils.DayNoteLoadAction;
 
 public class MainCalendarActivity extends BaseActivity implements
@@ -32,7 +30,7 @@ public class MainCalendarActivity extends BaseActivity implements
 	private GridView calendarView;
 	private GridCellAdapter adapter;
 	private Calendar _calendar;
-	private LinearLayout mInfo;
+	private static LinearLayout mInfo;
 	private int month, year;
 	public static String day_month_year = "";
 	private static final String dateTemplate = "MMMM yyyy";
@@ -41,15 +39,13 @@ public class MainCalendarActivity extends BaseActivity implements
 	private TextView mStimung;
 	private TextView mMenstruation;
 	private TextView mTime;
-	private DayNoteDataSource mDataSource;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.calendar_layout);
-		mDataSource = new DayNoteDataSource(this);
-		mDataSource.open();
+
 		_calendar = Calendar.getInstance(Locale.getDefault());
 		month = _calendar.get(Calendar.MONTH) + 1;
 		year = _calendar.get(Calendar.YEAR);
@@ -84,7 +80,7 @@ public class MainCalendarActivity extends BaseActivity implements
 		// Initialised
 		initFirstDate(this);
 		adapter = new GridCellAdapter(getApplicationContext(),
-				R.id.calendar_day_gridcell, month, year, this, mDataSource);
+				R.id.calendar_day_gridcell, month, year, this);
 		adapter.notifyDataSetChanged();
 		calendarView.setAdapter(adapter);
 
@@ -93,8 +89,12 @@ public class MainCalendarActivity extends BaseActivity implements
 
 	@Override
 	protected void onResume() {
-		initFirstDate(this);
+		
+		if (BaseActivity.firstDay == 0) {
+			initFirstDate(this);
+		}
 		adapter.notifyDataSetChanged();
+		disable();
 		super.onResume();
 	}
 
@@ -114,7 +114,7 @@ public class MainCalendarActivity extends BaseActivity implements
 	 */
 	private void setGridCellAdapterToDate(int month, int year) {
 		adapter = new GridCellAdapter(getApplicationContext(),
-				R.id.calendar_day_gridcell, month, year, this, mDataSource);
+				R.id.calendar_day_gridcell, month, year, this);
 		_calendar.set(year, month - 1, _calendar.get(Calendar.DAY_OF_MONTH));
 		currentMonth.setText(DateFormat.format(dateTemplate,
 				_calendar.getTime()));
@@ -137,6 +137,7 @@ public class MainCalendarActivity extends BaseActivity implements
 					+ month + " Year: " + year);
 			setGridCellAdapterToDate(month, year);
 			BaseActivity.setCurrentCount(MainCalendarActivity.this, -28);
+			disable();
 		}
 		if (v == nextMonth) {
 			if (month > 11) {
@@ -150,6 +151,7 @@ public class MainCalendarActivity extends BaseActivity implements
 					+ month + " Year: " + year);
 			setGridCellAdapterToDate(month, year);
 			BaseActivity.setCurrentCount(MainCalendarActivity.this, 28);
+			disable();
 		}
 
 	}
@@ -185,7 +187,7 @@ public class MainCalendarActivity extends BaseActivity implements
 		super.onDestroy();
 	}
 
-	// "ï¿½";
+	// "•";
 
 	private String checkIfEqualsNull(String str) {
 		if (str == null) {
@@ -203,7 +205,7 @@ public class MainCalendarActivity extends BaseActivity implements
 			String sypm = "";
 			String spacer_sym = "                     ";
 			for (String i : dayNote.getNormalizedSymptoms()) {
-				sypm += "ï¿½ " + i + "\n" + spacer_sym;
+				sypm += "• " + i + "\n" + spacer_sym;
 			}
 
 			mSympt.setText(getString(R.string.symptome_) + sypm);
@@ -211,7 +213,7 @@ public class MainCalendarActivity extends BaseActivity implements
 			String stim = "";
 			String spacer_stim = "                    ";
 			for (String i : dayNote.getNormalizedStimmungs()) {
-				stim += "ï¿½ " + i + "\n" + spacer_stim;
+				stim += "• " + i + "\n" + spacer_stim;
 
 			}
 
@@ -228,19 +230,6 @@ public class MainCalendarActivity extends BaseActivity implements
 		}
 
 	}
-	
-	@Override
-	protected void onResume() {
-		super.onResume();
-		mDataSource.open();
-		((GridCellAdapter)calendarView.getAdapter()).notifyDataSetChanged();
-	}
-	
-	@Override
-	protected void onPause() {
-		super.onPause();
-		mDataSource.close();
-	}
 
 	private void setClear() {
 		mNotes.setText(getString(R.string.notiz_));
@@ -250,4 +239,13 @@ public class MainCalendarActivity extends BaseActivity implements
 		mTime.setText(getString(R.string.arzttermin_));
 
 	}
+	
+	public static void enable () {
+		mInfo.setVisibility(LinearLayout.VISIBLE);
+	}
+	
+	public static void disable () {
+		mInfo.setVisibility(LinearLayout.INVISIBLE);
+	}
+	
 }

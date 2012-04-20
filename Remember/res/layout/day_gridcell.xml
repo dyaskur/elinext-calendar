@@ -11,8 +11,7 @@
         android:layout_height="45dp"
         android:layout_gravity="center"
         android:background="@drawable/calendar_button_selector"
-        android:focusable="true"
-        android:onClick="onCellButtonClick"
+        android:onClick="onCellButtonClick"   
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#FFFFFF" >
     </Button>
@@ -28,8 +27,8 @@
 
     <ImageView
         android:id="@+id/plus_icon"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:background="@drawable/arzttermin"
@@ -39,8 +38,8 @@
 
     <ImageView
         android:id="@+id/notes_icon"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_marginRight="5dp"
@@ -51,8 +50,8 @@
 
     <ImageView
         android:id="@+id/intim_icon"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/intim"
@@ -62,8 +61,8 @@
 
     <ImageView
         android:id="@+id/pille_star_icon"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginRight="5dp"
@@ -75,8 +74,8 @@
 
     <ImageView
         android:id="@+id/pille_icon"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginRight="5dp"

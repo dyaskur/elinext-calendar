@@ -233,12 +233,20 @@ public class DayActivity extends BaseActivity {
 
 		String men = sharedPreferences.getString(MENSTRUATION, "");
 		if (!men.equals("")) {
-			dayNote.setMenstruation(men);
+			if (men.equals("-")) {
+				dayNote.setMenstruation(null);
+			} else {
+				dayNote.setMenstruation(men);
+			}
 		}
 
 		String arz = sharedPreferences.getString(ARZTTERMIN, "");
 		if (!arz.equals("")) {
-			dayNote.setArzttermin(arz);
+			if (arz.equals("-")) {
+				dayNote.setArzttermin(null);
+			} else {
+				dayNote.setArzttermin(arz);
+			}
 		}
 
 		String begin_ende = sharedPreferences.getString(BEGIN_ENDE, "");
@@ -255,7 +263,19 @@ public class DayActivity extends BaseActivity {
 		}
 
 		SharedPreferences.Editor editor = sharedPreferences.edit();
-		editor.remove(PREFERENCES);
+		/*
+		 * public static final String DATE = "date"; public static final String
+		 * STIMMUNGS = "stimmungs"; public static final String SYMPTOMES =
+		 * "symptomes"; public static final String MENSTRUATION =
+		 * "menstruation"; public static final String ARZTTERMIN = "arzttermin";
+		 * public static final String BEGIN_ENDE = "begin_ende";
+		 */
+		editor.remove(DATE);
+		editor.remove(STIMMUNGS);
+		editor.remove(SYMPTOMES);
+		editor.remove(MENSTRUATION);
+		editor.remove(ARZTTERMIN);
+		editor.remove(BEGIN_ENDE);
 		editor.commit();
 
 		dayNote.setNote(noteStr);
@@ -263,11 +283,15 @@ public class DayActivity extends BaseActivity {
 		dataSource.open();
 		dataSource.saveOrupdateDayNote(dayNote);
 		dataSource.close();
-		SharedPreferences sharedPreferences2 = getSharedPreferences(REMEMBERME, MODE_WORLD_WRITEABLE);
-		if (!sharedPreferences2.contains(FIRST_DAY)) {
-			SharedPreferences.Editor editor = sharedPreferences2.edit();
-			editor.putString(FIRST_DAY, dayNote.getDate());
-			editor.commit();
+		if (dayNote.getBegin_or_end_pille_date() != null
+				&& !dayNote.getBegin_or_end_pille_date().equals("")) {
+			SharedPreferences sharedPreferences2 = getSharedPreferences(
+					REMEMBERME, MODE_WORLD_WRITEABLE);
+			if (!sharedPreferences2.contains(FIRST_DAY)) {
+				SharedPreferences.Editor editor2 = sharedPreferences2.edit();
+				editor2.putString(FIRST_DAY, dayNote.getDate());
+				editor2.commit();
+			}
 		}
 		finish();
 	}

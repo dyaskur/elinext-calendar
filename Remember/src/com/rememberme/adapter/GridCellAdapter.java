@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,9 +17,11 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rememberme.R;
+import com.rememberme.activity.BaseActivity;
 import com.rememberme.activity.MainCalendarActivity;
 import com.rememberme.entity.DayNote;
 import com.rememberme.sqlite.DayNoteDataSource;
@@ -51,6 +54,14 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 	private DayNoteDataSource mDayNoteDataSource;
 	private DayNoteLoadAction mAction;
 	private View lastSelectedCell;
+	private ImageView mPille;
+	private ImageView mPilleStart;
+	private ImageView mIntim;
+	private ImageView mPlus;
+	private ImageView mNotes;
+	private ImageView mPeriode;
+
+	private static int counter = 0;
 
 	// Days in Current Month
 	public GridCellAdapter(Context context, int textViewResourceId, int month,
@@ -134,26 +145,21 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 			nextMonth = 0;
 			prevYear = yy;
 			nextYear = yy + 1;
-			Log.d(tag, "*->PrevYear: " + prevYear + " PrevMonth:" + prevMonth
-					+ " NextMonth: " + nextMonth + " NextYear: " + nextYear);
+
 		} else if (currentMonth == 0) {
 			prevMonth = 11;
 			prevYear = yy - 1;
 			nextYear = yy;
 			daysInPrevMonth = getNumberOfDaysOfMonth(prevMonth);
 			nextMonth = 1;
-			Log.d(tag, "**--> PrevYear: " + prevYear + " PrevMonth:"
-					+ prevMonth + " NextMonth: " + nextMonth + " NextYear: "
-					+ nextYear);
+
 		} else {
 			prevMonth = currentMonth - 1;
 			nextMonth = currentMonth + 1;
 			nextYear = yy;
 			prevYear = yy;
 			daysInPrevMonth = getNumberOfDaysOfMonth(prevMonth);
-			Log.d(tag, "***---> PrevYear: " + prevYear + " PrevMonth:"
-					+ prevMonth + " NextMonth: " + nextMonth + " NextYear: "
-					+ nextYear);
+
 		}
 
 		// Compute how much to leave before before the first day of the
@@ -161,11 +167,6 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 		// getDay() returns 0 for Sunday.
 		int currentWeekDay = cal.get(Calendar.DAY_OF_WEEK) - 1;
 		trailingSpaces = currentWeekDay;
-
-		Log.d(tag, "Week Day:" + currentWeekDay + " is "
-				+ getWeekDayAsString(currentWeekDay));
-		Log.d(tag, "No. Trailing space to Add: " + trailingSpaces);
-		Log.d(tag, "No. of Days in Previous Month: " + daysInPrevMonth);
 
 		if (cal.isLeapYear(cal.get(Calendar.YEAR)) && mm == 1) {
 			++daysInMonth;
@@ -245,17 +246,22 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View row = convertView;
-		if (row == null) {
-			LayoutInflater inflater = (LayoutInflater) _context
-					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			row = inflater.inflate(R.layout.day_gridcell, parent, false);
-		}
+
+		LayoutInflater inflater = (LayoutInflater) _context
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		row = inflater.inflate(R.layout.day_gridcell, parent, false);
 
 		// Get a reference to the Day gridcell
 		gridcell = (Button) row.findViewById(R.id.calendar_day_gridcell);
 		gridcell.setOnClickListener(this);
 
 		// ACCOUNT FOR SPACING
+		mPille = (ImageView) row.findViewById(R.id.pille_icon);
+		mPilleStart = (ImageView) row.findViewById(R.id.pille_star_icon);
+		mPlus = (ImageView) row.findViewById(R.id.plus_icon);
+		mIntim = (ImageView) row.findViewById(R.id.intim_icon);
+		mNotes = (ImageView) row.findViewById(R.id.notes_icon);
+		mPeriode = (ImageView) row.findViewById(R.id.periode_icon);
 
 		Log.d(tag, "Current Day: " + getCurrentDayOfMonth());
 		String[] day_color = list.get(position).split("-");
@@ -286,6 +292,57 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 		if (day_color[1].equals("BLUE")) {
 			gridcell.setTextColor(Color.parseColor("#003366"));
 		}
+		SharedPreferences sharedPreferences = _context.getSharedPreferences(
+				BaseActivity.REMEMBERME, BaseActivity.MODE_WORLD_READABLE);
+		if (sharedPreferences.contains(BaseActivity.FIRST_DAY)) {
+
+			if ((getDayPosition(theday + "-" + themonth + "-" + theyear) < BaseActivity.firstDay - 6 && getDayPosition(theday
+					+ "-" + themonth + "-" + theyear) > BaseActivity.theFirstDate)
+					|| (getDayPosition(theday + "-" + themonth + "-" + theyear) > BaseActivity.firstDay && getDayPosition(theday
+							+ "-" + themonth + "-" + theyear) < BaseActivity.firstDay + 22)
+					&& getDayPosition(theday + "-" + themonth + "-" + theyear) > BaseActivity.theFirstDate
+					|| getDayPosition(theday + "-" + themonth + "-" + theyear) > BaseActivity.firstDay + 28) {
+				mPille.setVisibility(ImageView.VISIBLE);
+				counter++;
+			} else {
+				mPille.setVisibility(ImageView.INVISIBLE);
+			}
+
+		}
+		mDayNoteDataSource.open();
+		DayNote dayNote = mDayNoteDataSource.getDayNoteByDate(theday + "-"
+				+ themonth + "-" + theyear);
+		mDayNoteDataSource.close();
+		if (dayNote != null) {
+
+			if (dayNote.getNote() != null && !dayNote.getNote().equals("")) {
+				mNotes.setVisibility(ImageView.VISIBLE);
+			}
+			if (dayNote.getIsIntim() != null
+					&& !dayNote.getIsIntim().equals("false")) {
+				mIntim.setVisibility(ImageView.VISIBLE);
+			}
+			if (dayNote.getMenstruation() != null
+					&& !dayNote.getMenstruation().equals("")
+					|| dayNote.getSymptoms() != null
+					&& !dayNote.getSymptoms().equals("")) {
+				mPeriode.setVisibility(ImageView.VISIBLE);
+			}
+			if (dayNote.getArzttermin() != null
+					&& !dayNote.getArzttermin().equals("")) {
+				mPlus.setVisibility(ImageView.VISIBLE);
+			}
+
+			if (dayNote.getStimmungs() != null
+					&& !dayNote.getStimmungs().equals("")) {
+				mNotes.setVisibility(ImageView.VISIBLE);
+			}
+			if (dayNote.getBegin_or_end_pille_date() != null
+					&& !dayNote.getBegin_or_end_pille_date().equals("")) {
+				mPilleStart.setVisibility(ImageView.VISIBLE);
+			}
+		}
+		row.setSelected(false);
 		return row;
 	}
 
@@ -299,13 +356,14 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 		}
 
 		String date_month_year = (String) view.getTag();
-		view.setPressed(true);
+		// view.setPressed(true);
 		view.setSelected(true);
 		mDayNoteDataSource.open();
 		DayNote dayNote = mDayNoteDataSource.getDayNoteByDate(date_month_year);
 		MainCalendarActivity.day_month_year = date_month_year;
 		mDayNoteDataSource.close();
 		mAction.setSelectedDayNote(dayNote);
+		MainCalendarActivity.enable();
 
 	}
 
@@ -324,4 +382,24 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 	public int getCurrentWeekDay() {
 		return currentWeekDay;
 	}
+
+	private int getDayPosition(String date) {
+
+		String[] dateInfo = date.split("-");
+		int monthCount = 0;
+		int daysWhenYearStarted = 0;
+		for (int i = 0; i < 12; i++) {
+			if (months[i].contains(dateInfo[1])) {
+				monthCount = i;
+				break;
+			}
+		}
+
+		for (int i = 0; i < monthCount; i++) {
+			daysWhenYearStarted += daysOfMonth[i];
+		}
+		daysWhenYearStarted += Integer.parseInt(dateInfo[0]);
+		return daysWhenYearStarted;
+	}
+
 }
