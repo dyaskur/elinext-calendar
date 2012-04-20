@@ -179,7 +179,6 @@ public class DayActivity extends BaseActivity {
 		}
 
 		EditText note = (EditText) findViewById(R.id.edittext);
-
 		String noteStr = note.getText().toString();
 		if (noteStr
 				.equalsIgnoreCase(getString(R.string.heir_kannst_du_deine_notiz_eingeben_))) {
@@ -222,6 +221,15 @@ public class DayActivity extends BaseActivity {
 			dayNote.setIsIntim("false");
 
 		}
+		
+		SharedPreferences.Editor editor = sharedPreferences.edit();
+		editor.putString(DATE, "");
+		editor.putString(STIMMUNGS, "");
+		editor.putString(SYMPTOMES, "");
+		editor.putString(MENSTRUATION, "");
+		editor.putString(ARZTTERMIN, "");
+		editor.putString(BEGIN_ENDE, "");
+		editor.commit();
 
 		dayNote.setNote(noteStr);
 		DayNoteDataSource dataSource = new DayNoteDataSource(this);
