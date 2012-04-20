@@ -263,6 +263,12 @@ public class DayActivity extends BaseActivity {
 		dataSource.open();
 		dataSource.saveOrupdateDayNote(dayNote);
 		dataSource.close();
+		SharedPreferences sharedPreferences2 = getSharedPreferences(REMEMBERME, MODE_WORLD_WRITEABLE);
+		if (!sharedPreferences2.contains(FIRST_DAY)) {
+			SharedPreferences.Editor editor = sharedPreferences2.edit();
+			editor.putString(FIRST_DAY, dayNote.getDate());
+			editor.commit();
+		}
 		finish();
 	}
 
