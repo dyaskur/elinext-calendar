@@ -5,10 +5,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.widget.Toast;
 
 import com.rememberme.R;
 import com.rememberme.activity.AlarmActivity;
+import com.rememberme.activity.BaseActivity;
 import com.rememberme.activity.SoundActivity;
 
 // Need the following import to get access to the app resources, since this
@@ -25,8 +27,12 @@ public class AlarmReciver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		Toast.makeText(context, R.string.alarm, Toast.LENGTH_SHORT).show();
-		AlarmActivity.playSound((Integer) intent
-				.getSerializableExtra(SoundActivity.CURRENT_SOUND), context);
+		SharedPreferences sharedPreferences = context.getSharedPreferences(
+				BaseActivity.REMEMBERME, context.MODE_WORLD_WRITEABLE);
+
+		AlarmActivity.playSound(
+				sharedPreferences.getInt(SoundActivity.CURRENT_SOUND, 1),
+				context);
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setMessage("Are you sure you want to exit?")
