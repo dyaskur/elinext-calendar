@@ -72,5 +72,13 @@
         android:contentDescription="@string/content_descr"
         android:visibility="invisible" >
     </ImageView>
+    
+    <LinearLayout 
+        android:id="@+id/period"
+        android:layout_height="2px"
+        android:layout_width="fill_parent"
+        android:background="#FF0000"
+        android:layout_alignParentBottom="true"/>
+        
 
 </RelativeLayout>
