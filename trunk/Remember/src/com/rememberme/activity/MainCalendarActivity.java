@@ -13,11 +13,13 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.rememberme.R;
 import com.rememberme.adapter.GridCellAdapter;
 import com.rememberme.entity.DayNote;
+import com.rememberme.sqlite.DayNoteDataSource;
 import com.rememberme.utils.DayNoteLoadAction;
 
 public class MainCalendarActivity extends BaseActivity implements
@@ -39,13 +41,15 @@ public class MainCalendarActivity extends BaseActivity implements
 	private TextView mStimung;
 	private TextView mMenstruation;
 	private TextView mTime;
+	private DayNoteDataSource mDataSource;
 
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.calendar_layout);
-
+		mDataSource = new DayNoteDataSource(this);
+		mDataSource.open();
 		_calendar = Calendar.getInstance(Locale.getDefault());
 		month = _calendar.get(Calendar.MONTH) + 1;
 		year = _calendar.get(Calendar.YEAR);
@@ -78,7 +82,7 @@ public class MainCalendarActivity extends BaseActivity implements
 
 		// Initialised
 		adapter = new GridCellAdapter(getApplicationContext(),
-				R.id.calendar_day_gridcell, month, year, this);
+				R.id.calendar_day_gridcell, month, year, this, mDataSource);
 		adapter.notifyDataSetChanged();
 		calendarView.setAdapter(adapter);
 
@@ -101,7 +105,7 @@ public class MainCalendarActivity extends BaseActivity implements
 	 */
 	private void setGridCellAdapterToDate(int month, int year) {
 		adapter = new GridCellAdapter(getApplicationContext(),
-				R.id.calendar_day_gridcell, month, year, this);
+				R.id.calendar_day_gridcell, month, year, this, mDataSource);
 		_calendar.set(year, month - 1, _calendar.get(Calendar.DAY_OF_MONTH));
 		currentMonth.setText(DateFormat.format(dateTemplate,
 				_calendar.getTime()));
@@ -167,7 +171,7 @@ public class MainCalendarActivity extends BaseActivity implements
 		super.onDestroy();
 	}
 
-	// "•";
+	// "ï¿½";
 
 	private String checkIfEqualsNull(String str) {
 		if (str == null) {
@@ -185,7 +189,7 @@ public class MainCalendarActivity extends BaseActivity implements
 			String sypm = "";
 			String spacer_sym = "                     ";
 			for (String i : dayNote.getNormalizedSymptoms()) {
-				sypm += "• " + i + "\n" + spacer_sym;
+				sypm += "ï¿½ " + i + "\n" + spacer_sym;
 			}
 
 			mSympt.setText(getString(R.string.symptome_) + sypm);
@@ -193,7 +197,7 @@ public class MainCalendarActivity extends BaseActivity implements
 			String stim = "";
 			String spacer_stim = "                    ";
 			for (String i : dayNote.getNormalizedStimmungs()) {
-				stim += "• " + i + "\n" + spacer_stim;
+				stim += "ï¿½ " + i + "\n" + spacer_stim;
 
 			}
 
@@ -211,6 +215,19 @@ public class MainCalendarActivity extends BaseActivity implements
 
 
 
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		mDataSource.open();
+		((GridCellAdapter)calendarView.getAdapter()).notifyDataSetChanged();
+	}
+	
+	@Override
+	protected void onPause() {
+		super.onPause();
+		mDataSource.close();
 	}
 
 
