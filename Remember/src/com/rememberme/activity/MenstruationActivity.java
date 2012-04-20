@@ -20,7 +20,7 @@ import com.rememberme.sqlite.DayNoteDataSource;
 public class MenstruationActivity extends BaseActivity {
 	public final static String[] ITEMS = { "leicht", "mittel", "stark" };
 	private ListView view;
-	private String menstruation;
+	private String menstruation = "-";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
