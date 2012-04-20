@@ -1,17 +1,17 @@
 package com.rememberme.activity;
 
+import java.util.HashMap;
+
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
 
 import com.rememberme.R;
 import com.rememberme.adapter.MenstrItemAdapter;
 import com.rememberme.entity.DayNote;
-import com.rememberme.sqlite.DayNoteDataSource;
 
 /**
  * Created with IntelliJ IDEA. User: Luxor-XP Date: 18.04.12 Time: 22:44 To
@@ -21,15 +21,36 @@ public class MenstruationActivity extends BaseActivity {
 	public final static String[] ITEMS = { "leicht", "mittel", "stark" };
 	private ListView view;
 	private String menstruation = "-";
+	public static HashMap<String, Boolean> map = new HashMap<String, Boolean>();
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.stimmung_layout);
 		super.onCreate(savedInstanceState);
+		
+		DayNote dayNote = DayActivity.dayNote;
+		String selected = "";
+		if(dayNote != null) {
+			selected = dayNote.getMenstruation();
+		}
+		
+		for(String i: ITEMS) {
+			if(i.equalsIgnoreCase(selected)) {
+				map.put(i, true);
+				
+			} else {
+				map.put(i, false);
+				
+			}
+		}
 
+			
 		MenstrItemAdapter adapter = new MenstrItemAdapter(
 				MenstruationActivity.this, R.layout.menstr_item,
-				R.id.menstr_item_name, ITEMS);
+				R.id.menstr_item_name, ITEMS, selected);
+		
+		
 
 		view = (ListView) findViewById(R.id.list_stimmung);
 		view.setAdapter(adapter);
@@ -40,8 +61,9 @@ public class MenstruationActivity extends BaseActivity {
 				View v = view.getChildAt(i);
 				CheckedTextView cView = (CheckedTextView) v
 						.findViewById(R.id.menstr_item_name);
-				if (cView.isSelected()) {
+				if (map.get(cView.getText())) {
 					cView.setSelected(false);
+					map.put((String) cView.getText(), false);
 					cView.setCheckMarkDrawable(R.drawable.btn_check_off);
 
 				} else {
@@ -51,10 +73,13 @@ public class MenstruationActivity extends BaseActivity {
 						cViewTemp = (CheckedTextView) v
 								.findViewById(R.id.menstr_item_name);
 						cViewTemp.setSelected(false);
+						map.put((String) cViewTemp.getText(), false);
 						cViewTemp
 								.setCheckMarkDrawable(R.drawable.btn_check_off);
 					}
+					
 					cView.setSelected(true);
+					map.put((String) cView.getText(), true);
 					cView.setCheckMarkDrawable(R.drawable.btn_check_on);
 
 				}
