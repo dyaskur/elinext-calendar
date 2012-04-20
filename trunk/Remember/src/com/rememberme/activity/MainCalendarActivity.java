@@ -68,25 +68,34 @@ public class MainCalendarActivity extends BaseActivity implements
 		calendarView = (GridView) this.findViewById(R.id.calendar);
 
 		mInfo = (LinearLayout) this.findViewById(R.id.info);
-		
+
 		mInfo.setOnClickListener(new OnClickListener() {
 
 			public void onClick(View v) {
-
-				Intent intent = new Intent(MainCalendarActivity.this,
+				Intent intent;
+				intent = new Intent(MainCalendarActivity.this,
 						DayActivity.class);
+				DayActivity.date = day_month_year;
 				startActivity(intent);
 
 			}
 		});
 
 		// Initialised
+		initFirstDate(this);
 		adapter = new GridCellAdapter(getApplicationContext(),
 				R.id.calendar_day_gridcell, month, year, this, mDataSource);
 		adapter.notifyDataSetChanged();
 		calendarView.setAdapter(adapter);
 
 		initCalendarData();
+	}
+
+	@Override
+	protected void onResume() {
+		initFirstDate(this);
+		adapter.notifyDataSetChanged();
+		super.onResume();
 	}
 
 	private void initCalendarData() {
@@ -119,12 +128,15 @@ public class MainCalendarActivity extends BaseActivity implements
 			if (month <= 1) {
 				month = 12;
 				year--;
+
 			} else {
 				month--;
 			}
+
 			Log.d(tag, "Setting Prev Month in GridCellAdapter: " + "Month: "
 					+ month + " Year: " + year);
 			setGridCellAdapterToDate(month, year);
+			BaseActivity.setCurrentCount(MainCalendarActivity.this, -28);
 		}
 		if (v == nextMonth) {
 			if (month > 11) {
@@ -133,9 +145,11 @@ public class MainCalendarActivity extends BaseActivity implements
 			} else {
 				month++;
 			}
+
 			Log.d(tag, "Setting Next Month in GridCellAdapter: " + "Month: "
 					+ month + " Year: " + year);
 			setGridCellAdapterToDate(month, year);
+			BaseActivity.setCurrentCount(MainCalendarActivity.this, 28);
 		}
 
 	}
@@ -213,8 +227,6 @@ public class MainCalendarActivity extends BaseActivity implements
 			BaseActivity.setDayNote(dayNote);
 		}
 
-
-
 	}
 	
 	@Override
@@ -230,13 +242,12 @@ public class MainCalendarActivity extends BaseActivity implements
 		mDataSource.close();
 	}
 
-
 	private void setClear() {
 		mNotes.setText(getString(R.string.notiz_));
 		mSympt.setText(getString(R.string.symptome_));
 		mStimung.setText(getString(R.string.stimmung_));
 		mMenstruation.setText(getString(R.string.menstruation_));
 		mTime.setText(getString(R.string.arzttermin_));
-		
+
 	}
 }

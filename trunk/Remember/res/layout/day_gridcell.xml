@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="50dp"
-    android:layout_height="50dp"
+    android:layout_width="45dp"
+    android:layout_height="45dp"
     android:background="@drawable/calendar_button_selector"
     android:orientation="vertical" >
 
     <Button
         android:id="@+id/calendar_day_gridcell"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_gravity="center"
         android:background="@drawable/calendar_button_selector"
         android:focusable="true"
-        
         android:onClick="onCellButtonClick"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#FFFFFF" >
@@ -31,8 +30,8 @@
         android:id="@+id/plus_icon"
         android:layout_width="15dp"
         android:layout_height="15dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
         android:background="@drawable/arzttermin"
         android:contentDescription="@string/content_descr"
         android:visibility="invisible" >
@@ -42,8 +41,8 @@
         android:id="@+id/notes_icon"
         android:layout_width="15dp"
         android:layout_height="15dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
         android:layout_marginRight="5dp"
         android:background="@drawable/notiz"
         android:contentDescription="@string/content_descr"
@@ -54,8 +53,8 @@
         android:id="@+id/intim_icon"
         android:layout_width="15dp"
         android:layout_height="15dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
         android:background="@drawable/intim"
         android:contentDescription="@string/content_descr"
         android:visibility="invisible" >
@@ -65,20 +64,37 @@
         android:id="@+id/pille_star_icon"
         android:layout_width="15dp"
         android:layout_height="15dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
         android:layout_marginRight="5dp"
         android:background="@drawable/pille_start"
         android:contentDescription="@string/content_descr"
         android:visibility="invisible" >
     </ImageView>
-    
-    <LinearLayout 
-        android:id="@+id/period"
-        android:layout_height="2px"
-        android:layout_width="fill_parent"
-        android:background="#FF0000"
-        android:layout_alignParentBottom="true"/>
-        
+           
+
+    <ImageView
+        android:id="@+id/pille_icon"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/pille"
+        android:contentDescription="@string/content_descr"
+        android:visibility="invisible" >
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/periode_icon"
+        android:layout_width="50dp"
+        android:layout_height="2dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/periode"
+        android:contentDescription="@string/content_descr"
+        android:visibility="invisible" >
+    </ImageView>
 
 </RelativeLayout>

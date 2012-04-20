@@ -82,6 +82,15 @@ public class AlarmActivity extends BaseActivity {
 		mSound = (LinearLayout) findViewById(R.id.sound);
 		mSound.setOnClickListener(OnSoundButtonClick());
 		mBigClock = (TextView) findViewById(R.id.big_clock);
+		SharedPreferences sharedPreferences = getSharedPreferences(REMEMBERME,
+				MODE_WORLD_READABLE);
+
+		if (sharedPreferences.contains(TimePickerActivity.HOURS_OF_DAY)
+				&& sharedPreferences.contains(SoundActivity.CURRENT_SOUND)) {
+			mToggleButton.setEnabled(true);
+		} else {
+			mToggleButton.setEnabled(false);
+		}
 
 	}
 
@@ -184,6 +193,13 @@ public class AlarmActivity extends BaseActivity {
 			mBigClock.setText(alarmTime);
 
 		}
+		if (sharedPreferences.contains(TimePickerActivity.HOURS_OF_DAY)
+				&& sharedPreferences.contains(SoundActivity.CURRENT_SOUND)) {
+			mToggleButton.setEnabled(true);
+		} else {
+			mToggleButton.setEnabled(false);
+		}
+
 		super.onResume();
 	}
 
