@@ -315,11 +315,22 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 			setIntim(row, dayNote);
 			setEintrag(row, dayNote);
 			setArzttermin(row, dayNote);
+			setPeriod(row, dayNote);
 		} else {
 			hideUnused(row);
 		}
 
 		
+	}
+
+	private void setPeriod(View row, DayNote dayNote) {
+		String mestruation = dayNote.getMenstruation();
+		
+		if (mestruation == null || mestruation.equals("")){
+			row.findViewById(R.id.period).setVisibility(View.GONE);
+		} else {
+			row.findViewById(R.id.period).setVisibility(View.VISIBLE);
+		}
 	}
 
 	private void setArzttermin(View row, DayNote dayNote) {
@@ -344,6 +355,8 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 	private void hideUnused(View row) {
 		row.findViewById(R.id.intim_icon).setVisibility(View.GONE);	
 		row.findViewById(R.id.notes_icon).setVisibility(View.GONE);
+		row.findViewById(R.id.period).setVisibility(View.GONE);
+		row.findViewById(R.id.plus_icon).setVisibility(View.GONE);
 	}
 
 	private void setIntim(View row, DayNote dayNote) {
