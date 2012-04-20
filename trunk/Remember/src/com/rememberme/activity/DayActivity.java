@@ -153,6 +153,8 @@ public class DayActivity extends BaseActivity {
 
 			}
 
+		} else {
+			dayNote = new DayNote();
 		}
 
 	}
@@ -161,6 +163,8 @@ public class DayActivity extends BaseActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		
+		
 
 		if (state) {
 			
@@ -209,6 +213,9 @@ public class DayActivity extends BaseActivity {
 				textView2.setText(begin_ende);
 
 			}
+			
+			saveToDB();
+			
 		}
 
 
@@ -231,7 +238,11 @@ public class DayActivity extends BaseActivity {
 		});
 
 		if (dayNote != null) {
-			if (dayNote.getIsIntim().equals("true")) {
+			String intimstr = dayNote.getIsIntim();
+			if(intimstr == null) {
+				intimstr = "";
+			}
+			if (intimstr.equals("true")) {
 				intim.setChecked(true);
 				intim.setCheckMarkDrawable(R.drawable.btn_check_on);
 			}
@@ -241,6 +252,11 @@ public class DayActivity extends BaseActivity {
 
 	@Override
 	public void onBackPressed() {
+		//saveToDB();
+		finish();
+	}
+
+	private void saveToDB() {
 		if (dayNote == null) {
 			dayNote = new DayNote();
 		}
@@ -345,7 +361,6 @@ public class DayActivity extends BaseActivity {
 				editor2.commit();
 			}
 		}
-		finish();
 	}
 
 }
