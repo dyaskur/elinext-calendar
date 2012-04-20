@@ -314,10 +314,21 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 		if (dayNote != null) {
 			setIntim(row, dayNote);
 			setEintrag(row, dayNote);
+			setArzttermin(row, dayNote);
 		} else {
 			hideUnused(row);
 		}
 
+		
+	}
+
+	private void setArzttermin(View row, DayNote dayNote) {
+		String arzttermin = dayNote.getArzttermin();
+		if (arzttermin == null || arzttermin.equals("")){
+			row.findViewById(R.id.plus_icon).setVisibility(View.GONE);
+		} else {
+			row.findViewById(R.id.plus_icon).setVisibility(View.VISIBLE);
+		}
 		
 	}
 
