@@ -32,7 +32,7 @@ public class PilleneinnahmeActivity extends BaseActivity {
 			editor.commit();
 			
 		} else {
-			String str = "";
+			String str = "-";
 			SharedPreferences.Editor editor = getSharedPreferences(
 					DayActivity.PREFERENCES, 0).edit();
 			editor.putString(DayActivity.BEGIN_ENDE, str);

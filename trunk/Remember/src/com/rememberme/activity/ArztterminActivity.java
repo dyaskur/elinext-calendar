@@ -31,8 +31,7 @@ public class ArztterminActivity extends BaseActivity {
 			editor.putString(DayActivity.ARZTTERMIN, string);
 			editor.commit();
 		} else {
-			String string = "";
-
+			String string = "-";
 			SharedPreferences.Editor editor = getSharedPreferences(
 					DayActivity.PREFERENCES, 0).edit();
 			editor.putString(DayActivity.ARZTTERMIN, string);

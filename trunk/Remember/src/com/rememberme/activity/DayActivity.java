@@ -90,6 +90,15 @@ public class DayActivity extends BaseActivity {
 		dayNote = source.getDayNoteByDate(date);
 		source.close();
 
+		TextView titleText = (TextView) findViewById(R.id.date);
+		if (date == null || date.equals("")) {
+			titleText.setText(DayNote.converDateToString(new Date()));
+
+		} else {
+			titleText.setText(date);
+
+		}
+
 		if (dayNote != null) {
 			String noteText = dayNote.getNote();
 			if (!noteText.equalsIgnoreCase("")) {
@@ -168,7 +177,9 @@ public class DayActivity extends BaseActivity {
 
 	@Override
 	public void onBackPressed() {
-		DayNote dayNote = new DayNote();
+		if (dayNote == null) {
+			dayNote = new DayNote();
+		}
 
 		if (date == null || date.equals("")) {
 			dayNote.setDate(DayNote.converDateToString(new Date()));
@@ -191,12 +202,21 @@ public class DayActivity extends BaseActivity {
 				0);
 		String stim = sharedPreferences.getString(STIMMUNGS, "");
 		if (!stim.equals("")) {
-			dayNote.setStimmungs(stim);
+			if (stim.equals("-")) {
+				dayNote.setStimmungs(null);
+			} else {
+				dayNote.setStimmungs(stim);
+			}
+
 		}
 
 		String symp = sharedPreferences.getString(SYMPTOMES, "");
 		if (!symp.equals("")) {
-			dayNote.setSymptoms(symp);
+			if (symp.equals("-")) {
+				dayNote.setSymptoms(null);
+			} else {
+				dayNote.setSymptoms(symp);
+			}
 		}
 
 		String men = sharedPreferences.getString(MENSTRUATION, "");
@@ -221,14 +241,9 @@ public class DayActivity extends BaseActivity {
 			dayNote.setIsIntim("false");
 
 		}
-		
+
 		SharedPreferences.Editor editor = sharedPreferences.edit();
-		editor.putString(DATE, "");
-		editor.putString(STIMMUNGS, "");
-		editor.putString(SYMPTOMES, "");
-		editor.putString(MENSTRUATION, "");
-		editor.putString(ARZTTERMIN, "");
-		editor.putString(BEGIN_ENDE, "");
+		editor.remove(PREFERENCES);
 		editor.commit();
 
 		dayNote.setNote(noteStr);
