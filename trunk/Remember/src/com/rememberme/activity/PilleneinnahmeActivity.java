@@ -52,9 +52,9 @@ public class PilleneinnahmeActivity extends BaseActivity {
         dayNote = source.getDayNoteByDate(DayActivity.date);
         source.close();
 		if (dayNote != null) {
-			if (dayNote.getArzttermin() != null
-					&& !dayNote.getArzttermin().equals("")
-					&& !dayNote.getArzttermin().equals("-")) {
+			if (dayNote.getBegin_or_end_pille_date() != null
+					&& !dayNote.getBegin_or_end_pille_date().equals("")
+					&& !dayNote.getBegin_or_end_pille_date().equals("-")) {
 				tb.setChecked(true);
 			} else {
 				tb.setChecked(false);
