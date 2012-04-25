@@ -17,20 +17,30 @@ import java.util.Date;
  */
 public class ArztterminActivity extends BaseActivity {
 	private TimePicker tp;
+	private ToggleButton tb;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.arzttermin_layout);
-        TextView titleText = (TextView) findViewById(R.id.date);
-        tp = (TimePicker) findViewById(R.id.timepicker_az);
-        tp.setIs24HourView(true);
-        if (DayActivity.date == null || DayActivity.date.equals("")) {
-            titleText.setText(DayNote.converDateToString(new Date()));
+		TextView titleText = (TextView) findViewById(R.id.date);
+		tp = (TimePicker) findViewById(R.id.timepicker_az);
+		tp.setIs24HourView(true);
+		if (DayActivity.date == null || DayActivity.date.equals("")) {
+			titleText.setText(DayNote.converDateToString(new Date()));
 
-        } else {
-            titleText.setText(DayActivity.date);
+		} else {
+			titleText.setText(DayActivity.date);
 
-        }
+		}
+		tb= (ToggleButton)findViewById(R.id.toggleButton);
+		DayNote dayNote=DayActivity.dayNote;
+		if(dayNote!=null){
+			if(dayNote.getArzttermin()!=null && !dayNote.getArzttermin().equals("") && !dayNote.getArzttermin().equals("-")){
+				tb.setChecked(true);
+			} else {
+				tb.setChecked(false);
+			}
+		}
 	}
 
 	@Override
