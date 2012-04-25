@@ -335,9 +335,7 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 				mIntim.setVisibility(ImageView.VISIBLE);
 			}
 			if (dayNote.getMenstruation() != null
-					&& !dayNote.getMenstruation().equals("")
-					|| dayNote.getSymptoms() != null
-					&& !dayNote.getSymptoms().equals("")) {
+					&& !dayNote.getMenstruation().equals("")) {
 				mPeriode.setVisibility(ImageView.VISIBLE);
 			}
 			if (dayNote.getArzttermin() != null
@@ -345,8 +343,9 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 				mPlus.setVisibility(ImageView.VISIBLE);
 			}
 
-			if (dayNote.getStimmungs() != null
-					&& !dayNote.getStimmungs().equals("")) {
+			if ((dayNote.getSymptoms() != null
+					&& !dayNote.getSymptoms().equals(""))
+                || (dayNote.getStimmungs()!=null && !dayNote.getStimmungs().equals(""))) {
 				mNotes.setVisibility(ImageView.VISIBLE);
 			}
 			if (dayNote.getBegin_or_end_pille_date() != null
