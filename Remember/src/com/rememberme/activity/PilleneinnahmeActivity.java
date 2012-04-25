@@ -56,6 +56,9 @@ public class PilleneinnahmeActivity extends BaseActivity {
 					&& !dayNote.getBegin_or_end_pille_date().equals("")
 					&& !dayNote.getBegin_or_end_pille_date().equals("-")) {
 				tb.setChecked(true);
+				String[] split = dayNote.getBegin_or_end_pille_date().split(":");
+				tp.setCurrentHour(Integer.parseInt(split[0]));
+				tp.setCurrentMinute(Integer.parseInt(split[1]));
 			} else {
 				tb.setChecked(false);
 			}
