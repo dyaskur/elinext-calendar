@@ -26,16 +26,6 @@
         </TextView>
     </LinearLayout>
 
-    <TimePicker
-        android:id="@+id/timepicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/linearLayout1"
-        android:layout_marginRight="23dp"
-        android:layout_marginTop="98dp"
-        android:gravity="center" />
-
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -51,5 +41,14 @@
             android:textColor="#ffffff"
             android:textSize="10dp" />
     </RelativeLayout>
+
+    <TimePicker
+        android:id="@+id/timepicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="87dp"
+        android:gravity="center" />
 
 </RelativeLayout>
