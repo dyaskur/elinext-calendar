@@ -19,6 +19,7 @@ import android.widget.ToggleButton;
 import com.rememberme.R;
 import com.rememberme.broadcast.PilleneinnahmeReciver;
 import com.rememberme.entity.DayNote;
+import com.rememberme.sqlite.DayNoteDataSource;
 
 /**
  * Created with IntelliJ IDEA. User: Luxor-XP Date: 19.04.12 Time: 1:06 To
@@ -46,7 +47,10 @@ public class PilleneinnahmeActivity extends BaseActivity {
 
 		}
 		tb = (ToggleButton) findViewById(R.id.toggleButton);
-		DayNote dayNote = DayActivity.dayNote;
+        DayNoteDataSource source = new DayNoteDataSource(this);
+        source.open();
+        dayNote = source.getDayNoteByDate(DayActivity.date);
+        source.close();
 		if (dayNote != null) {
 			if (dayNote.getArzttermin() != null
 					&& !dayNote.getArzttermin().equals("")
@@ -91,7 +95,10 @@ public class PilleneinnahmeActivity extends BaseActivity {
 			calendar.add(Calendar.SECOND, mAlarmTime);
 
 			// Schedule the alarm!
-			am = (AlarmManager) getSystemService(ALARM_SERVICE);
+			am = BaseActivity.getAlarmInstance(this);
+			am.cancel(sender);
+			sender = PendingIntent.getBroadcast(PilleneinnahmeActivity.this, 0,
+					intent, 0);
 			am.setRepeating(AlarmManager.RTC_WAKEUP,
 					calendar.getTimeInMillis(), 24 * 60 * 60 * 1000, sender);
 
