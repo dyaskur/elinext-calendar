@@ -1,6 +1,7 @@
 package com.rememberme.activity;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.view.View;
@@ -23,6 +24,7 @@ public class BaseActivity extends Activity {
 	public static DayNote dayNote = new DayNote();
 	private static int daysWhenYearStarted;
 	public static int theFirstDate = 0;
+	private static AlarmManager alarm;
 
 	public void toggle(View v) {
 		CheckedTextView cView = (CheckedTextView) v
@@ -88,5 +90,12 @@ public class BaseActivity extends Activity {
 	public static void initFirstDate(Context context) {
 		firstDay = getFirstDate(context);
 		theFirstDate = getFirstDate(context);
+	}
+	
+	public static AlarmManager getAlarmInstance(Context context){
+		if(alarm==null){
+			alarm=(AlarmManager) context.getSystemService(ALARM_SERVICE);			
+		} 
+		return alarm;
 	}
 }

@@ -8,6 +8,7 @@ import android.widget.ToggleButton;
 
 import com.rememberme.R;
 import com.rememberme.entity.DayNote;
+import com.rememberme.sqlite.DayNoteDataSource;
 
 import java.util.Date;
 
@@ -33,7 +34,10 @@ public class ArztterminActivity extends BaseActivity {
 
 		}
 		tb= (ToggleButton)findViewById(R.id.toggleButton);
-		DayNote dayNote=DayActivity.dayNote;
+        DayNoteDataSource source = new DayNoteDataSource(this);
+        source.open();
+        dayNote = source.getDayNoteByDate(DayActivity.date);
+        source.close();
 		if(dayNote!=null){
 			if(dayNote.getArzttermin()!=null && !dayNote.getArzttermin().equals("") && !dayNote.getArzttermin().equals("-")){
 				tb.setChecked(true);
