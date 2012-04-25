@@ -40,6 +40,8 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 			"November", "December" };
 	private final int[] daysOfMonth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31,
 			30, 31 };
+	private final int[] daysOfMonthUnusual = { 31, 29, 31, 30, 31, 30, 31, 31,
+			30, 31, 30, 31 };
 	private final int month, year;
 	private int daysInMonth, prevMonthDays;
 	private int currentDayOfMonth;
@@ -78,7 +80,7 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 				+ year);
 		Calendar calendar = Calendar.getInstance();
 		setCurrentDayOfMonth(calendar.get(Calendar.DAY_OF_MONTH));
-		setCurrentWeekDay(calendar.get(Calendar.DAY_OF_WEEK));
+		setCurrentWeekDay(getDay(calendar));
 		Log.d(tag, "New Calendar:= " + calendar.getTime().toString());
 		Log.d(tag, "CurrentDayOfWeek :" + getCurrentWeekDay());
 		Log.d(tag, "CurrentDayOfMonth :" + getCurrentDayOfMonth());
@@ -98,8 +100,12 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 		return weekdays[i];
 	}
 
-	private int getNumberOfDaysOfMonth(int i) {
-		return daysOfMonth[i];
+	private int getNumberOfDaysOfMonth(int i, int year) {
+		if (year % 4 == 0) {
+			return daysOfMonthUnusual[i];
+		} else {
+			return daysOfMonth[i];
+		}
 	}
 
 	public String getItem(int position) {
@@ -130,7 +136,7 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 
 		int currentMonth = mm - 1;
 		String currentMonthName = getMonthAsString(currentMonth);
-		daysInMonth = getNumberOfDaysOfMonth(currentMonth);
+		daysInMonth = getNumberOfDaysOfMonth(currentMonth, yy);
 
 		Log.d(tag, "Current Month: " + " " + currentMonthName + " having "
 				+ daysInMonth + " days.");
@@ -141,7 +147,7 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 
 		if (currentMonth == 11) {
 			prevMonth = currentMonth - 1;
-			daysInPrevMonth = getNumberOfDaysOfMonth(prevMonth);
+			daysInPrevMonth = getNumberOfDaysOfMonth(prevMonth, yy);
 			nextMonth = 0;
 			prevYear = yy;
 			nextYear = yy + 1;
@@ -150,7 +156,7 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 			prevMonth = 11;
 			prevYear = yy - 1;
 			nextYear = yy;
-			daysInPrevMonth = getNumberOfDaysOfMonth(prevMonth);
+			daysInPrevMonth = getNumberOfDaysOfMonth(prevMonth, yy);
 			nextMonth = 1;
 
 		} else {
@@ -158,14 +164,14 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 			nextMonth = currentMonth + 1;
 			nextYear = yy;
 			prevYear = yy;
-			daysInPrevMonth = getNumberOfDaysOfMonth(prevMonth);
+			daysInPrevMonth = getNumberOfDaysOfMonth(prevMonth, yy);
 
 		}
 
 		// Compute how much to leave before before the first day of the
 		// month.
 		// getDay() returns 0 for Sunday.
-		int currentWeekDay = cal.get(Calendar.DAY_OF_WEEK) - 1;
+		int currentWeekDay = getDay(cal);
 		trailingSpaces = currentWeekDay;
 
 		if (cal.isLeapYear(cal.get(Calendar.YEAR)) && mm == 1) {
@@ -211,6 +217,12 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 			list.add(String.valueOf(i + 1) + "-GREY" + "-"
 					+ getMonthAsString(nextMonth) + "-" + nextYear);
 		}
+	}
+
+	private int getDay(Calendar cal) {
+		int retVal = cal.get(Calendar.DAY_OF_WEEK) - 2;
+		retVal = retVal < 0 ? 6 : retVal;
+		return retVal;
 	}
 
 	/**
