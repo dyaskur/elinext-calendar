@@ -36,9 +36,14 @@ public class PilleneinnahmeActivity extends BaseActivity {
 	@Override
 	public void onBackPressed() {
 		ToggleButton button = (ToggleButton) findViewById(R.id.toggleButton);
-		if (button.isChecked()) {			
-			String str = tp.getCurrentHour().toString() + ":"
-					+ tp.getCurrentMinute().toString();
+		if (button.isChecked()) {
+
+			String str = tp.getCurrentHour().toString() + ":";
+			if(tp.getCurrentMinute()<10){
+				str+="0" + tp.getCurrentMinute().toString();
+			} else {
+				str+= tp.getCurrentMinute().toString();
+			}					
 
 			SharedPreferences.Editor editor = getSharedPreferences(
 					DayActivity.PREFERENCES, 0).edit();
