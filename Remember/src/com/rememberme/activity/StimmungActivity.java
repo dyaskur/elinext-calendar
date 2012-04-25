@@ -1,6 +1,7 @@
 package com.rememberme.activity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
 
+import android.widget.TextView;
 import com.rememberme.R;
 import com.rememberme.entity.DayNote;
 
@@ -33,6 +35,14 @@ public class StimmungActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.stimmung_layout);
 		super.onCreate(savedInstanceState);
+        TextView titleText = (TextView) findViewById(R.id.date);
+        if (DayActivity.date == null || DayActivity.date.equals("")) {
+            titleText.setText(DayNote.converDateToString(new Date()));
+
+        } else {
+            titleText.setText(DayActivity.date);
+
+        }
 
 		adapter = new AdapterStim(StimmungActivity.this, R.layout.item,
 				R.id.item_name, ITEMS);
