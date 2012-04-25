@@ -115,7 +115,7 @@ public class PilleneinnahmeActivity extends BaseActivity {
 		Notification notification = new Notification(R.drawable.icon, "Notify",
 				System.currentTimeMillis());
 		notification.setLatestEventInfo(context, "RememberMe",
-				"Please,take a pill.",
+				"Pille einnehmen",
 				PendingIntent.getActivity(context, 0, notificationIntent, 0));
 
 		notification.vibrate = new long[] { 100, 200, 100, 500 };
