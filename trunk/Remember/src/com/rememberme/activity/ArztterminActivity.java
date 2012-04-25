@@ -41,6 +41,9 @@ public class ArztterminActivity extends BaseActivity {
 		if(dayNote!=null){
 			if(dayNote.getArzttermin()!=null && !dayNote.getArzttermin().equals("") && !dayNote.getArzttermin().equals("-")){
 				tb.setChecked(true);
+				String[] split = dayNote.getArzttermin().split(":");
+				tp.setCurrentHour(Integer.parseInt(split[0]));
+				tp.setCurrentMinute(Integer.parseInt(split[1]));
 			} else {
 				tb.setChecked(false);
 			}
