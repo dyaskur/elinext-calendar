@@ -1,9 +1,6 @@
 package com.rememberme.activity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -16,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
 
+import android.widget.TextView;
 import com.rememberme.R;
 import com.rememberme.adapter.ItemAdapter;
 import com.rememberme.entity.DayNote;
@@ -37,6 +35,15 @@ public class SymptomeActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.stimmung_layout);
 		super.onCreate(savedInstanceState);
+
+        TextView titleText = (TextView) findViewById(R.id.date);
+        if (DayActivity.date == null || DayActivity.date.equals("")) {
+            titleText.setText(DayNote.converDateToString(new Date()));
+
+        } else {
+            titleText.setText(DayActivity.date);
+
+        }
 
 		adapter = new AdapterSymp(SymptomeActivity.this, R.layout.item,
 				R.id.item_name, ITEMS);
