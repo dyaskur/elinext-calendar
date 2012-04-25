@@ -23,6 +23,7 @@ public class TimePickerActivity extends BaseActivity {
 		setContentView(R.layout.time_picker_layout);
 
 		mTimePicker = (TimePicker) findViewById(R.id.timepicker);
+		mTimePicker.setIs24HourView(true);
 		mTimePicker.setOnTimeChangedListener(new OnTimeChangedListener() {
 
 			@Override
