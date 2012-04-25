@@ -16,11 +16,14 @@ import java.util.Date;
  * change this template use File | Settings | File Templates.
  */
 public class ArztterminActivity extends BaseActivity {
+	private TimePicker tp;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.arzttermin_layout);
         TextView titleText = (TextView) findViewById(R.id.date);
+        tp = (TimePicker) findViewById(R.id.timepicker_az);
+        tp.setIs24HourView(true);
         if (DayActivity.date == null || DayActivity.date.equals("")) {
             titleText.setText(DayNote.converDateToString(new Date()));
 
@@ -33,8 +36,7 @@ public class ArztterminActivity extends BaseActivity {
 	@Override
 	public void onBackPressed() {
 		ToggleButton button = (ToggleButton) findViewById(R.id.toggleButton);
-		if (button.isChecked()) {
-			TimePicker tp = (TimePicker) findViewById(R.id.timepicker_az);
+		if (button.isChecked()) {			
 			String string = tp.getCurrentHour().toString() + ":"
 					+ tp.getCurrentMinute().toString();
 
