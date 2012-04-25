@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -63,9 +64,12 @@ public class AlarmActivity extends BaseActivity {
 	private int hoursOfDay;
 	private LinearLayout mTime;
 	private LinearLayout mSound;
+	private SharedPreferences sharedPreferences;
+	private SharedPreferences.Editor editor;
 
 	private int minute;
 	private int mCurrentSound;
+	private final static String ALARM_STATUS = "alarm_status";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -82,14 +86,21 @@ public class AlarmActivity extends BaseActivity {
 		mSound = (LinearLayout) findViewById(R.id.sound);
 		mSound.setOnClickListener(OnSoundButtonClick());
 		mBigClock = (TextView) findViewById(R.id.big_clock);
-		SharedPreferences sharedPreferences = getSharedPreferences(REMEMBERME,
-				MODE_WORLD_READABLE);
+
+		sharedPreferences = getSharedPreferences(REMEMBERME,
+				MODE_WORLD_WRITEABLE);
+		editor = sharedPreferences.edit();
 
 		if (sharedPreferences.contains(TimePickerActivity.HOURS_OF_DAY)
 				&& sharedPreferences.contains(SoundActivity.CURRENT_SOUND)) {
 			mToggleButton.setEnabled(true);
+
 		} else {
 			mToggleButton.setEnabled(false);
+		}
+
+		if (sharedPreferences.getString(ALARM_STATUS, "").equals("on")) {
+			mToggleButton.setChecked(true);
 		}
 
 	}
@@ -103,41 +114,60 @@ public class AlarmActivity extends BaseActivity {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView,
 					boolean isChecked) {
+
 				if (isChecked) {
+					if (sharedPreferences.contains(ALARM_STATUS)) {
+						if (sharedPreferences.getString(ALARM_STATUS, "")
+								.equals("off")) {
 
-					Intent intent = new Intent(AlarmActivity.this,
-							AlarmReciver.class);
+							Intent intent = new Intent(AlarmActivity.this,
+									AlarmReciver.class);
 
-					intent.putExtra(SoundActivity.CURRENT_SOUND, mCurrentSound);
-					sender = PendingIntent.getBroadcast(AlarmActivity.this, 0,
-							intent, 0);
+							intent.putExtra(SoundActivity.CURRENT_SOUND,
+									mCurrentSound);
+							sender = PendingIntent.getBroadcast(
+									AlarmActivity.this, 0, intent, 0);
 
-					Calendar calendar = Calendar.getInstance();
-					calendar.setTimeInMillis(System.currentTimeMillis());
-					int mCurrentHours = calendar.get(Calendar.HOUR_OF_DAY);
-					int mCurrentMinutes = calendar.get(Calendar.MINUTE);
+							Calendar calendar = Calendar.getInstance();
+							calendar.setTimeInMillis(System.currentTimeMillis());
+							int mCurrentHours = calendar
+									.get(Calendar.HOUR_OF_DAY);
+							int mCurrentMinutes = calendar.get(Calendar.MINUTE);
 
-					int mAlarmTime = ((hoursOfDay - mCurrentHours) * 60 + (minute - mCurrentMinutes)) * 60;
+							int mAlarmTime = ((hoursOfDay - mCurrentHours) * 60 + (minute - mCurrentMinutes)) * 60;
 
-					calendar.add(Calendar.SECOND, mAlarmTime);
+							calendar.add(Calendar.SECOND, mAlarmTime);
 
-					// Schedule the alarm!
-					am = (AlarmManager) getSystemService(ALARM_SERVICE);
-					am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
-							sender);
+							// Schedule the alarm!
+							am = (AlarmManager) getSystemService(ALARM_SERVICE);
+							am.set(AlarmManager.RTC_WAKEUP,
+									calendar.getTimeInMillis(), sender);
 
-					// Tell the user about what we did.
-					if (mToast != null) {
-						mToast.cancel();
+							// Tell the user about what we did.
+							if (mToast != null) {
+								mToast.cancel();
+							}
+							mToast = Toast
+									.makeText(AlarmActivity.this,
+											R.string.alarm_scheduled,
+											Toast.LENGTH_LONG);
+							mToast.show();
+							editor.putString(ALARM_STATUS, "on");
+							editor.commit();
+						}
+					} else {
+						editor.putString(ALARM_STATUS, "off");
+						editor.commit();
 					}
-					mToast = Toast.makeText(AlarmActivity.this,
-							R.string.alarm_scheduled, Toast.LENGTH_LONG);
-					mToast.show();
+
 				} else {
 					if (am != null) {
 						am.cancel(sender);
 						AlarmActivity.stopPlaySound();
+
 					}
+					editor.putString(ALARM_STATUS, "off");
+					editor.commit();
 				}
 
 			}
@@ -198,6 +228,9 @@ public class AlarmActivity extends BaseActivity {
 			mToggleButton.setEnabled(true);
 		} else {
 			mToggleButton.setEnabled(false);
+		}
+		if (sharedPreferences.getString(ALARM_STATUS, "").equals("on")) {
+			mToggleButton.setChecked(true);
 		}
 
 		super.onResume();
