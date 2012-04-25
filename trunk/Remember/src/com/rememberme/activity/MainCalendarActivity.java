@@ -9,11 +9,7 @@ import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.*;
 
 import com.rememberme.R;
 import com.rememberme.adapter.GridCellAdapter;
@@ -39,6 +35,7 @@ public class MainCalendarActivity extends BaseActivity implements
 	private TextView mStimung;
 	private TextView mMenstruation;
 	private TextView mTime;
+    private static ImageView plus;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -64,6 +61,7 @@ public class MainCalendarActivity extends BaseActivity implements
 		calendarView = (GridView) this.findViewById(R.id.calendar);
 
 		mInfo = (LinearLayout) this.findViewById(R.id.info);
+        plus = (ImageView) this.findViewById(R.id.plus_btn);
 
 		mInfo.setOnClickListener(new OnClickListener() {
 
@@ -171,9 +169,13 @@ public class MainCalendarActivity extends BaseActivity implements
 			startActivity(intent);
 			break;
 		case R.id.plus_btn:
-			intent = new Intent(MainCalendarActivity.this, DayActivity.class);
-			DayActivity.date = day_month_year;
-			startActivity(intent);
+            if (plus.isEnabled()){
+			    intent = new Intent(MainCalendarActivity.this, DayActivity.class);
+			    DayActivity.date = day_month_year;
+			    startActivity(intent);
+            } else {
+                Toast.makeText(this,"Please,select a day.",Toast.LENGTH_LONG).show();
+            }
 			break;
 
 		default:
@@ -187,7 +189,7 @@ public class MainCalendarActivity extends BaseActivity implements
 		super.onDestroy();
 	}
 
-	// "•";
+	// "â€¢";
 
 	private String checkIfEqualsNull(String str) {
 		if (str == null) {
@@ -205,7 +207,7 @@ public class MainCalendarActivity extends BaseActivity implements
 			String sypm = "";
 			String spacer_sym = "                     ";
 			for (String i : dayNote.getNormalizedSymptoms()) {
-				sypm += "• " + i + "\n" + spacer_sym;
+				sypm += "â€¢ " + i + "\n" + spacer_sym;
 			}
 
 			mSympt.setText(getString(R.string.symptome_) + sypm);
@@ -213,7 +215,7 @@ public class MainCalendarActivity extends BaseActivity implements
 			String stim = "";
 			String spacer_stim = "                    ";
 			for (String i : dayNote.getNormalizedStimmungs()) {
-				stim += "• " + i + "\n" + spacer_stim;
+				stim += "â€¢ " + i + "\n" + spacer_stim;
 
 			}
 
@@ -242,10 +244,13 @@ public class MainCalendarActivity extends BaseActivity implements
 	
 	public static void enable () {
 		mInfo.setVisibility(LinearLayout.VISIBLE);
+        plus.setEnabled(true);
+
 	}
 	
 	public static void disable () {
 		mInfo.setVisibility(LinearLayout.INVISIBLE);
+        plus.setEnabled(false);
 	}
 	
 }
