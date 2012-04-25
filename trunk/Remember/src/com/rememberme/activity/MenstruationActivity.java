@@ -1,5 +1,6 @@
 package com.rememberme.activity;
 
+import java.util.Date;
 import java.util.HashMap;
 
 import android.content.SharedPreferences;
@@ -9,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.CheckedTextView;
 import android.widget.ListView;
 
+import android.widget.TextView;
 import com.rememberme.R;
 import com.rememberme.adapter.MenstrItemAdapter;
 import com.rememberme.entity.DayNote;
@@ -28,6 +30,15 @@ public class MenstruationActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.stimmung_layout);
 		super.onCreate(savedInstanceState);
+
+        TextView titleText = (TextView) findViewById(R.id.date);
+        if (DayActivity.date == null || DayActivity.date.equals("")) {
+            titleText.setText(DayNote.converDateToString(new Date()));
+
+        } else {
+            titleText.setText(DayActivity.date);
+
+        }
 		
 		DayNote dayNote = DayActivity.dayNote;
 		String selected = "";
