@@ -207,7 +207,7 @@ public class MainCalendarActivity extends BaseActivity implements
 			String sypm = "";
 			String spacer_sym = "                     ";
 			for (String i : dayNote.getNormalizedSymptoms()) {
-				sypm += "â€¢ " + i + "\n" + spacer_sym;
+				sypm += "• " + i + "\n" + spacer_sym;
 			}
 
 			mSympt.setText(getString(R.string.symptome_) + sypm);
@@ -215,7 +215,7 @@ public class MainCalendarActivity extends BaseActivity implements
 			String stim = "";
 			String spacer_stim = "                    ";
 			for (String i : dayNote.getNormalizedStimmungs()) {
-				stim += "â€¢ " + i + "\n" + spacer_stim;
+				stim += "• " + i + "\n" + spacer_stim;
 
 			}
 
