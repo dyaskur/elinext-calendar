@@ -2,10 +2,14 @@ package com.rememberme.activity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.ToggleButton;
 
 import com.rememberme.R;
+import com.rememberme.entity.DayNote;
+
+import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA. User: Luxor-XP Date: 19.04.12 Time: 1:06 To
@@ -16,6 +20,14 @@ public class PilleneinnahmeActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.pilleneinnahme_layout);
+        TextView titleText = (TextView) findViewById(R.id.date);
+        if (DayActivity.date == null || DayActivity.date.equals("")) {
+            titleText.setText(DayNote.converDateToString(new Date()));
+
+        } else {
+            titleText.setText(DayActivity.date);
+
+        }
 	}
 
 	@Override
