@@ -8,7 +8,7 @@
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="fill_parent"
-        android:layout_height="180dp"
+        android:layout_height="190dp"
         android:background="@drawable/pillenwecker_bg" >
 
         <TextView
@@ -16,9 +16,10 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="20dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
+            android:gravity="center"
             android:text="Bitte hier die Uhrzeit für Deinen täglichen Pillenwecker eingeben: "
             android:textColor="#ffffff"
             android:textSize="16dp" >
@@ -45,7 +46,8 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Für eine ordnungsgemäße Funtion muss die App innerhalb von 30 Tagen wieder geöffnet werden!"
+            android:gravity="center"
+            android:text="Für eine ordnungsgemäße Funktion muss die App innerhalb von 30 Tage wieder geöffnet werden!"
             android:textColor="#ffffff"
             android:textSize="10dp" />
     </RelativeLayout>
