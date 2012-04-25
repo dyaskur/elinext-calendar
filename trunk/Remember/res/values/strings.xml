@@ -13,7 +13,7 @@
     <string name="stimmung_">"Stimmung: "</string>
     <string name="symptome_">"Symptome: "</string>
     <string name="notiz_">"Notiz: "</string>
-    <string name="heir_kannst_du_deine_notiz_eingeben_">Heir kannst du deine Notiz eingeben!</string>
+    <string name="heir_kannst_du_deine_notiz_eingeben_">Hier kannst du deine Notiz eingeben!</string>
     <string name="begin_ende_pilleneinnahme">Begin/Ende Pilleneinnahme</string>
 
 </resources>
