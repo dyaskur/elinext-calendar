@@ -90,9 +90,11 @@
 
                     <ImageView
                         android:id="@+id/prevMonth"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/calendar_left_arrow_selector" >
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/calendar_left_arrow_selector" 
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="15dp">
                     </ImageView>
 
                     <Button
@@ -104,14 +106,17 @@
                         android:background="@android:color/transparent"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="#3b4958"
-                        android:textSize="18dp" >
+                        android:textSize="18dp" 
+                        android:textStyle="bold">
                     </Button>
 
                     <ImageView
                         android:id="@+id/nextMonth"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/calendar_right_arrow_selector" >
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:src="@drawable/calendar_right_arrow_selector" 
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="15dp">
                     </ImageView>
                 </LinearLayout>
             </LinearLayout>
