@@ -37,12 +37,16 @@ public class ArztterminActivity extends BaseActivity {
 	public void onBackPressed() {
 		ToggleButton button = (ToggleButton) findViewById(R.id.toggleButton);
 		if (button.isChecked()) {			
-			String string = tp.getCurrentHour().toString() + ":"
-					+ tp.getCurrentMinute().toString();
+			String str = tp.getCurrentHour().toString() + ":";
+			if(tp.getCurrentMinute()<10){
+				str+="0" + tp.getCurrentMinute().toString();
+			} else {
+				str+= tp.getCurrentMinute().toString();
+			}	
 
 			SharedPreferences.Editor editor = getSharedPreferences(
 					DayActivity.PREFERENCES, 0).edit();
-			editor.putString(DayActivity.ARZTTERMIN, string);
+			editor.putString(DayActivity.ARZTTERMIN, str);
 			editor.commit();
 		} else {
 			String string = "-";
