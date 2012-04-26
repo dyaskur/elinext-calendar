@@ -3,7 +3,7 @@
      <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"    
-    android:orientation="vertical" >
+    android:orientation="vertical" >
 -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -90,11 +90,10 @@
 
                     <ImageView
                         android:id="@+id/prevMonth"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:src="@drawable/calendar_left_arrow_selector" 
+                        android:layout_width="45dp"
+                        android:layout_height="20dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginLeft="15dp">
+                        android:src="@drawable/calendar_left_arrow_selector" >
                     </ImageView>
 
                     <Button
@@ -106,17 +105,16 @@
                         android:background="@android:color/transparent"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="#3b4958"
-                        android:textSize="18dp" 
-                        android:textStyle="bold">
+                        android:textSize="18dp"
+                        android:textStyle="bold" >
                     </Button>
 
                     <ImageView
                         android:id="@+id/nextMonth"
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
-                        android:src="@drawable/calendar_right_arrow_selector" 
+                        android:layout_width="45dp"
+                        android:layout_height="20dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginRight="15dp">
+                        android:src="@drawable/calendar_right_arrow_selector" >
                     </ImageView>
                 </LinearLayout>
             </LinearLayout>
@@ -124,7 +122,7 @@
             <GridView
                 android:id="@+id/calendar"
                 android:layout_width="fill_parent"
-                android:layout_height="235dp"
+                android:layout_height="275dp"
                 android:layout_below="@id/sec_button_set"
                 android:numColumns="7" >
             </GridView>
@@ -135,8 +133,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/calendar"
                 android:layout_marginBottom="30dp"
-                android:layout_marginTop="10dp"
                 android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
                 android:orientation="vertical"
                 android:visibility="invisible" >
 
