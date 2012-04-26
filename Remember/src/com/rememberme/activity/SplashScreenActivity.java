@@ -42,7 +42,14 @@ public class SplashScreenActivity extends BaseActivity {
 						SharedPreferences.Editor editor = getSharedPreferences(
 								FIRST_LAUNCH, 0).edit();
 						editor.putBoolean(FIRST_LAUNCH, true);
+						
 						editor.commit();
+						
+						SharedPreferences sharedPreferences1 = getSharedPreferences(REMEMBERME, MODE_WORLD_WRITEABLE);
+						SharedPreferences.Editor editor1 = sharedPreferences1.edit();
+						editor1.putString(AlarmActivity.ALARM_STATUS, "off");
+						editor1.commit();
+						
 
 						startActivity(new Intent(SplashScreenActivity.this,
 								FirstLaunch.class));

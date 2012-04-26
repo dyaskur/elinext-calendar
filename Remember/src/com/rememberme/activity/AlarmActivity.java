@@ -69,7 +69,7 @@ public class AlarmActivity extends BaseActivity {
 
 	private int minute;
 	private int mCurrentSound;
-	private final static String ALARM_STATUS = "alarm_status";
+	public final static String ALARM_STATUS = "alarm_status";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -154,10 +154,10 @@ public class AlarmActivity extends BaseActivity {
 							mToast.show();
 							editor.putString(ALARM_STATUS, "on");
 							editor.commit();
+						} else {
+							editor.putString(ALARM_STATUS, "on");
+							editor.commit();
 						}
-					} else {
-						editor.putString(ALARM_STATUS, "off");
-						editor.commit();
 					}
 
 				} else {
