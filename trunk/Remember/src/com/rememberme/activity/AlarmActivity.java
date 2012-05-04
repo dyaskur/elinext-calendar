@@ -55,7 +55,7 @@ public class AlarmActivity extends BaseActivity {
 
 	private final static String TAG = "AlarmActivity";
 	private Toast mToast;
-	private ToggleButton mToggleButton;
+	private static ToggleButton mToggleButton;
 	private TextView mTimeValue;
 	private TextView mSoundValue;
 	private TextView mBigClock;
@@ -64,7 +64,7 @@ public class AlarmActivity extends BaseActivity {
 	private int hoursOfDay;
 	private LinearLayout mTime;
 	private LinearLayout mSound;
-	private SharedPreferences sharedPreferences;
+	private static SharedPreferences sharedPreferences;
 	private SharedPreferences.Editor editor;
 
 	private int minute;
@@ -140,8 +140,9 @@ public class AlarmActivity extends BaseActivity {
 
 							// Schedule the alarm!
 							am = (AlarmManager) getSystemService(ALARM_SERVICE);
-							am.set(AlarmManager.RTC_WAKEUP,
-									calendar.getTimeInMillis(), sender);
+							am.setRepeating(AlarmManager.RTC_WAKEUP,
+									calendar.getTimeInMillis(), 6 * 1000,
+									sender);
 
 							// Tell the user about what we did.
 							if (mToast != null) {
@@ -258,13 +259,44 @@ public class AlarmActivity extends BaseActivity {
 			default:
 				break;
 			}
+			if (sharedPreferences.contains(COUNT)) {
+				int count = sharedPreferences.getInt(COUNT, 0);
+				SharedPreferences.Editor editor = sharedPreferences.edit();
+				if (count <= 20 && count > 0) {
+					mMediaPlayer.start();
 
-			mMediaPlayer.start();
+					editor.remove(COUNT);
+					editor.commit();
+					count = count + 1;
+					editor.putInt(COUNT, count);
+					editor.commit();
+
+					showDialog(context);
+
+				} else if (count <= 0 || (count > 20 && count < 28)) {
+					count = count + 1;
+					editor.putInt(COUNT, count);
+					editor.commit();
+				}
+				if (count == 28) {
+					editor.remove(COUNT);
+					editor.commit();
+					editor.putInt(COUNT, 0);
+					editor.commit();
+				}
+				Toast.makeText(context, " " + count, Toast.LENGTH_SHORT).show();
+			}
 
 		} catch (Exception e) {
 			Log.e(TAG, "error: " + e.getMessage(), e);
 		}
 
+	}
+
+	private static void showDialog(Context context) {
+		Intent mIntent = new Intent(context, DialogActivity.class);
+		mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		context.startActivity(mIntent);
 	}
 
 	public static void stopPlaySound() {
@@ -273,4 +305,14 @@ public class AlarmActivity extends BaseActivity {
 			mMediaPlayer = null;
 		}
 	}
+
+	public static void turnOffButton(Context context) {
+		mToggleButton.setChecked(false);
+		SharedPreferences sharedPreferences = context.getSharedPreferences(
+				REMEMBERME, MODE_WORLD_WRITEABLE);
+		if (sharedPreferences.contains(ALARM_STATUS)) {
+			sharedPreferences.edit().putString(ALARM_STATUS, "off");
+		}
+	}
+
 }

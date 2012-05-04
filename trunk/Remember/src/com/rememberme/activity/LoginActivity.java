@@ -1,7 +1,5 @@
 package com.rememberme.activity;
 
-import java.util.List;
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -9,8 +7,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.rememberme.R;
-import com.rememberme.entity.DayNote;
-import com.rememberme.sqlite.DayNoteDataSource;
 
 /**
  * Created with IntelliJ IDEA. User: User Date: 4/17/12 Time: 3:41 PM To change

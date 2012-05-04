@@ -63,6 +63,11 @@
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
         </activity>
         <activity
+            android:name=".activity.DialogActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+        <activity
             android:name=".activity.SymptomeActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
@@ -85,7 +90,8 @@
         <activity
             android:name=".activity.DayActivity"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
             android:name=".activity.PasswordChangeActivity"
@@ -103,11 +109,7 @@
                 <action android:name="com.rememberme.activity.intent" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".broadcast.PilleneinnahmeReciver" >
-            <intent-filter>
-                <action android:name="com.rememberme.activity.intent" />
-            </intent-filter>
-        </receiver>
+        
     </application>
 
 </manifest>
