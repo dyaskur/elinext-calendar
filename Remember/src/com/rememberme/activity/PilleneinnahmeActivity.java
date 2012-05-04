@@ -1,9 +1,7 @@
 package com.rememberme.activity;
 
-import java.util.Calendar;
 import java.util.Date;
 
-import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -17,7 +15,6 @@ import android.widget.TimePicker;
 import android.widget.ToggleButton;
 
 import com.rememberme.R;
-import com.rememberme.broadcast.PilleneinnahmeReciver;
 import com.rememberme.entity.DayNote;
 import com.rememberme.sqlite.DayNoteDataSource;
 
@@ -29,8 +26,6 @@ public class PilleneinnahmeActivity extends BaseActivity {
 	private static MediaPlayer mMediaPlayer;
 	private TimePicker tp;
 	private ToggleButton tb;
-	private PendingIntent sender;
-	private AlarmManager am;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -81,31 +76,6 @@ public class PilleneinnahmeActivity extends BaseActivity {
 					DayActivity.PREFERENCES, 0).edit();
 			editor.putString(DayActivity.BEGIN_ENDE, str);
 			editor.commit();
-			Intent intent = new Intent(PilleneinnahmeActivity.this,
-					PilleneinnahmeReciver.class);
-
-			sender = PendingIntent.getBroadcast(PilleneinnahmeActivity.this, 0,
-					intent, 0);
-
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTimeInMillis(System.currentTimeMillis());
-			int mCurrentHours = calendar.get(Calendar.HOUR_OF_DAY);
-			int mCurrentMinutes = calendar.get(Calendar.MINUTE);
-
-			int mAlarmTime = ((tp.getCurrentHour() - mCurrentHours) * 60 + (tp
-					.getCurrentMinute() - mCurrentMinutes)) * 60;
-
-			calendar.add(Calendar.SECOND, mAlarmTime);
-
-			// Schedule the alarm!
-			am = BaseActivity.getAlarmInstance(this);
-			am.cancel(sender);
-			sender = PendingIntent.getBroadcast(PilleneinnahmeActivity.this, 0,
-					intent, 0);
-			am.setRepeating(AlarmManager.RTC_WAKEUP,
-					calendar.getTimeInMillis(), 24 * 60 * 60 * 1000, sender);
-
-			// Tell the user about what we did.
 
 		} else {
 			String str = "-";
@@ -118,28 +88,5 @@ public class PilleneinnahmeActivity extends BaseActivity {
 		finish();
 	}
 
-	public static void showNotification(Context context) {
-		Intent notificationIntent = new Intent(context, Notification.class);
-		NotificationManager notificationManager = (NotificationManager) context
-				.getSystemService(Context.NOTIFICATION_SERVICE);
-		Notification notification = new Notification(R.drawable.icon, "Notify",
-				System.currentTimeMillis());
-		notification.setLatestEventInfo(context, "RememberMe",
-				"Pille einnehmen",
-				PendingIntent.getActivity(context, 0, notificationIntent, 0));
-
-		notification.vibrate = new long[] { 100, 200, 100, 500 };
-		notificationManager.notify(0, notification);
-
-		notification.flags |= Notification.FLAG_ONLY_ALERT_ONCE
-				| Notification.FLAG_AUTO_CANCEL;
-		mMediaPlayer = MediaPlayer.create(context, R.raw.soft_bells);
-		mMediaPlayer.start();
-		// notificationManager.cancel(0);
-		/*
-		 * if (mMediaPlayer != null) { mMediaPlayer.release(); mMediaPlayer =
-		 * null; }
-		 */
-	}
 
 }

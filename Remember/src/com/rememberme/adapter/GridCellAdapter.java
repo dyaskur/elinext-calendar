@@ -316,6 +316,8 @@ public class GridCellAdapter extends BaseAdapter implements OnClickListener {
 					|| getDayPosition(theday + "-" + themonth + "-" + theyear) > BaseActivity.firstDay + 28) {
 				mPille.setVisibility(ImageView.VISIBLE);
 				counter++;
+				
+
 			} else {
 				mPille.setVisibility(ImageView.INVISIBLE);
 			}

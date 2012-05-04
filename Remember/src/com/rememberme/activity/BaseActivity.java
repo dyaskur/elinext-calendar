@@ -3,6 +3,7 @@ package com.rememberme.activity;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.View;
 import android.widget.CheckedTextView;
@@ -14,6 +15,7 @@ public class BaseActivity extends Activity {
 
 	public final static String REMEMBERME = "remember_me";
 	public final static String FIRST_DAY = "first_day";
+	public final static String COUNT = "count";
 	public static int firstDay = 0;
 	private final static String[] months = { "January", "February", "March",
 			"April", "May", "June", "July", "August", "September", "October",
@@ -91,11 +93,13 @@ public class BaseActivity extends Activity {
 		firstDay = getFirstDate(context);
 		theFirstDate = getFirstDate(context);
 	}
-	
-	public static AlarmManager getAlarmInstance(Context context){
-		if(alarm==null){
-			alarm=(AlarmManager) context.getSystemService(ALARM_SERVICE);			
-		} 
+
+	public static AlarmManager getAlarmInstance(Context context) {
+		if (alarm == null) {
+			alarm = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+		}
 		return alarm;
 	}
+
+	
 }
