@@ -7,7 +7,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -141,8 +140,8 @@ public class AlarmActivity extends BaseActivity {
 							// Schedule the alarm!
 							am = (AlarmManager) getSystemService(ALARM_SERVICE);
 							am.setRepeating(AlarmManager.RTC_WAKEUP,
-									calendar.getTimeInMillis(), 6 * 1000,
-									sender);
+									calendar.getTimeInMillis(),
+									24 * 60 * 60 * 1000, sender);
 
 							// Tell the user about what we did.
 							if (mToast != null) {

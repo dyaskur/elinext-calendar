@@ -14,15 +14,18 @@
         android:text="17 april 2012"
         android:textColor="#FFFFFF" />
 
-    <!-- <LinearLayout
+    <!--
+    <LinearLayout
         android:layout_width="1dp"
         android:layout_height="1dp"
         android:background="@android:color/transparent"
         android:focusable="true"
         android:focusableInTouchMode="true" >
-    </LinearLayout> -->
+    </LinearLayout>
+    -->
 
     <ScrollView
+        android:id="@+id/scroll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp" >

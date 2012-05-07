@@ -1,15 +1,20 @@
 package com.rememberme.activity;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.*;
+import android.widget.Button;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rememberme.R;
 import com.rememberme.adapter.GridCellAdapter;
@@ -36,6 +41,7 @@ public class MainCalendarActivity extends BaseActivity implements
 	private TextView mMenstruation;
 	private TextView mTime;
     private static ImageView plus;
+    private SimpleDateFormat formatter ;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -52,8 +58,8 @@ public class MainCalendarActivity extends BaseActivity implements
 		prevMonth.setOnClickListener(this);
 
 		currentMonth = (Button) this.findViewById(R.id.currentMonth);
-		currentMonth.setText(DateFormat.format(dateTemplate,
-				_calendar.getTime()));
+		formatter = new SimpleDateFormat(dateTemplate, Locale.GERMAN);
+		currentMonth.setText(formatter.format(_calendar.getTime()));
 
 		nextMonth = (ImageView) this.findViewById(R.id.nextMonth);
 		nextMonth.setOnClickListener(this);
@@ -114,8 +120,7 @@ public class MainCalendarActivity extends BaseActivity implements
 		adapter = new GridCellAdapter(getApplicationContext(),
 				R.id.calendar_day_gridcell, month, year, this);
 		_calendar.set(year, month - 1, _calendar.get(Calendar.DAY_OF_MONTH));
-		currentMonth.setText(DateFormat.format(dateTemplate,
-				_calendar.getTime()));
+		currentMonth.setText(formatter.format(_calendar.getTime()));
 		adapter.notifyDataSetChanged();
 		calendarView.setAdapter(adapter);
 
@@ -189,7 +194,7 @@ public class MainCalendarActivity extends BaseActivity implements
 		super.onDestroy();
 	}
 
-	// "•";
+	// "вЂў";
 
 	private String checkIfEqualsNull(String str) {
 		if (str == null) {
@@ -207,7 +212,7 @@ public class MainCalendarActivity extends BaseActivity implements
 			String sypm = "";
 			String spacer_sym = "                     ";
 			for (String i : dayNote.getNormalizedSymptoms()) {
-				sypm += "� " + i + "\n" + spacer_sym;
+				sypm += "• " + i + "\n" + spacer_sym;
 			}
 
 			mSympt.setText(getString(R.string.symptome_) + sypm);
@@ -215,7 +220,7 @@ public class MainCalendarActivity extends BaseActivity implements
 			String stim = "";
 			String spacer_stim = "                    ";
 			for (String i : dayNote.getNormalizedStimmungs()) {
-				stim += "� " + i + "\n" + spacer_stim;
+				stim += "• " + i + "\n" + spacer_stim;
 
 			}
 
