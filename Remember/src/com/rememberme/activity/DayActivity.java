@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckedTextView;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,12 +36,13 @@ public class DayActivity extends BaseActivity {
 	private TextView arzttermine;
 	private boolean state = true;
 	private EditText note;
+	private ScrollView scrollView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.day_selected);
-
+		scrollView=(ScrollView)findViewById(R.id.scroll);
 		pilleneinnahme = (TextView) findViewById(R.id.begin_time);
 		arzttermine = (TextView) findViewById(R.id.arzttermin_time);
 
@@ -168,7 +170,8 @@ public class DayActivity extends BaseActivity {
 		
 		@Override
 		public void onClick(View v) {
-			note.setText("");			
+			if(note.getText().toString().equals(getString(R.string.heir_kannst_du_deine_notiz_eingeben_)))
+				note.setText("");			
 		}
 	};
 
@@ -263,8 +266,21 @@ public class DayActivity extends BaseActivity {
 				intim.setCheckMarkDrawable(R.drawable.btn_check_on);
 			}
 		}
+		
+		scrollToTop();
+
 
 	}
+	
+    private void scrollToTop() {
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.fullScroll(ScrollView.FOCUS_UP);
+            }
+        });
+
+    }
 
 	@Override
 	public void onBackPressed() {
