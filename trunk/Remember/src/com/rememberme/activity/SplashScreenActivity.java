@@ -30,10 +30,8 @@ public class SplashScreenActivity extends BaseActivity {
 			public void run() {
 
 				try {
-					Thread.sleep(3000);
+					Thread.sleep(2000);
 
-					boolean isRequestAuth = mPreferences.getBoolean(
-							PasswordChangeActivity.AUTH_REQURED, false);
 
 					boolean launch = getSharedPreferences(FIRST_LAUNCH, 0)
 							.getBoolean(FIRST_LAUNCH, false);
@@ -55,9 +53,8 @@ public class SplashScreenActivity extends BaseActivity {
 								FirstLaunch.class));
 						finish();
 
-					} else {
-						auth(isRequestAuth);
-						
+					}  else {
+						startActivity(new Intent(getApplicationContext(), MainCalendarActivity.class));
 					}
 
 				} catch (InterruptedException e) {
@@ -66,15 +63,7 @@ public class SplashScreenActivity extends BaseActivity {
 
 			}
 
-			private void auth(boolean isRequestAuth) {
-				if (isRequestAuth) {
-					requestAuth();
-				} else {
-					startActivity(new Intent(getApplicationContext(),
-							MainCalendarActivity.class));
-					finish();
-				}
-			}
+			
 		});
 		thread.start();
 
@@ -92,23 +81,6 @@ public class SplashScreenActivity extends BaseActivity {
 		// DO Nothing;
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode == REQUEST_AUTH) {
-			if (resultCode == RESULT_OK) {
-				startActivity(new Intent(this, MainCalendarActivity.class));
-				finish();
 
-			} else {
-				requestAuth();
-			}
-		}
-	}
-
-	protected void requestAuth() {
-		Intent intent = new Intent(SplashScreenActivity.this,
-				LoginActivity.class);
-		startActivityForResult(intent, REQUEST_AUTH);
-	}
 
 }
