@@ -13,6 +13,8 @@ import com.rememberme.entity.DayNote;
 
 public class BaseActivity extends Activity {
 
+	private static final int REQUEST_AUTH = 0;
+	static final String FIRST_LAUNCH = "if_first_launch";
 	public final static String REMEMBERME = "remember_me";
 	public final static String FIRST_DAY = "first_day";
 	public final static String COUNT = "count";
@@ -27,6 +29,7 @@ public class BaseActivity extends Activity {
 	private static int daysWhenYearStarted;
 	public static int theFirstDate = 0;
 	private static AlarmManager alarm;
+	private static long latIteraction = 0;
 
 	public void toggle(View v) {
 		CheckedTextView cView = (CheckedTextView) v
@@ -101,5 +104,115 @@ public class BaseActivity extends Activity {
 		return alarm;
 	}
 
+	@Override
+	public void onUserInteraction() {
+		super.onUserInteraction();
+		latIteraction = System.currentTimeMillis();
+	}
+
+	// @Override
+	// protected void onCreate(Bundle savedInstanceState) {
+	// super.onCreate(savedInstanceState);
+	// Log.i("TEST", "onCreate"+"|" + this.getClass().getName());
+	// }
+	//
+	// @Override
+	// protected void onStart() {
+	// super.onStart();
+	// Log.i("TEST", "onStart" +"|" + this.getClass().getName());
+	// }
+	//
+	@Override
+	protected void onResume() {
+		super.onResume();
+		long div = System.currentTimeMillis() - latIteraction;
+		if (div > 10000) {
+			perfomChaeck();
+		}
+	}
+
+	//
+	// @Override
+	// protected void onPause() {
+	// super.onPause();
+	// trigerCheck = trigerCheck? false: true;
+	// Log.i("TEST", "onPause" +"|" + this.getClass().getName());
+	// }
+	//
+	// @Override
+	// protected void onStop() {
+	// super.onStop();
+	// trigerCheck = trigerCheck? false: true;
+	// Log.i("TEST", "onStop" +"|" + this.getClass().getName());
+	// }
+	//
+	// @Override
+	// protected void onDestroy() {
+	// super.onDestroy();
+	// Log.i("TEST", "onDestroy" +"|" + this.getClass().getName()) ;
+	// }
+	//
+	// @Override
+	// protected void onRestart() {
+	// super.onRestart();
+	// Log.i("TEST", "onRestart" +"|" + this.getClass().getName());
+	// }
+	//
+	// @Override
+	// protected void onNewIntent(Intent intent) {
+	// super.onNewIntent(intent);
+	// Log.i("TEST", "onNewIntentnt" +"|" + this.getClass().getName());
+	// }
+
+	private void perfomChaeck() {
+		SharedPreferences preferences = getSharedPreferences(PasswordChangeActivity.PREF_AUTH,
+				MODE_PRIVATE);
+		boolean isRequestAuth = preferences .getBoolean(
+				PasswordChangeActivity.AUTH_REQURED, false);
+
+		boolean launch = getSharedPreferences(FIRST_LAUNCH, 0).getBoolean(
+				FIRST_LAUNCH, false);
+
+		if (launch == false) {
+			SharedPreferences.Editor editor = getSharedPreferences(
+					FIRST_LAUNCH, 0).edit();
+			editor.putBoolean(FIRST_LAUNCH, true);
+
+			editor.commit();
+		} else {
+			auth(isRequestAuth);
+
+		}
+
+	}
 	
+	private void auth(boolean isRequestAuth) {
+		if (isRequestAuth) {
+			requestAuth();
+		} else {
+			startActivity(new Intent(getApplicationContext(),
+					MainCalendarActivity.class));
+			finish();
+		}
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == REQUEST_AUTH) {
+			if (resultCode == RESULT_OK) {
+				startActivity(new Intent(this, MainCalendarActivity.class));
+				finish();
+
+			} else {
+				requestAuth();
+			}
+		}
+	}
+
+	protected void requestAuth() {
+		Intent intent = new Intent(this,
+				LoginActivity.class);
+		startActivityForResult(intent, REQUEST_AUTH);
+	}
+
 }
