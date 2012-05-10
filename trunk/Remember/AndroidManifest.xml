@@ -9,6 +9,7 @@
         android:targetSdkVersion="10" />
 
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.GET_TASKS"/>
 
     <application
         android:icon="@drawable/icon"

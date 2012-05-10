@@ -1,10 +1,16 @@
 package com.rememberme.activity;
 
+import java.util.List;
+
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningTaskInfo;
 import android.app.AlarmManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckedTextView;
 
@@ -30,6 +36,8 @@ public class BaseActivity extends Activity {
 	public static int theFirstDate = 0;
 	private static AlarmManager alarm;
 	private static long latIteraction = 0;
+	private volatile static boolean perfomCheck = true;
+	protected static volatile boolean showSplash = false;
 
 	public void toggle(View v) {
 		CheckedTextView cView = (CheckedTextView) v
@@ -125,26 +133,24 @@ public class BaseActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		long div = System.currentTimeMillis() - latIteraction;
-		if (div > 10000) {
+		if (getPerfomCheck()){
 			perfomChaeck();
 		}
 	}
 
-	//
-	// @Override
-	// protected void onPause() {
-	// super.onPause();
-	// trigerCheck = trigerCheck? false: true;
-	// Log.i("TEST", "onPause" +"|" + this.getClass().getName());
-	// }
-	//
-	// @Override
-	// protected void onStop() {
-	// super.onStop();
-	// trigerCheck = trigerCheck? false: true;
-	// Log.i("TEST", "onStop" +"|" + this.getClass().getName());
-	// }
+	@Override
+	protected void onPause() {
+		super.onPause();
+		setPerfomCheck(isApplicationBroughtToBackground());
+
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		setPerfomCheck(isApplicationBroughtToBackground());
+	}
+
 	//
 	// @Override
 	// protected void onDestroy() {
@@ -164,10 +170,10 @@ public class BaseActivity extends Activity {
 	// Log.i("TEST", "onNewIntentnt" +"|" + this.getClass().getName());
 	// }
 
-	private void perfomChaeck() {
-		SharedPreferences preferences = getSharedPreferences(PasswordChangeActivity.PREF_AUTH,
-				MODE_PRIVATE);
-		boolean isRequestAuth = preferences .getBoolean(
+	protected void perfomChaeck() {
+		SharedPreferences preferences = getSharedPreferences(
+				PasswordChangeActivity.PREF_AUTH, MODE_PRIVATE);
+		boolean isRequestAuth = preferences.getBoolean(
 				PasswordChangeActivity.AUTH_REQURED, false);
 
 		boolean launch = getSharedPreferences(FIRST_LAUNCH, 0).getBoolean(
@@ -181,11 +187,10 @@ public class BaseActivity extends Activity {
 			editor.commit();
 		} else {
 			auth(isRequestAuth);
-
 		}
 
 	}
-	
+
 	private void auth(boolean isRequestAuth) {
 		if (isRequestAuth) {
 			requestAuth();
@@ -195,12 +200,16 @@ public class BaseActivity extends Activity {
 			finish();
 		}
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == REQUEST_AUTH) {
 			if (resultCode == RESULT_OK) {
-				startActivity(new Intent(this, MainCalendarActivity.class));
+				if (showSplash){
+					startActivity(new Intent(this, SplashScreenActivity.class));
+				} else {
+					startActivity(new Intent(this, MainCalendarActivity.class));
+				}
 				finish();
 
 			} else {
@@ -210,9 +219,30 @@ public class BaseActivity extends Activity {
 	}
 
 	protected void requestAuth() {
-		Intent intent = new Intent(this,
-				LoginActivity.class);
+		Intent intent = new Intent(this, LoginActivity.class);
 		startActivityForResult(intent, REQUEST_AUTH);
 	}
 
+	private boolean isApplicationBroughtToBackground() {
+		ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+		List<RunningTaskInfo> tasks = am.getRunningTasks(1);
+		if (!tasks.isEmpty()) {
+			ComponentName topActivity = tasks.get(0).topActivity;
+			if (!topActivity.getPackageName().equals(getPackageName())) {
+				return true;
+			} else {
+				return tasks.get(0).numRunning == 0;
+			}
+		}
+
+		return false;
+	}
+	
+	public static synchronized void setPerfomCheck(boolean val){
+		perfomCheck = val;
+	}
+	
+	public static synchronized boolean getPerfomCheck(){
+		return perfomCheck;
+	}
 }

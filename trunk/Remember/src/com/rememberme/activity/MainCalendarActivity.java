@@ -4,7 +4,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -23,6 +26,17 @@ import com.rememberme.utils.DayNoteLoadAction;
 
 public class MainCalendarActivity extends BaseActivity implements
 		OnClickListener, DayNoteLoadAction {
+	public class ScreenReceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context arg0, Intent intent) {
+			if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)){
+				setPerfomCheck(true);
+			}
+		}
+
+	}
+
 	private static final String tag = "SimpleCalendarViewActivity";
 
 	private Button currentMonth;
@@ -42,6 +56,8 @@ public class MainCalendarActivity extends BaseActivity implements
 	private TextView mTime;
     private static ImageView plus;
     private SimpleDateFormat formatter ;
+
+	private ScreenReceiver mResceiver;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -89,6 +105,14 @@ public class MainCalendarActivity extends BaseActivity implements
 		calendarView.setAdapter(adapter);
 
 		initCalendarData();
+		
+		createReciver();
+	}
+
+	private void createReciver() {
+		IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
+		mResceiver = new ScreenReceiver();
+		registerReceiver(mResceiver, filter);
 	}
 
 	@Override
