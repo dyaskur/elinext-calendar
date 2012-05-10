@@ -19,7 +19,7 @@ import com.rememberme.adapter.ItemAdapter;
 import com.rememberme.entity.DayNote;
 
 public class SymptomeActivity extends BaseActivity {
-	public final static String[] ITEMS = { "Spannungsgefuhl der Bruste",
+	public final static String[] ITEMS = { "Spannungsgefühl der Brüste",
 			"Gewichtszunahme", "Schmierblutung", "Zwischenblutung",
 			"Unreine Haut", "Völlegefühl", "Erbrechen", "Durchfall",
 			"Unterleibskrämpfe", "Kopfschmerzen", "Rückenschmerzen",

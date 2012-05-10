@@ -21,10 +21,10 @@ import com.rememberme.R;
 import com.rememberme.entity.DayNote;
 
 public class StimmungActivity extends BaseActivity {
-	public final static String[] ITEMS = {  "glücklich", "traurig", "depriment",
-   "euphorisch", "relaxed", "angespannt", "gereizt", "gelassen",
-   "hungrig", "flirty" };
-	
+	public final static String[] ITEMS = { "glücklich", "traurig",
+			"deprimiert", "euphorisch", "relaxed", "angespannt", "gereizt",
+			"gelassen", "hungrig", "flirty" };
+
 	private ListView view;
 	private List<String> selectedItems = new ArrayList<String>();
 	private ArrayAdapter<String> adapter;
@@ -35,14 +35,14 @@ public class StimmungActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.stimmung_layout);
 		super.onCreate(savedInstanceState);
-        TextView titleText = (TextView) findViewById(R.id.date);
-        if (DayActivity.date == null || DayActivity.date.equals("")) {
-            titleText.setText(DayNote.converDateToString(new Date()));
+		TextView titleText = (TextView) findViewById(R.id.date);
+		if (DayActivity.date == null || DayActivity.date.equals("")) {
+			titleText.setText(DayNote.converDateToString(new Date()));
 
-        } else {
-            titleText.setText(DayActivity.date);
+		} else {
+			titleText.setText(DayActivity.date);
 
-        }
+		}
 
 		adapter = new AdapterStim(StimmungActivity.this, R.layout.item,
 				R.id.item_name, ITEMS);
@@ -52,12 +52,12 @@ public class StimmungActivity extends BaseActivity {
 			selectedItems = dayNote.getNormalizedStimmungs();
 		}
 
-		for(String i: ITEMS) {
+		for (String i : ITEMS) {
 			map.put(i, false);
 		}
-		
+
 		newSelectedList.addAll(selectedItems);
-		for(String i: newSelectedList) {
+		for (String i : newSelectedList) {
 			map.put(i, true);
 		}
 
@@ -100,18 +100,18 @@ public class StimmungActivity extends BaseActivity {
 				@Override
 				public void onClick(View v1) {
 					CheckedTextView textView = (CheckedTextView) v1;
-					if(map.get(textView.getText())) {
+					if (map.get(textView.getText())) {
 						textView.setSelected(false);
 						textView.setCheckMarkDrawable(R.drawable.btn_check_off);
 						newSelectedList.remove(textView.getText());
 						map.put((String) textView.getText(), false);
-						
+
 					} else {
 						map.put((String) textView.getText(), true);
 						newSelectedList.add((String) textView.getText());
 						textView.setSelected(true);
 						textView.setCheckMarkDrawable(R.drawable.btn_check_on);
-						
+
 					}
 
 				}

@@ -42,7 +42,7 @@ public class DayActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.day_selected);
-		scrollView=(ScrollView)findViewById(R.id.scroll);
+		scrollView = (ScrollView) findViewById(R.id.scroll);
 		pilleneinnahme = (TextView) findViewById(R.id.begin_time);
 		arzttermine = (TextView) findViewById(R.id.arzttermin_time);
 
@@ -136,7 +136,7 @@ public class DayActivity extends BaseActivity {
 			if (!noteText.equalsIgnoreCase("")) {
 
 				note.setText(noteText);
-				//note.clearFocus();
+				// note.clearFocus();
 
 				// note.setFocusable(false);
 
@@ -165,13 +165,15 @@ public class DayActivity extends BaseActivity {
 		}
 
 	}
-	
+
 	private View.OnClickListener noteListener = new View.OnClickListener() {
-		
+
 		@Override
 		public void onClick(View v) {
-			if(note.getText().toString().equals(getString(R.string.heir_kannst_du_deine_notiz_eingeben_)))
-				note.setText("");			
+			if (note.getText()
+					.toString()
+					.equals(getString(R.string.heir_kannst_du_deine_notiz_eingeben_)))
+				note.setText("");
 		}
 	};
 
@@ -266,21 +268,20 @@ public class DayActivity extends BaseActivity {
 				intim.setCheckMarkDrawable(R.drawable.btn_check_on);
 			}
 		}
-		
+
 		scrollToTop();
 
+	}
+
+	private void scrollToTop() {
+		scrollView.post(new Runnable() {
+			@Override
+			public void run() {
+				scrollView.fullScroll(ScrollView.FOCUS_UP);
+			}
+		});
 
 	}
-	
-    private void scrollToTop() {
-        scrollView.post(new Runnable() {
-            @Override
-            public void run() {
-                scrollView.fullScroll(ScrollView.FOCUS_UP);
-            }
-        });
-
-    }
 
 	@Override
 	public void onBackPressed() {
@@ -411,7 +412,7 @@ public class DayActivity extends BaseActivity {
 				String date = dayNote.getDate();
 				int dayOfStart = Integer.parseInt(date.substring(0,
 						date.indexOf("-")));
-				int currentDay = calendar.DAY_OF_MONTH - 2;
+				int currentDay = calendar.get(Calendar.DAY_OF_MONTH) - 1;
 				int startPositon = currentDay - dayOfStart;
 				Toast.makeText(
 						this,
