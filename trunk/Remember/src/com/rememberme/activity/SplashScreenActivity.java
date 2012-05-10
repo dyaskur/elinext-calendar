@@ -39,20 +39,17 @@ public class SplashScreenActivity extends Activity {
 							.getBoolean(FIRST_LAUNCH, true);
 
 					if (launch == false) {
-						
-
+						startActivity(new Intent(getApplicationContext(), MainCalendarActivity.class));
+					} else {
+						SharedPreferences.Editor editor = getSharedPreferences(
+								FIRST_LAUNCH, 0).edit();
+						editor.putBoolean(FIRST_LAUNCH, false);
 						SharedPreferences sharedPreferences1 = getSharedPreferences(
 								BaseActivity.REMEMBERME, MODE_WORLD_WRITEABLE);
 						SharedPreferences.Editor editor1 = sharedPreferences1
 								.edit();
 						editor1.putString(AlarmActivity.ALARM_STATUS, "off");
 						editor1.commit();
-						startActivity(new Intent(getApplicationContext(), MainCalendarActivity.class));
-					} else {
-						SharedPreferences.Editor editor = getSharedPreferences(
-								FIRST_LAUNCH, 0).edit();
-						editor.putBoolean(FIRST_LAUNCH, false);
-
 						editor.commit();
 						startActivity(new Intent(getApplicationContext(), FirstLaunch.class));
 					}				
