@@ -21,8 +21,8 @@ import com.rememberme.entity.DayNote;
 public class SymptomeActivity extends BaseActivity {
 	public final static String[] ITEMS = { "Spannungsgefuhl der Bruste",
 			"Gewichtszunahme", "Schmierblutung", "Zwischenblutung",
-			"Unreine Haut", "Vollegefuhl", "Erbrechen", "Durchfall",
-			"Unterleibskrampfe", "Kopfschmerzen", "Ruckenschmerzen",
+			"Unreine Haut", "Völlegefühl", "Erbrechen", "Durchfall",
+			"Unterleibskrämpfe", "Kopfschmerzen", "Rückenschmerzen",
 			"Gliederschmerzen", "Nackenschmerzen" };
 	private ListView view;
 
@@ -36,14 +36,14 @@ public class SymptomeActivity extends BaseActivity {
 		setContentView(R.layout.stimmung_layout);
 		super.onCreate(savedInstanceState);
 
-        TextView titleText = (TextView) findViewById(R.id.date);
-        if (DayActivity.date == null || DayActivity.date.equals("")) {
-            titleText.setText(DayNote.converDateToString(new Date()));
+		TextView titleText = (TextView) findViewById(R.id.date);
+		if (DayActivity.date == null || DayActivity.date.equals("")) {
+			titleText.setText(DayNote.converDateToString(new Date()));
 
-        } else {
-            titleText.setText(DayActivity.date);
+		} else {
+			titleText.setText(DayActivity.date);
 
-        }
+		}
 
 		adapter = new AdapterSymp(SymptomeActivity.this, R.layout.item,
 				R.id.item_name, ITEMS);
