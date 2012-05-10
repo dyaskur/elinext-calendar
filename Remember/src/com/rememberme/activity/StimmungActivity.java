@@ -21,9 +21,9 @@ import com.rememberme.R;
 import com.rememberme.entity.DayNote;
 
 public class StimmungActivity extends BaseActivity {
-	public final static String[] ITEMS = { "glucklich", "traurig", "depriment",
-			"euphorisch", "relaxed", "angespannt", "gereizt", "gelassen",
-			"hungrig", "flirty" };
+	public final static String[] ITEMS = {  "glücklich", "traurig", "depriment",
+   "euphorisch", "relaxed", "angespannt", "gereizt", "gelassen",
+   "hungrig", "flirty" };
 	
 	private ListView view;
 	private List<String> selectedItems = new ArrayList<String>();
